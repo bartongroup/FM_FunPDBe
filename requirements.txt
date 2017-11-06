@@ -1,0 +1,7 @@
+# This requirements file lists all third-party dependencies for this project.
+#
+# Run 'pip install -r requirements.txt' to install these dependencies
+
+proteofav>=0.2.0
+click>=6.7
+click_log>=0.2.1
