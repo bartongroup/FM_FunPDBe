@@ -12,6 +12,7 @@ import os
 import sys
 import click
 import logging
+import textwrap
 import click_log
 from Bio import SeqIO
 from subprocess import Popen
@@ -38,7 +39,7 @@ def main(input, log):
     for i, record in enumerate(seqs):
         seq = record.seq
         pid = record.id
-        print(i, pid)
+        print(i + 1, pid)
 
         # write a sequence per file
         input_seq = os.path.join(os.path.dirname(__file__),
@@ -48,6 +49,7 @@ def main(input, log):
 
         if not os.path.exists(input_seq):
             output = open(input_seq, 'w')
+            seq = '\n'.join(textwrap.wrap(str(seq), width=60))
             output.write(">{}\n{}\n".format(pid, seq))
             output.close()
 
