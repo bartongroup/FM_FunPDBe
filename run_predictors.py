@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-# NOD cli donwloaded from: http://www.compbio.dundee.ac.uk/www-nod/downloads.jsp
+# NOD cli downloaded from: http://www.compbio.dundee.ac.uk/www-nod/downloads.jsp
 # Running instructions: http://www.compbio.dundee.ac.uk/www-nod/cli_help.jsp
-
 # java -jar clinod-1.3.jar -in=test2.fasta -out=test2.nod -f=COMPLETE
 
 
 # 14-3-3-Pred downloaded from: https://github.com/bartongroup/FM_14-3-3/www1433/app
-
 # python2.7 prediction.py -i ./test.fasta -o ./
 
 
@@ -28,8 +26,8 @@ import click_log
 from Bio import SeqIO
 from subprocess import Popen
 
-nod_jar = os.path.join('lib', 'NOD', 'clinod-1.3.jar')
-# nod_jar = '/homes/fmmarquesmadeira/clinod-1.3.jar'
+# nod_jar = os.path.join('lib', 'NOD', 'clinod-1.3.jar')
+nod_jar = '/homes/fmmarquesmadeira/clinod-1.3.jar'
 pred1433_python = os.path.join('lib', '1433pred', 'prediction.py')
 jpred_perl = os.path.join('lib', 'Jpred', 'jpredapi')
 
@@ -76,12 +74,12 @@ def nod(input, log):
 
         cmd = ['java', '-jar', nod_jar,
                '-in={}'.format(input_seq),
-               "-out={}".format(output_nod),
+               '-out={}'.format(output_nod),
                '-f=COMPLETE']
         Popen(cmd)
 
 
-@main.command('pred1433')
+@main.command('1433pred')
 @click.option('-l', '--log', default=sys.stderr,
               help="Path to the logfile.",
               type=click.File('wb'))
@@ -114,7 +112,7 @@ def pred1433(input, log):
             output.close()
 
         cmd = ['python2.7', pred1433_python,
-               "-i", input_seq, "-o", output_1433pred]
+               '-i', input_seq, '-o', output_1433pred]
         # Popen(cmd)
         os.system(' '.join(cmd))
 
