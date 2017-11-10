@@ -1,0 +1,12 @@
+Your job will be submitted with the following parameters:
+file: data/input/3tpp_A.fasta
+format: seq
+skipPDB: on
+email: funpdbe@dundee.ac.uk
+name: 3tpp_A
+
+
+Created JPred job with jobid: jp_8Ya5nzw
+You can check the status of the job using the following URL: http://www.compbio.dundee.ac.uk/jpred4/cgi-bin/chklog?jp_8Ya5nzw
+...or using 'perl jpredapi status jobid=jp_8Ya5nzw getResults=yes checkEvery=60 silent' command
+(Check documentation for more details.)
