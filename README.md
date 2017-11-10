@@ -8,24 +8,24 @@ Scripts for adding functional annotations to FunPDBe.
 
 Extracting the sequences from all chains in the PDB files
 ```sh
-$ python extract_chains_sequences.py data/funpdbe_examples_list.txt data/funpdbe_examples_list.fasta 
+$ python extract_sequences.py data/funpdbe_examples_list.txt data/funpdbe_examples_list.fasta 
 ```
 
 ### Getting Fasta sequences from PDB/CHAIN or UniProt IDs
 
 Extracting the sequence from all chains based on a PDB ID
 ```sh
-$ python extract_chains_sequences.py --pdb <pdb_id> 
+$ python extract_sequences.py --pdb <pdb_id> 
 ```
 
 Extracting the sequence from all chains based on a PDB ID and Chain ID
 ```sh
-$ python extract_chains_sequences.py --pdb <pdb_id> --chain <chain_id>
+$ python extract_sequences.py --pdb <pdb_id> --chain <chain_id>
 ```
 
 Extracting the sequence from all PDB/Chain IDs based on a UniProt ID
 ```sh
-$ python extract_chains_sequences.py --uniprot <pdb_id>
+$ python extract_sequences.py --uniprot <pdb_id>
 ```
 
 ### Running Barton Group Predictors on a collection of Fasta sequences
