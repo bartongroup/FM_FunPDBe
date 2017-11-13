@@ -46,6 +46,18 @@ $ python run_predictors.py jpred data/funpdbe_examples_list.fasta
 ```
 
 
+## Scoring and Classifier Thresholds
+
+**NOD**  
+* NOD - Artificial Neural Network (20-length sequence windows with a score cut-off >= 0.8)
+
+**14-3-3-Pred**  
+* ANN - Artificial Neural Network (cut-off >= 0.55)
+* PSSM - Position-Specific Scoring Matrix (cut-off >= 0.80)
+* SVM - Support Vector Machine (cut-off >= 0.25)
+* Consensus - Average of the scores provided by the three methods (cut-off >= 0.50)
+
+
 ## Dependencies
 Using Python 3.5+. Check [requirements.txt](./requirements.txt) for all Python dependencies.
 
