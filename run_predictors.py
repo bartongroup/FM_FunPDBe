@@ -26,8 +26,7 @@ import click_log
 from Bio import SeqIO
 from subprocess import Popen
 
-# nod_jar = os.path.join('lib', 'NOD', 'clinod-1.3.jar')
-nod_jar = '/homes/fmmarquesmadeira/clinod-1.3.jar'
+nod_jar = os.path.join('lib', 'NOD', 'clinod-1.3.jar')
 pred1433_python = os.path.join('lib', '1433pred', 'prediction.py')
 jpred_perl = os.path.join('lib', 'Jpred', 'jpredapi')
 
@@ -111,7 +110,7 @@ def pred1433(input, log):
             output.write(">{}\n{}\n".format(pid, seq))
             output.close()
 
-        cmd = ['python2.7', pred1433_python,
+        cmd = ['python', pred1433_python,
                '-i', input_seq, '-o', output_1433pred]
         # Popen(cmd)
         os.system(' '.join(cmd))
