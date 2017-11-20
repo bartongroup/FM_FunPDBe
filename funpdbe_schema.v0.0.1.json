@@ -52,13 +52,18 @@
                             "description": "Confidence level of the annotation"
                           }
                         }
-                      }
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
                     }
                   }
-                }
+                },
+                "minItems": 1
               }
             }
-          }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         }
       },
       "sites": {
@@ -75,7 +80,9 @@
               "description": "Reference to label"
             }
           }
-        }
+        },
+        "minItems": 1,
+        "uniqueItems": true
       }
     },
 
@@ -98,7 +105,9 @@
             "description": "Label description"
           }
         }
-      }
+      },
+      "minItems": 1,
+      "uniqueItems": true
     },
 
     "evidence_ontology": {
@@ -106,7 +115,9 @@
       "items": {
         "type": "string",
         "description": "Experimental Factor Ontology (EFO) code"
-      }
+//        "enum": [] - TODO: agree on list of allowed EFO codes
+      },
+      "uniqueItems": true
     }
   },
   "required": ["data_resource", "pdb", "labels"]
