@@ -1,0 +1,97 @@
+{
+  "title": "FunPDBeSchema",
+  "type": "object",
+  "properties": {
+
+    "data_resource": {
+      "type": "string"
+    },
+
+    "resource_version": {
+      "type": "string"
+    },
+
+    "pdb":{
+      "type": "object",
+      "properties": {
+        "chains": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chain_id": {
+                "type": "string"
+              },
+              "residues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "pdb_res_index": {
+                      "type": "integer"
+                    },
+                    "aa_type": {
+                      "type": "string"
+                    },
+                    "site_data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "site_id_ref": "integer",
+                          "confidence": "float"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "site_id": {
+                "type": "integer"
+              },
+              "label_id_ref": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "release_date": {
+      "type": "string"
+    },
+
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label_id": {
+            "type": "integer"
+          },
+          "label_text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "evidence_ontology": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+
+  },
+  "required": ["data_resource", "pdb", "labels"]
+}
