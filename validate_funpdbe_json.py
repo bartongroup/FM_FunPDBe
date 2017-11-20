@@ -10,4 +10,4 @@ with open("funpdbe_example.json") as example_file:
 # print(funpdbe_schema)
 # print(funpdbe_example)
 
-jsonschema.validate(funpdbe_schema, funpdbe_example)
+print(jsonschema.validate(funpdbe_example, funpdbe_schema))
