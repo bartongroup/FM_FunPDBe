@@ -4,11 +4,13 @@
   "properties": {
 
     "data_resource": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of the database or software"
     },
 
     "resource_version": {
-      "type": "string"
+      "type": "string",
+      "description": "Version of the database or software"
     },
 
     "pdb":{
@@ -20,7 +22,8 @@
             "type": "object",
             "properties": {
               "chain_id": {
-                "type": "string"
+                "type": "string",
+                "description": "PDB chain identifier"
               },
               "residues": {
                 "type": "array",
@@ -28,18 +31,26 @@
                   "type": "object",
                   "properties": {
                     "pdb_res_index": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Residue index from the related PDB entry"
                     },
                     "aa_type": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "One letter amino acid code"
                     },
                     "site_data": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "site_id_ref": "integer",
-                          "confidence": "float"
+                          "site_id_ref": {
+                            "type": "integer",
+                            "description": "Reference to site_id"
+                          },
+                          "confidence": {
+                            "type": "float",
+                            "description": "Confidence level of the annotation"
+                          }
                         }
                       }
                     }
@@ -48,18 +59,20 @@
               }
             }
           }
-        },
-        "sites": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "site_id": {
-                "type": "integer"
-              },
-              "label_id_ref": {
-                "type": "integer"
-              }
+        }
+      },
+      "sites": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "site_id": {
+              "type": "integer",
+              "description": "Site identifier"
+            },
+            "label_id_ref": {
+              "type": "integer",
+              "description": "Reference to label"
             }
           }
         }
@@ -67,7 +80,8 @@
     },
 
     "release_date": {
-      "type": "string"
+      "type": "string",
+      "description": "Release date of the annotation"
     },
 
     "labels": {
@@ -76,10 +90,12 @@
         "type": "object",
         "properties": {
           "label_id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Label identifier"
           },
           "label_text": {
-            "type": "string"
+            "type": "string",
+            "description": "Label description"
           }
         }
       }
@@ -88,10 +104,10 @@
     "evidence_ontology": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Experimental Factor Ontology (EFO) code"
       }
     }
-
   },
   "required": ["data_resource", "pdb", "labels"]
 }
