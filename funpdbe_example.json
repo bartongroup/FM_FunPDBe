@@ -1,0 +1,40 @@
+{
+  "data_resource": "PartnerDB",
+  "resource_version": "1.0.0",
+  "pdb": {
+    "pdb_id": "1ABC",
+    "chains": [
+      {
+        "chain_id": "A",
+        "residues": [
+          {
+            "pdb_res_index": 1,
+            "aa_type": "A",
+            "site_data": [
+              {
+                "site_id_ref": "1",
+                "confidence": 0.9
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sites": [
+      {
+        "site_id": 1,
+        "label_id_ref": 1
+      }
+    ]
+  },
+  "release_date": "10/10/2010",
+  "labels": [
+    {
+      "label_id": 1,
+      "label_text": "This is a label"
+    }
+  ],
+  "evidence_ontology": [
+    "EF00001"
+  ]
+}
