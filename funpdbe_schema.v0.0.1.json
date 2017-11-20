@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "FunPDBeSchema",
   "type": "object",
   "properties": {
@@ -49,10 +48,10 @@
                             "description": "Reference to site_id"
                           },
                           "confidence": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Confidence level of the annotation",
-                            "minimum": 0,
-                            "maximum": 1
+                            "minimum": 0.0,
+                            "maximum": 1.0
                           }
                         }
                       },
@@ -118,7 +117,6 @@
       "items": {
         "type": "string",
         "description": "Experimental Factor Ontology (EFO) code"
-//        "enum": [] - TODO: agree on list of allowed EFO codes
       },
       "uniqueItems": true
     }
