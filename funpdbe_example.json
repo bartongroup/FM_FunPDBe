@@ -12,7 +12,7 @@
             "aa_type": "A",
             "site_data": [
               {
-                "site_id_ref": "1",
+                "site_id_ref": 1,
                 "confidence": 0.9
               }
             ]
