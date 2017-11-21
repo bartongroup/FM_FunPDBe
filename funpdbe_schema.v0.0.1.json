@@ -111,15 +111,6 @@
       },
       "minItems": 1,
       "uniqueItems": true
-    },
-
-    "evidence_ontology": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "description": "Experimental Factor Ontology (EFO) code"
-      },
-      "uniqueItems": true
     }
   },
   "required": ["data_resource", "pdb", "labels"]
