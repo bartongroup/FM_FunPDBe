@@ -33,5 +33,8 @@
       "label_id": 1,
       "label_text": "This is a label"
     }
+  ],
+  "evidence_ontology": [
+    "EF00001"
   ]
 }
