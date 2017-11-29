@@ -108,7 +108,7 @@
                       "uniqueItems": true
                     }
                   },
-                  "required": ["pdb_res_index", "aa_type", "site_data"]
+                  "required": ["pdb_res_label", "aa_type", "site_data"]
                 },
                 "minItems": 1
               }
