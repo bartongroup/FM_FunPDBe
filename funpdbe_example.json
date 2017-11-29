@@ -49,7 +49,7 @@
       "label_text": "ligand_binding_site"
     }
   ],
-  "evidence_ontology": [
+  "experimental_factor_ontology": [
     "manually_curated"
   ]
 }
