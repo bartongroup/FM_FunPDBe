@@ -11,13 +11,51 @@
 
     "resource_version": {
       "type": "string",
-      "description": "Version of the database or software"
+      "description": "Version of the resource"
     },
 
-    "pdb":{
-      "type": "object",
-      "properties": {
-        "chains": {
+    "software_version": {
+      "type": "string",
+      "description": "Version of the software used"
+    },
+
+    "resource_entry_url": {
+      "type": "string",
+      "description": "URL linking to the entry at the partner resource"
+    },
+
+    "release_date": {
+      "type": "string",
+      "description": "Release date of the annotation"
+    },
+
+    "source_datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "description": "Unique identifier of source"
+          },
+          "source_release_date": {
+            "type": "string",
+            "description": "Date of acquiring data from source"
+          },
+          "source_db": {
+            "type": "string",
+            "description": "Name of the source database"
+          }
+        }
+      }
+    },
+
+    "pdb_id": {
+      "type": "string",
+      "description": "PDB identifier"
+    },
+
+    "chains": {
           "type": "array",
           "items": {
             "type": "object",
@@ -48,11 +86,19 @@
                             "type": "integer",
                             "description": "Reference to site_id"
                           },
+                          "value":{
+                            "type": "number",
+                            "description": "Raw calculated score/value"
+                          },
                           "confidence": {
                             "type": "number",
                             "description": "Confidence level of the annotation",
                             "minimum": 0.0,
                             "maximum": 1.0
+                          },
+                          "classification": {
+                            "type": "string",
+                            "description": "Confidence classification of the residue"
                           }
                         }
                       },
@@ -67,9 +113,9 @@
           },
           "minItems": 1,
           "uniqueItems": true
-        }
-      },
-      "sites": {
+        },
+
+    "sites": {
         "type": "array",
         "items": {
           "type": "object",
@@ -81,18 +127,25 @@
             "label_id_ref": {
               "type": "integer",
               "description": "Reference to label"
+            },
+            "evidence": {
+              "type": "object",
+              "properties": {
+                "source_id_ref": {
+                  "type": "integer",
+                  "description": "Referencing source identifier"
+                },
+                "source_accession": {
+                  "type": "string",
+                  "description": "Accession identifier"
+                }
+              }
             }
           }
         },
         "minItems": 1,
         "uniqueItems": true
-      }
-    },
-
-    "release_date": {
-      "type": "string",
-      "description": "Release date of the annotation"
-    },
+      },
 
     "labels": {
       "type": "array",
@@ -105,7 +158,7 @@
           },
           "label_text": {
             "type": "string",
-            "description": "Label description"
+            "description": "Label description, sequence feature ontology (SFO) term"
           }
         }
       },
@@ -113,14 +166,15 @@
       "uniqueItems": true
     },
 
-    "evidence_ontology": {
+    "experimental_factor_ontology": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Experimental Factor Ontology (EFO) code"
+        "description": "Experimental Factor Ontology (EFO) term"
       },
       "uniqueItems": true
     }
   },
+
   "required": ["data_resource", "pdb", "labels"]
 }
