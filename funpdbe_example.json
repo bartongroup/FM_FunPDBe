@@ -18,8 +18,9 @@
       "additional_chain_annotations": {},
       "residues": [
         {
-          "pdb_res_label": 1,
+          "pdb_res_label": "1",
           "aa_type": "A",
+          "additional_residue_annotations": {},
           "site_data": [
             {
               "site_id_ref": 1,
@@ -42,7 +43,7 @@
       }
     }
   ],
-  "additional_annotations": {},
+  "additional_entry_annotations": {},
   "labels": [
     {
       "label_id": 1,
