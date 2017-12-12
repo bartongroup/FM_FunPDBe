@@ -71,7 +71,7 @@
                   "type": "object",
                   "properties": {
                     "pdb_res_label": {
-                      "type": "integer",
+                      "type": "string",
                       "description": "Residue index from the related PDB entry"
                     },
                     "aa_type": {
