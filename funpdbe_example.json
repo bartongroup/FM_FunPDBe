@@ -50,7 +50,7 @@
       "label_text": "ligand_binding_site"
     }
   ],
-  "experimental_factor_ontology": [
+  "evidence_code_ontology": [
     "manually_curated"
   ]
 }

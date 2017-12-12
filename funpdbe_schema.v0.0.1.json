@@ -173,11 +173,11 @@
       "uniqueItems": true
     },
 
-    "experimental_factor_ontology": {
+    "evidence_code_ontology": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Experimental Factor Ontology (EFO) term"
+        "description": "Evidence Code Ontology (ECO) term - http://www.evidenceontology.org/"
       },
       "uniqueItems": true
     }
