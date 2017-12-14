@@ -110,13 +110,16 @@
                   },
                   "required": ["pdb_res_label", "aa_type", "site_data"]
                 },
-                "minItems": 1
+                "minItems": 1,
+                "mergeStrategy": "append"
               }
             },
             "required": ["chain_id", "residues"]
           },
           "minItems": 1,
-          "uniqueItems": true
+          "uniqueItems": true,
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {"idRef": "chain_id"}
         },
 
     "sites": {
@@ -150,7 +153,8 @@
           "required": ["site_id", "label_id_ref"]
         },
         "minItems": 1,
-        "uniqueItems": true
+        "uniqueItems": true,
+        "mergeStrategy": "append"
       },
 
     "labels": {
