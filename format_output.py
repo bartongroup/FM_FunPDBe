@@ -31,6 +31,45 @@ def format_1433_site(site, mmcif_table):
     :param mmcif:
     :return:
     """
+
+    def parse_site_to_FunPDBe_chain_json(site, mmcif_series, cutoffs):
+        # Get fields needed for FunPDBe schema: NB. how do we differentiate positive vs negative predictions
+        # There will be redundency if we include the flanking residues in the site, since they all have the same score.
+        # Perhaps we could use 'additional_site_annotations'...
+        # Should normalise negative and positive predictions for min:cutoff and cutoff:max
+        # Should confidence account for pSer/Thr too?
+        predicted_1433 = float(site['Consensus']) > cutoffs['Consensus']
+        additional_residue_annotations = {
+            'pSer/Thr': site['pSer/Thr'],
+            'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
+            'Prediction': '14-3-3 Binding' if predicted_1433 else 'Not candidate site'
+        }
+        additional_residue_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
+        d = {
+            "chains": [
+                {
+                    "chain_id": mmcif_series['label_asym_id'],
+                    "additional_chain_annotations": {},
+                    "residues": [
+                        {
+                            "pdb_res_label": mmcif_series['pdbe_label_seq_id'],  # Make sure is str
+                            "aa_type": mmcif_series['label_comp_id'],
+                            "additional_residue_annotations": additional_residue_annotations,
+                            "site_data": [
+                                {
+                                    "site_id_ref": site['Site'],  # or increment from 1...
+                                    "value": float(site['Consensus']),
+                                    "confidence": 1 if predicted_1433 else 0,
+                                    "classification": 'reliable'  # TODO: Make this reflect confidence in some way
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+        }
+        return d, predicted_1433
+    
     cutoffs = {'Consensus': 0.50, 'SVM': 0.25, 'PSSM': 0.80, 'ANN': 0.55}
 
     # Lookup site in mmcif and verify amino acids match
@@ -43,42 +82,11 @@ def format_1433_site(site, mmcif_table):
 
     # Format site and mmcif data to FunPDBe; for the moment only the S/T
     mmcif_series = mmcif_table.iloc[site_mmcif_index]
+    d, predicted_1433 = parse_site_to_FunPDBe_chain_json(site, mmcif_series, cutoffs)
 
-    # Get fields needed for FunPDBe schema: NB. how do we differentiate positive vs negative predictions
-    # There will be redundency if we include the flanking residues in the site, since they all have the same score.
-    # Perhaps we could use 'additional_site_annotations'...
-    # Should normalise negative and positive predictions for min:cutoff and cutoff:max
-    # Should confidence account for pSer/Thr too?
-    predicted_1433 = float(site['Consensus']) > cutoffs['Consensus']
-    additional_residue_annotations = {
-        'pSer/Thr': site['pSer/Thr'],
-        'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
-        'Prediction': '14-3-3 Binding' if predicted_1433 else 'Not candidate site'
-    }
-    additional_residue_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
 
-    d = {
-        "chains": [
-            {
-                "chain_id": mmcif_series['label_asym_id'],
-                "additional_chain_annotations": {},
-                "residues": [
-                    {
-                        "pdb_res_label": mmcif_series['pdbe_label_seq_id'],  # Make sure is str
-                        "aa_type": mmcif_series['label_comp_id'],
-                        "additional_residue_annotations": additional_residue_annotations,
-                        "site_data": [
-                            {
-                                "site_id_ref": site['Site'],  # or increment from 1...
-                                "value": float(site['Consensus']),
-                                "confidence": 1 if predicted_1433 else 0,
-                                "classification": 'reliable'  # TODO: Make this reflect confidence in some way
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
+    # Add 'site' level annotation
+    d.update({
         "sites": [
             {
                 "site_id": site['Site'],  # or increment from 1...
@@ -89,7 +97,7 @@ def format_1433_site(site, mmcif_table):
                 }
             }
         ]
-    }
+    })
 
     return d
 
