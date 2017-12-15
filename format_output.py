@@ -128,5 +128,7 @@ if __name__ == '__main__':
     FunPDBe_json = schema.FunPDBe_merger.merge(top_level_json, merged_sites_json)
 
     schema.validate_FunPDBe_entry(FunPDBe_json)
+    with open('14_3_3_Pred.json', 'w') as output:
+        json.dump(FunPDBe_json, output, indent=4, sort_keys=True)
     pprint(FunPDBe_json)
 
