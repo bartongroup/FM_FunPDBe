@@ -104,8 +104,7 @@ if __name__ == '__main__':
     sites_jsons = [format_1433_site(site, mmcif) for site in one433_sites]
 
     # Merge FunPDBe JSONs respecting schema
-    merger = jsonmerge.Merger(schema.funpdbe_schema)
-    merged_sites_json = functools.reduce(merger.merge, sites_jsons)
+    merged_sites_json = functools.reduce(schema.FunPDBe_merger.merge, sites_jsons)
 
     # Fill top level FunPDBe JSON fields:
     top_level_json = schema.resource_header('14-3-3 Pred', software_version='76237a4cc452d99a0df68ffff41c520b33c86fee',
@@ -126,7 +125,7 @@ if __name__ == '__main__':
     top_level_json.update(additional_entry_annotations={}, evidence_code_ontology=['...'], source_datasets=[], sites=[])
 
     # Merge site and top level annotations
-    FunPDBe_json = merger.merge(top_level_json, merged_sites_json)
+    FunPDBe_json = schema.FunPDBe_merger.merge(top_level_json, merged_sites_json)
 
     schema.validate_FunPDBe_entry(FunPDBe_json)
     pprint(FunPDBe_json)
