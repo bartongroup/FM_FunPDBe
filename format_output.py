@@ -130,7 +130,32 @@ if __name__ == '__main__':
                                   {'label_id': 2, 'label_text': 'Negative prediction'}])
 
     # Other
-    top_level_json.update(additional_entry_annotations={}, evidence_code_ontology=['...'], source_datasets=[], sites=[])
+    source_datasets = [
+        {
+            "source_id": 1,
+            "source_release_date": "10/2017",
+            "source_db": "PDB"
+        },
+        {
+            "source_id": 2,
+            "source_release_date": "10/2013",
+            "source_db": "PhosphoSitePlus"
+        },
+        {
+            "source_id": 3,
+            "source_release_date": "2014",
+            "source_db": "ANIA"
+        },
+        {
+            "source_id": 4,
+            "source_release_date": "2015",
+            "source_db": "14-3-3 Pred Dataset"
+        }
+
+    ]
+    eco_terms = ["sequence_similarity_evidence_used_in_automatic_assertion"]
+    top_level_json.update(additional_entry_annotations={}, evidence_code_ontology=eco_terms,
+                          source_datasets=source_datasets, sites=[])
 
     # Merge site and top level annotations
     FunPDBe_json = schema.FunPDBe_merger.merge(top_level_json, merged_sites_json)
