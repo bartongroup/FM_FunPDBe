@@ -94,8 +94,8 @@ def format_1433_site(site, mmcif_table):
     # Add 'site' level annotation
     additional_site_annotations = {
         'pSer/Thr': site['pSer/Thr'],
-        'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
-        'Prediction': '14-3-3 protein_binding_site' if predicted_1433 else 'not_candidate_site',
+        'concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
+        'prediction': '14-3-3 protein_binding_site' if predicted_1433 else 'not_candidate_site',
     }
     additional_site_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
     d.update({
