@@ -71,6 +71,7 @@ def format_1433_site(site, mmcif_table):
         return d, predicted_1433
     
     cutoffs = {'Consensus': 0.50, 'SVM': 0.25, 'PSSM': 0.80, 'ANN': 0.55}
+    min_max = {'ANN': [0, 1], 'SVM': [-1, 1]}
 
     # Lookup site in mmcif and verify amino acids match
     site_mmcif_index = site['Site'] - 1
