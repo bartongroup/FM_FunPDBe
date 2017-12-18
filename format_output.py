@@ -57,7 +57,7 @@ def format_1433_site(site, mmcif_table):
                             "additional_residue_annotations": additional_residue_annotations,
                             "site_data": [
                                 {
-                                    "site_id_ref": site['Site'],  # or increment from 1...
+                                    "site_id_ref": site_mmcif_index,  # or increment from 1...
                                     "value": float(site['Consensus']),
                                     "confidence": 1 if predicted_1433 else 0,  # TODO: will get model ranges and can make 0-1
                                     "classification": 'reliable',  # TODO: Make this reflect confidence in some way
@@ -89,7 +89,7 @@ def format_1433_site(site, mmcif_table):
     d.update({
         "sites": [
             {
-                "site_id": site['Site'],  # or increment from 1...
+                "site_id": site_mmcif_index,  # or increment from 1...
                 "label_id_ref": 1 if predicted_1433 else 2,
                 "evidence": {
                     "source_id_ref": 1,  # TODO: Not meaningful just now
