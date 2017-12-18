@@ -157,12 +157,15 @@ if __name__ == '__main__':
         {
             "source_id": 3,
             "source_release_date": "2014",
-            "source_db": "ANIA"
+            "source_db": "ANIA",
+            "source_url": "https://ania-1433.lifesci.dundee.ac.uk/prediction/webserver/index.py",
+            "source_publication_doi": "10.1093/database/bat085"
         },
         {
             "source_id": 4,
             "source_release_date": "2015",
-            "source_db": "14-3-3 Pred Dataset"
+            "source_db": "14-3-3 Pred Dataset",
+            "source_publication_doi": "10.1093/bioinformatics/btv133"
         }
 
     ]
