@@ -39,12 +39,9 @@ def format_1433_site(site, mmcif_table):
         # Should normalise negative and positive predictions for min:cutoff and cutoff:max
         # Should confidence account for pSer/Thr too?
         predicted_1433 = float(site['Consensus']) > cutoffs['Consensus']
-        additional_residue_annotations = {
-            'pSer/Thr': site['pSer/Thr'],
-            'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
-            'Prediction': '14-3-3 Binding' if predicted_1433 else 'Not candidate site'
-        }
-        additional_residue_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
+        additional_residue_annotations = {}
+        if site_mmcif_index == mmcif_index:  # Add phosphorylation status for S/T
+            additional_residue_annotations.update({"pSer/Thr": site['pSer/Thr']})
         d = {
             "chains": [
                 {
@@ -61,6 +58,9 @@ def format_1433_site(site, mmcif_table):
                                     "value": float(site['Consensus']),
                                     "confidence": 1 if predicted_1433 else 0,  # TODO: will get model ranges and can make 0-1
                                     "classification": 'reliable',  # TODO: Make this reflect confidence in some way
+                                    "additional_site_data_annotations": {
+                                        'motif_position': mmcif_index - site_mmcif_index
+                                    }
                                 }
                             ]
                         }
@@ -86,6 +86,12 @@ def format_1433_site(site, mmcif_table):
 
 
     # Add 'site' level annotation
+    additional_site_annotations = {
+        'pSer/Thr': site['pSer/Thr'],
+        'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
+        'Prediction': '14-3-3 Binding' if predicted_1433 else 'Not candidate site',
+    }
+    additional_site_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
     d.update({
         "sites": [
             {
@@ -94,7 +100,8 @@ def format_1433_site(site, mmcif_table):
                 "evidence": {
                     "source_id_ref": 1,  # TODO: Not meaningful just now
                     "source_accession": ""
-                }
+                },
+                "additional_site_annotations": additional_site_annotations
             }
         ]
     })
