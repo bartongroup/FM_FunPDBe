@@ -95,7 +95,7 @@ def format_1433_site(site, mmcif_table):
     additional_site_annotations = {
         'pSer/Thr': site['pSer/Thr'],
         'Concordance': [method for method in ['SVM', 'ANN', 'PSSM'] if float(site[method]) > cutoffs[method]],
-        'Prediction': '14-3-3 Binding' if predicted_1433 else 'Not candidate site',
+        'Prediction': '14-3-3 protein_binding_site' if predicted_1433 else 'not_candidate_site',
     }
     additional_site_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
     d.update({
@@ -139,8 +139,8 @@ if __name__ == '__main__':
     top_level_json.update(release_date=date_string)
 
     # 'labels' (referenced to 'sites')
-    top_level_json.update(labels=[{'label_id': 1, 'label_text': '14-3-3 Binding'},
-                                  {'label_id': 2, 'label_text': 'Negative prediction'}])
+    top_level_json.update(labels=[{'label_id': 1, 'label_text': '14-3-3 protein_binding_site'},
+                                  {'label_id': 2, 'label_text': 'negative_prediction'}])
 
     # Other
     source_datasets = [
