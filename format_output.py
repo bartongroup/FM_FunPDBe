@@ -59,8 +59,8 @@ def format_1433_site(site, mmcif_table):
                                 {
                                     "site_id_ref": site['Site'],  # or increment from 1...
                                     "value": float(site['Consensus']),
-                                    "confidence": 1 if predicted_1433 else 0,
-                                    "classification": 'reliable'  # TODO: Make this reflect confidence in some way
+                                    "confidence": 1 if predicted_1433 else 0,  # TODO: will get model ranges and can make 0-1
+                                    "classification": 'reliable',  # TODO: Make this reflect confidence in some way
                                 }
                             ]
                         }
