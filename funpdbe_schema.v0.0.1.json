@@ -105,13 +105,15 @@
                         "required": ["site_id_ref"]
                       },
                       "minItems": 1,
-                      "uniqueItems": true
+                      "uniqueItems": true,
+                      "mergeStrategy": "append"
                     }
                   },
                   "required": ["pdb_res_label", "aa_type", "site_data"]
                 },
                 "minItems": 1,
-                "mergeStrategy": "append"
+                "mergeStrategy": "arrayMergeById",
+                "mergeOptions": {"idRef": "pdb_res_label"}
               }
             },
             "required": ["chain_id", "residues"]

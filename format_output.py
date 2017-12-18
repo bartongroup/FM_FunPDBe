@@ -80,10 +80,15 @@ def format_1433_site(site, mmcif_table):
     seq = site['Peptide'].replace('-', '').upper()  # Drop gaps
     assert seq == site_mmcif_seq
 
-    # Format site and mmcif data to FunPDBe; for the moment only the S/T
-    mmcif_series = mmcif_table.iloc[site_mmcif_index]
-    d, predicted_1433 = parse_site_to_FunPDBe_chain_json(site, mmcif_series, cutoffs)
+    residue_entries = []
+    for mmcif_index in range(site_mmcif_start, site_mmcif_end+1):
+        # Format site and mmcif data to FunPDBe; for the moment only the S/T
+        mmcif_series = mmcif_table.iloc[mmcif_index]
+        d, predicted_1433 = parse_site_to_FunPDBe_chain_json(site, mmcif_series, cutoffs)
+        residue_entries.append(d)
 
+    # Merge chain level JSONs respecting FunPDBe schema
+    d = functools.reduce(schema.FunPDBe_merger.merge, residue_entries)
 
     # Add 'site' level annotation
     additional_site_annotations = {
