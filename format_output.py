@@ -115,33 +115,31 @@ def format_1433_site(site, mmcif_table):
     return d
 
 
-if __name__ == '__main__':
-    # Load mmcif and corresponding predictions
-    mmcif = read_mmcif_chain('3tpp', 'A')
-    prediction_result_file = './data/output/1433pred/3tpp_A.json'
+def format_1433_pdb(source_mmcif, prediction_result_file):
+    """
+
+    :param source_mmcif:
+    :param prediction_result_file:
+    :return:
+    """
+    # Load predictions
     one433_sites = json.load(open(prediction_result_file))
-
     # Create FunPDBe JSONs for each prediction
-    sites_jsons = [format_1433_site(site, mmcif) for site in one433_sites]
-
+    sites_jsons = [format_1433_site(site, source_mmcif) for site in one433_sites]
     # Merge FunPDBe JSONs respecting schema
     merged_sites_json = functools.reduce(schema.FunPDBe_merger.merge, sites_jsons)
-
     # Fill top level FunPDBe JSON fields:
     top_level_json = schema.resource_header('14-3-3 Pred', software_version='76237a4cc452d99a0df68ffff41c520b33c86fee',
                                             resource_entry_url='http://www.compbio.dundee.ac.uk/1433pred/')
     top_level_json.update(pdb_id='3tpp')
     top_level_json.update(chains=[{'chain_id': 'A', 'additional_chain_annotations': {}, 'residues': []}])
-
     # Release date
     struct_time = localtime(os.path.getmtime(prediction_result_file))
     date_string = '/'.join([str(getattr(struct_time, attr)) for attr in ('tm_mday', 'tm_mon', 'tm_year')])
     top_level_json.update(release_date=date_string)
-
     # 'labels' (referenced to 'sites')
     top_level_json.update(labels=[{'label_id': 1, 'label_text': '14-3-3 protein_binding_site'},
                                   {'label_id': 2, 'label_text': 'negative_prediction'}])
-
     # Other
     source_datasets = [
         {
@@ -172,12 +170,20 @@ if __name__ == '__main__':
     eco_terms = ["sequence_similarity_evidence_used_in_automatic_assertion"]
     top_level_json.update(additional_entry_annotations={}, evidence_code_ontology=eco_terms,
                           source_datasets=source_datasets, sites=[])
-
     # Merge site and top level annotations
     FunPDBe_json = schema.FunPDBe_merger.merge(top_level_json, merged_sites_json)
+    return FunPDBe_json
 
-    schema.validate_FunPDBe_entry(FunPDBe_json)
+
+if __name__ == '__main__':
+    # Load mmcif
+    mmcif = read_mmcif_chain('3tpp', 'A')
+    one433_result_file = './data/output/1433pred/3tpp_A.json'
+
+    FunPDBe_1433_json = format_1433_pdb(mmcif, one433_result_file)
+
+    schema.validate_FunPDBe_entry(FunPDBe_1433_json)
     with open('14_3_3_Pred.json', 'w') as output:
-        json.dump(FunPDBe_json, output, indent=4, sort_keys=True)
-    pprint(FunPDBe_json)
+        json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
+    pprint(FunPDBe_1433_json)
 
