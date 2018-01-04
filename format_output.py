@@ -175,6 +175,43 @@ def format_1433_pdb(source_mmcif, prediction_result_file):
     return FunPDBe_json
 
 
+def parse_nod_results(prediction_results_file):
+    with open(prediction_results_file) as results:
+        nods_sections = ['scores', 'segments', 'positions', 'number', 'sequence', 'fasta_header']
+        fasta_lines = []
+        nols_residue_scores = []
+        for line in results:
+            line = line.strip()
+            # Sequence
+            if nods_sections[-1] == 'fasta_header' and line.startswith('>'):
+                fasta_lines.append(line)
+                nods_sections.pop()
+            elif nods_sections[-1] == 'sequence' and line[:1].isalpha() and not line.startswith('NOLS_segment_number'):
+                fasta_lines.append(line)
+            # Number
+            elif nods_sections[-1] == 'sequence' and line.startswith('NOLS_segment_number'):
+                nods_sections.pop()
+            # elif nods_sections[-1] == 'number' and line.startswith('NOLS_segment_number'):
+                n_nols_seqments = int(line.split(' ')[-1])
+                nods_sections.pop()
+            # Positions
+            elif nods_sections[-1] == 'positions' and line.startswith('NOLS_segments_positions'):
+                nols_site_ranges = ''.join(line.split(' ')[1:]).split(',')
+                nods_sections.pop()
+            # Segments
+            elif nods_sections[-1] == 'segments' and line.startswith('NOLS_segments'):
+                nols_segments = ''.join(line.split(' ')[1:]).split(',')
+                nods_sections.pop()
+            elif nods_sections[-1] == 'scores' and line[:1] in ['0', '1']:
+                nols_residue_scores.append(float(line))
+            elif line == '':
+                continue
+            else:
+                raise ValueError('Could not parse NOD results file.')
+
+    return fasta_lines, str(n_nols_seqments), nols_site_ranges, nols_segments, nols_residue_scores
+
+
 if __name__ == '__main__':
     # Load mmcif
     mmcif = read_mmcif_chain('3tpp', 'A')
