@@ -175,7 +175,8 @@ def format_1433_pdb(source_mmcif, prediction_result_file):
     return FunPDBe_json
 
 
-def parse_nod_results(prediction_results_file):
+def parse_nod_results(source_mmcif, prediction_results_file):
+    # parse NOD results file
     with open(prediction_results_file) as results:
         nods_sections = ['scores', 'segments', 'positions', 'number', 'sequence', 'fasta_header']
         fasta_lines = []
@@ -209,16 +210,24 @@ def parse_nod_results(prediction_results_file):
             else:
                 raise ValueError('Could not parse NOD results file.')
 
+    # Process NOLS sites
+    for site_range, site_sequence in zip(nols_site_ranges, nols_segments):
+        start, end = [int(x) for x in site_range.split('-')]
+        site_mmcif_start, site_mmcif_end = start-1, end-1
+        site_mmcif = source_mmcif.iloc[site_mmcif_start:site_mmcif_end+1]
+        site_mmcif_seq = get_sequence(site_mmcif)
+        assert site_sequence == site_mmcif_seq
+
     return fasta_lines, str(n_nols_seqments), nols_site_ranges, nols_segments, nols_residue_scores
 
 
 if __name__ == '__main__':
-    # Load mmcif
+    # Format 1433 example
     mmcif = read_mmcif_chain('3tpp', 'A')
     one433_result_file = './data/output/1433pred/3tpp_A.json'
-
     FunPDBe_1433_json = format_1433_pdb(mmcif, one433_result_file)
 
+    # Validate and save 1433 example
     schema.validate_FunPDBe_entry(FunPDBe_1433_json)
     with open('14_3_3_Pred.json', 'w') as output:
         json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
