@@ -309,5 +309,10 @@ if __name__ == '__main__':
     schema.validate_FunPDBe_entry(FunPDBe_1433_json)
     with open('14_3_3_Pred.json', 'w') as output:
         json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
-    pprint(FunPDBe_1433_json)
 
+    # Format NOD example
+    mmcif = read_mmcif_chain('4oqb', 'A')
+    r = parse_nod_results(mmcif, 'data/output/NOD/4oqb_A.nod')
+    # schema.validate_FunPDBe_entry(r)
+    with open('NOD_example.json', 'w') as output:
+        json.dump(r, output, indent=4, sort_keys=True)
