@@ -69,6 +69,32 @@ def prepare_chain_entry(chain_id, pdb_res_label, aa_type, site_id_ref, value, co
     return d
 
 
+def create_site_json(site_id, label_id_ref, source_id_ref, additional_site_annotations={}):
+    """
+    Create a FunPDBe site entry.
+
+    :param site_id:
+    :param label_id_ref:
+    :param source_id_ref:
+    :param additional_site_annotations:
+    :return:
+    """
+    sites_component = {
+        "sites": [
+            {
+                "site_id": site_id,
+                "label_id_ref": label_id_ref,
+                "evidence": {
+                    "source_id_ref": source_id_ref,
+                    "source_accession": ""
+                },
+                "additional_site_annotations": additional_site_annotations
+            }
+        ]
+    }
+    return sites_component
+
+
 def format_1433_site(site, mmcif_table):
     """
 
@@ -128,19 +154,11 @@ def format_1433_site(site, mmcif_table):
         'prediction': '14-3-3 protein_binding_site' if predicted_1433 else 'not_candidate_site',
     }
     additional_site_annotations.update({k: float(v) for k, v in site.items() if k in ['SVM', 'ANN', 'PSSM']})
-    d.update({
-        "sites": [
-            {
-                "site_id": site_mmcif_index,  # or increment from 1...
-                "label_id_ref": 1 if predicted_1433 else 2,
-                "evidence": {
-                    "source_id_ref": 1,  # TODO: Not meaningful just now
-                    "source_accession": ""
-                },
-                "additional_site_annotations": additional_site_annotations
-            }
-        ]
-    })
+    label_id_ref = 1 if predicted_1433 else 2
+    site_id = site_mmcif_index  # or increment from 1...
+    source_id_ref = 1  # TODO: Not meaningful just now
+    sites_component = create_site_json(site_id, label_id_ref, source_id_ref, additional_site_annotations)
+    d.update(sites_component)
 
     return d
 
