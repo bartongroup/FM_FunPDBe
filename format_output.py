@@ -206,6 +206,17 @@ def format_1433_pdb(source_mmcif, prediction_result_file):
 
 
 def parse_nod_results(source_mmcif, prediction_results_file):
+
+    def parse_segment_to_FunPDBe_chain_json(site_id_ref, mmcif_series):
+        chain_id = mmcif_series['label_asym_id']
+        pdb_res_label = mmcif_series['pdbe_label_seq_id']
+        aa_type = mmcif_series['label_comp_id']
+        value = 0.5
+        confidence = 1
+        classification = 'reliable'  # TODO: Make this reflect confidence in some way
+        d = prepare_chain_entry(chain_id, pdb_res_label, aa_type, site_id_ref, value, confidence, classification)
+        return d
+
     # parse NOD results file
     with open(prediction_results_file) as results:
         nods_sections = ['scores', 'segments', 'positions', 'number', 'sequence', 'fasta_header']
@@ -241,14 +252,24 @@ def parse_nod_results(source_mmcif, prediction_results_file):
                 raise ValueError('Could not parse NOD results file.')
 
     # Process NOLS sites
-    for site_range, site_sequence in zip(nols_site_ranges, nols_segments):
+    for site_id_ref, (site_range, site_sequence) in enumerate(zip(nols_site_ranges, nols_segments)):
         start, end = [int(x) for x in site_range.split('-')]
         site_mmcif_start, site_mmcif_end = start-1, end-1
         site_mmcif = source_mmcif.iloc[site_mmcif_start:site_mmcif_end+1]
         site_mmcif_seq = get_sequence(site_mmcif)
         assert site_sequence == site_mmcif_seq
 
-    return fasta_lines, str(n_nols_seqments), nols_site_ranges, nols_segments, nols_residue_scores
+        residue_entries = []
+        for mmcif_index in range(site_mmcif_start, site_mmcif_end + 1):
+            # Format site and mmcif data to FunPDBe
+            mmcif_series = source_mmcif.iloc[mmcif_index]
+            d = parse_segment_to_FunPDBe_chain_json(site_id_ref, mmcif_series)
+            residue_entries.append(d)
+
+        # Merge chain level JSONs respecting FunPDBe schema
+        d = functools.reduce(schema.FunPDBe_merger.merge, residue_entries)
+
+    return d
 
 
 if __name__ == '__main__':
