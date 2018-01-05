@@ -24,6 +24,51 @@ def read_mmcif_chain(pdb, chain):
     return mmcif
 
 
+def prepare_chain_entry(chain_id, pdb_res_label, aa_type, site_id_ref, value, confidence, classification,
+                        additional_chain_annotations={}, additional_residue_annotations={},
+                        additional_site_data_annotations={}):
+    """
+    Create a FunPDBe formatted chain/residue/site_data entry.
+
+    :param chain_id:
+    :param pdb_res_label:
+    :param aa_type:
+    :param site_id_ref:
+    :param value:
+    :param confidence:
+    :param classification:
+    :param additional_chain_annotations:
+    :param additional_residue_annotations:
+    :param additional_site_data_annotations:
+    :return:
+    """
+    d = {
+        "chains": [
+            {
+                "chain_id": chain_id,
+                "additional_chain_annotations": additional_chain_annotations,
+                "residues": [
+                    {
+                        "pdb_res_label": pdb_res_label,  # Make sure is str
+                        "aa_type": aa_type,
+                        "additional_residue_annotations": additional_residue_annotations,
+                        "site_data": [
+                            {
+                                "site_id_ref": site_id_ref,
+                                "value": value,
+                                "confidence": confidence,
+                                "classification": classification,
+                                "additional_site_data_annotations": additional_site_data_annotations
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+    }
+    return d
+
+
 def format_1433_site(site, mmcif_table):
     """
 
@@ -39,37 +84,22 @@ def format_1433_site(site, mmcif_table):
         # Should normalise negative and positive predictions for min:cutoff and cutoff:max
         # Should confidence account for pSer/Thr too?
         predicted_1433 = float(site['Consensus']) > cutoffs['Consensus']
+        chain_id = mmcif_series['label_asym_id']
+        pdb_res_label = mmcif_series['pdbe_label_seq_id']
+        aa_type = mmcif_series['label_comp_id']
+        site_id_ref = site_mmcif_index  # or increment from 1...
+        value = float(site['Consensus'])
+        confidence = 1 if predicted_1433 else 0  # TODO: will get model ranges and can make 0-1
+        classification = 'reliable'  # TODO: Make this reflect confidence in some way
         additional_residue_annotations = {}
         if site_mmcif_index == mmcif_index:  # Add phosphorylation status for S/T
             additional_residue_annotations.update({"pSer/Thr": site['pSer/Thr']})
-        d = {
-            "chains": [
-                {
-                    "chain_id": mmcif_series['label_asym_id'],
-                    "additional_chain_annotations": {},
-                    "residues": [
-                        {
-                            "pdb_res_label": mmcif_series['pdbe_label_seq_id'],  # Make sure is str
-                            "aa_type": mmcif_series['label_comp_id'],
-                            "additional_residue_annotations": additional_residue_annotations,
-                            "site_data": [
-                                {
-                                    "site_id_ref": site_mmcif_index,  # or increment from 1...
-                                    "value": float(site['Consensus']),
-                                    "confidence": 1 if predicted_1433 else 0,  # TODO: will get model ranges and can make 0-1
-                                    "classification": 'reliable',  # TODO: Make this reflect confidence in some way
-                                    "additional_site_data_annotations": {
-                                        'motif_position': mmcif_index - site_mmcif_index
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-        }
+        additional_site_data_annotations = {'motif_position': mmcif_index - site_mmcif_index}
+        d = prepare_chain_entry(chain_id, pdb_res_label, aa_type, site_id_ref, value, confidence, classification,
+                                additional_residue_annotations=additional_residue_annotations,
+                                additional_site_data_annotations=additional_site_data_annotations)
         return d, predicted_1433
-    
+
     cutoffs = {'Consensus': 0.50, 'SVM': 0.25, 'PSSM': 0.80, 'ANN': 0.55}
     min_max = {'ANN': [0, 1], 'SVM': [-1, 1]}
 
