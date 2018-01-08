@@ -272,6 +272,7 @@ def parse_nod_results(pdb_id, chain_id, prediction_results_file):
                 raise ValueError('Could not parse NOD results file.')
 
     # Process NOLS sites
+    merged_sites_json = {}
     for site_id, (site_range, site_sequence) in enumerate(zip(nols_site_ranges, nols_segments)):
         start, end = [int(x) for x in site_range.split('-')]
         site_mmcif_start, site_mmcif_end = start-1, end-1
@@ -280,15 +281,14 @@ def parse_nod_results(pdb_id, chain_id, prediction_results_file):
         assert site_sequence == site_mmcif_seq
 
         # Add residue entries
-        residue_entries = []
         for mmcif_index in range(site_mmcif_start, site_mmcif_end + 1):
             # Format site and mmcif data to FunPDBe
             mmcif_series = source_mmcif.iloc[mmcif_index]
             d = parse_segment_to_FunPDBe_chain_json(site_id, 1, mmcif_series)
-            residue_entries.append(d)
+            merged_sites_json = schema.FunPDBe_merger.merge(merged_sites_json, d)
 
-        # Merge chain level JSONs respecting FunPDBe schema
-        d = functools.reduce(schema.FunPDBe_merger.merge, residue_entries)
+        # # Merge chain level JSONs respecting FunPDBe schema
+        # merged_sites_json = functools.reduce(schema.FunPDBe_merger.merge, residue_entries)
 
         # Add 'site' level annotation
         label_id_ref = 1
@@ -297,9 +297,9 @@ def parse_nod_results(pdb_id, chain_id, prediction_results_file):
             'segment': site_sequence,
         }
         sites_component = create_site_json(site_id, label_id_ref, source_id_ref, additional_site_annotations)
-        d = schema.FunPDBe_merger.merge(d, sites_component)
+        merged_sites_json = schema.FunPDBe_merger.merge(merged_sites_json, sites_component)
 
-    return d
+    return FunPDBe_json
 
 
 if __name__ == '__main__':
