@@ -299,6 +299,40 @@ def parse_nod_results(pdb_id, chain_id, prediction_results_file):
         sites_component = create_site_json(site_id, label_id_ref, source_id_ref, additional_site_annotations)
         merged_sites_json = schema.FunPDBe_merger.merge(merged_sites_json, sites_component)
 
+
+    # Fill top level FunPDBe JSON fields:
+    top_level_json = schema.resource_header('NOD',
+                                            software_version='',
+                                            resource_entry_url='http://www.compbio.dundee.ac.uk/nod/')
+    top_level_json.update(pdb_id=pdb_id)
+    top_level_json.update(chains=[{'chain_id': chain_id, 'additional_chain_annotations': {}, 'residues': []}])
+    # Release date
+    struct_time = localtime(os.path.getmtime(prediction_results_file))
+    date_string = '/'.join([str(getattr(struct_time, attr)) for attr in ('tm_mday', 'tm_mon', 'tm_year')])
+    top_level_json.update(release_date=date_string)
+    # 'labels' (referenced to 'sites')
+    top_level_json.update(labels=[{'label_id': 1, 'label_text': 'predicted nucleolar localization sequence'}])
+    # Other
+    source_datasets = [
+        {
+            "source_id": 1,
+            "source_release_date": "10/2017",
+            "source_db": "PDB"
+        },
+        {
+            "source_id": 2,
+            "source_release_date": "2011",
+            "source_db": "NOD Dataset",
+            "source_publication_doi": "10.1186/1471-2105-12-317"
+        }
+
+    ]
+    eco_terms = ["sequence_similarity_evidence_used_in_automatic_assertion"]
+    top_level_json.update(additional_entry_annotations={}, evidence_code_ontology=eco_terms,
+                          source_datasets=source_datasets, sites=[])
+    # Merge site and top level annotations
+    FunPDBe_json = schema.FunPDBe_merger.merge(top_level_json, merged_sites_json)
+
     return FunPDBe_json
 
 
