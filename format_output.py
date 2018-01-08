@@ -223,7 +223,7 @@ def format_1433_pdb(source_mmcif, prediction_result_file):
     return FunPDBe_json
 
 
-def parse_nod_results(source_mmcif, prediction_results_file):
+def parse_nod_results(pdb_id, chain_id, prediction_results_file):
 
     def parse_segment_to_FunPDBe_chain_json(site_id_ref, value,  mmcif_series):
         chain_id = mmcif_series['label_asym_id']
@@ -233,6 +233,9 @@ def parse_nod_results(source_mmcif, prediction_results_file):
         classification = 'reliable'  # TODO: Make this reflect confidence in some way
         d = prepare_chain_entry(chain_id, pdb_res_label, aa_type, site_id_ref, value, confidence, classification)
         return d
+
+    # Read mmcif
+    source_mmcif = read_mmcif_chain(pdb_id, chain_id)
 
     # parse NOD results file
     with open(prediction_results_file) as results:
@@ -311,8 +314,7 @@ if __name__ == '__main__':
         json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
 
     # Format NOD example
-    mmcif = read_mmcif_chain('4oqb', 'A')
-    r = parse_nod_results(mmcif, 'data/output/NOD/4oqb_A.nod')
-    # schema.validate_FunPDBe_entry(r)
+    r = parse_nod_results('3k2o', 'A', 'data/output/NOD/3k2o_A.nod')
+    schema.validate_FunPDBe_entry(r)
     with open('NOD_example.json', 'w') as output:
         json.dump(r, output, indent=4, sort_keys=True)
