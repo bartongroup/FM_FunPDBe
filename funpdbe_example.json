@@ -4,13 +4,6 @@
   "software_version": "1.0.0",
   "resource_entry_url": "https://partnerdb.org/0001",
   "release_date": "10/10/2010",
-  "source_datasets": [
-    {
-      "source_id": 1,
-      "source_release_date": "10/10/2010",
-      "source_db": "PDB"
-    }
-  ],
   "pdb_id": "1ABC",
   "chains": [
     {
@@ -36,20 +29,13 @@
   "sites": [
     {
       "site_id": 1,
-      "label_id_ref": 1,
-      "evidence": {
-        "source_id_ref": 1,
-        "source_accession": ""
-      }
+      "label": "ligand_binding_site",
+      "source_db": "pdb",
+      "source_accession": "1abc",
+      "source_release_date": "01/01/2017"
     }
   ],
   "additional_entry_annotations": {},
-  "labels": [
-    {
-      "label_id": 1,
-      "label_text": "ligand_binding_site"
-    }
-  ],
   "evidence_code_ontology": [
     "manually_curated"
   ]

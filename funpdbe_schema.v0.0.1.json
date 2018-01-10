@@ -29,28 +29,6 @@
       "description": "Release date of the annotation"
     },
 
-    "source_datasets": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "source_id": {
-            "type": "integer",
-            "description": "Unique identifier of source"
-          },
-          "source_release_date": {
-            "type": "string",
-            "description": "Date of acquiring data from source"
-          },
-          "source_db": {
-            "type": "string",
-            "description": "Name of the source database"
-          }
-        },
-        "required": ["source_id", "source_db"]
-      }
-    },
-
     "pdb_id": {
       "type": "string",
       "description": "PDB identifier"
@@ -128,50 +106,28 @@
               "type": "integer",
               "description": "Site identifier"
             },
-            "label_id_ref": {
-              "type": "integer",
-              "description": "Reference to label"
+            "label": {
+              "type": "string",
+              "description": "Site label"
             },
-            "evidence": {
-              "type": "object",
-              "properties": {
-                "source_id_ref": {
-                  "type": "integer",
-                  "description": "Referencing source identifier"
-                },
-                "source_accession": {
-                  "type": "string",
-                  "description": "Accession identifier"
-                }
-              },
-              "required": ["source_id_ref", "source_accession"]
+            "source_db": {
+            "type": "string",
+            "description": "Name of the source database"
+            },
+            "source_accession": {
+              "type": "string",
+              "description": "Accession identifier"
+            },
+            "source_release_date": {
+            "type": "string",
+            "description": "Date of acquiring data from source"
             }
           },
-          "required": ["site_id", "label_id_ref"]
+          "required": ["site_id", "label", "source_db", "source_accession"]
         },
         "minItems": 1,
         "uniqueItems": true
       },
-
-    "labels": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "label_id": {
-            "type": "integer",
-            "description": "Label identifier"
-          },
-          "label_text": {
-            "type": "string",
-            "description": "Label description, sequence feature ontology (SFO) term"
-          }
-        },
-        "required": ["label_id", "label_text"]
-      },
-      "minItems": 1,
-      "uniqueItems": true
-    },
 
     "evidence_code_ontology": {
       "type": "array",
@@ -183,5 +139,5 @@
     }
   },
 
-  "required": ["data_resource", "release_date", "pdb_id", "chains", "sites", "labels", "source_datasets"]
+  "required": ["data_resource", "release_date", "pdb_id", "chains", "sites"]
 }
