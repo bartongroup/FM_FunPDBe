@@ -37,6 +37,8 @@
   ],
   "additional_entry_annotations": {},
   "evidence_code_ontology": [
-    "manually_curated"
+    {
+      "eco_term": "manually_curated"
+    }
   ]
 }

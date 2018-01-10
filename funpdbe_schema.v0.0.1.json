@@ -132,8 +132,14 @@
     "evidence_code_ontology": {
       "type": "array",
       "items": {
-        "type": "string",
-        "description": "Evidence Code Ontology (ECO) term - http://www.evidenceontology.org/"
+        "type": "object",
+        "properties": {
+          "eco_term": {
+            "type": "string",
+            "description": "Evidence Code Ontology (ECO) term - http://www.evidenceontology.org/"
+          }
+        },
+        "required": ["eco_term"]
       },
       "uniqueItems": true
     }
