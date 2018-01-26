@@ -13,6 +13,10 @@ Author: Mihaly Varadi
 
 
 class User(object):
+    """
+    User object to handle prompts if no user name
+    or password were provided when running the Client()
+    """
 
     def __init__(self, user=None, pwd=None):
         self.user_name = user
