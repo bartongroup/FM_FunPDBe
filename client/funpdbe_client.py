@@ -62,12 +62,6 @@ class Client(object):
     def delete_one(self):
         pass
 
-
-
-# c = Client()
-# c.get_all()
-
-
 """
 user calls python funpdbe_client.py
 optionally with user name and password
