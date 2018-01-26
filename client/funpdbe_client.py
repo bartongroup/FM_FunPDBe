@@ -22,9 +22,11 @@ class User(object):
         self.user_name = user
         self.user_pwd = pwd
         if not self.user_name:
-            self.user_name = self.set_user()
+            while not self.user_name:
+                self.user_name = self.set_user()
         if not self.user_pwd:
-            self.user_pwd = self.set_pwd()
+            while not self.user_pwd:
+                self.user_pwd = self.set_pwd()
 
     @staticmethod
     def set_user():
