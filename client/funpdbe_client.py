@@ -48,14 +48,30 @@ class Api(object):
 class Client(object):
 
     def __init__(self, user=None, pwd=None):
+        self.welcome()
         self.user = User(user, pwd)
         self.api = Api()
 
-    def get_one(self, pdb_id):
-        pass
+    def welcome(self):
+        print("\n####################################\n")
+        print("Welcome to FunPDBe deposition client\n")
+        print("####################################\n")
 
-    def get_all(self):
-        r = requests.get(self.api.entries_url, auth=(self.user.user_name, self.user.user_pwd))
+    def get_one(self, pdb_id, resource=None):
+        url = self.api.entries_url
+        if resource:
+            url += "resource/%s/" % resource
+        else:
+            url += "pdb/"
+        url += "%s/" % pdb_id
+        r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
+        print(r.text)
+
+    def get_all(self, resource=None):
+        url = self.api.entries_url
+        if resource:
+            url += "resource/%s/" % resource
+        r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         print(r.text)
 
     def post_one(self, json_data):
@@ -87,12 +103,14 @@ def main():
     pwd = None
     mode = None
     pdbid = None
+    resource = None
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:h", [
+        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:h", [
             "user=",
             "pwd=",
             "mode=",
-            "pdbid="
+            "pdbid=",
+            "resource=",
             "help"])
     except getopt.GetoptError as err:
         print("Error: %s" % err)
@@ -107,6 +125,8 @@ def main():
                 mode = value
         elif option in ["-i", "--pdbid"]:
             pdbid = value
+        elif option in ["-r", "--resource"]:
+            resource = value
         elif option in ["-h", "--help"]:
             # TODO
             pass
@@ -114,10 +134,11 @@ def main():
             assert False, "unhandled option"
 
     if mode == "get":
-        # TODO reverse the logic
-        if not pdbid:
-            c = Client(user=user, pwd=pwd)
-            c.get_all()
+        c = Client(user=user, pwd=pwd)
+        if pdbid:
+            c.get_one(pdbid, resource)
+        else:
+            c.get_all(resource)
 
 if __name__ == "__main__":
     main()
