@@ -77,26 +77,11 @@ class Client(object):
     def post_one(self, json_data):
         pass
 
-    def delete_one(self):
-        pass
+    def delete_one(self, pdb_id):
+        url = '%spdb/%s' % (self.api.entries_url, pdb_id)
+        r = requests.delete(url, auth=(self.user.user_name, self.user.user_pwd))
+        print(r.text)
 
-"""
-user calls python funpdbe_client.py
-optionally with user name and password
-
-if no user name and password, then the first thing after welcome message is prompt for
-user name and password
-
-after that, options can be chosen:
-* get all your entries ()
-* get one entry by pdb_id (arg: pdb_id)
-* delete one entry (arg: pdb_id)
-* post one entry (arg: path)
-* batch post (arg: path)
-* exit ()
-
-need to have validation against schema when posting
-"""
 
 def main():
     user = None
@@ -133,12 +118,18 @@ def main():
         else:
             assert False, "unhandled option"
 
+    c = Client(user=user, pwd=pwd)
     if mode == "get":
-        c = Client(user=user, pwd=pwd)
         if pdbid:
             c.get_one(pdbid, resource)
         else:
             c.get_all(resource)
+    elif mode == "delete":
+        if not pdbid:
+            while not pdbid:
+                pdbid = input("pdb id to delete: ")
+        c.delete_one(pdbid)
+
 
 if __name__ == "__main__":
     main()
