@@ -111,7 +111,7 @@
               "type": "string",
               "description": "Site label"
             },
-            "source_db": {
+            "source_database": {
             "type": "string",
             "description": "Name of the source database"
             },
@@ -124,7 +124,7 @@
             "description": "Date of acquiring data from source"
             }
           },
-          "required": ["site_id", "label", "source_db", "source_accession"]
+          "required": ["site_id", "label", "source_database", "source_accession"]
         },
         "minItems": 1,
         "uniqueItems": true
