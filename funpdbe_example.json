@@ -7,7 +7,7 @@
   "pdb_id": "1ABC",
   "chains": [
     {
-      "chain_id": "A",
+      "chain_label": "A",
       "additional_chain_annotations": {},
       "residues": [
         {

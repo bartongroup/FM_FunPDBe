@@ -40,7 +40,7 @@
           "items": {
             "type": "object",
             "properties": {
-              "chain_id": {
+              "chain_label": {
                 "type": "string",
                 "description": "PDB chain identifier"
               },
@@ -92,7 +92,7 @@
                 "minItems": 1
               }
             },
-            "required": ["chain_id", "residues"]
+            "required": ["chain_label", "residues"]
           },
           "minItems": 1,
           "uniqueItems": true
