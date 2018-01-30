@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "FunPDBeSchema",
+  "$id": "https://github.com/funpdbe-consortium/funpdbe_schema/blob/master/funpdbe_schema.v0.0.1.json",
+  "title": "funpdbe_schema",
   "type": "object",
   "properties": {
 
