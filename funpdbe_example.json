@@ -17,8 +17,8 @@
           "site_data": [
             {
               "site_id_ref": 1,
-              "value": 0.7,
-              "confidence": 0.9,
+              "raw_score": 0.7,
+              "confidence_score": 0.9,
               "classification": "reliable"
             }
           ]
@@ -38,7 +38,8 @@
   "additional_entry_annotations": {},
   "evidence_code_ontology": [
     {
-      "eco_term": "manually_curated"
+      "eco_term": "manually_curated",
+      "eco_code": "ECO:0000246"
     }
   ]
 }
