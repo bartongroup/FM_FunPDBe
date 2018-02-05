@@ -4,7 +4,7 @@
   "software_version": "1.0.0",
   "resource_entry_url": "https://partnerdb.org/0001",
   "release_date": "10/10/2010",
-  "pdb_id": "1ABC",
+  "pdb_id": "1abc",
   "chains": [
     {
       "chain_label": "A",
