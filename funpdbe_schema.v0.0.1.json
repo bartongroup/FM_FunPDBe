@@ -55,7 +55,7 @@
                     },
                     "aa_type": {
                       "type": "string",
-                      "description": "One letter amino acid code"
+                      "description": "Three-letter amino acid code"
                     },
                     "site_data": {
                       "type": "array",
@@ -68,9 +68,7 @@
                           },
                           "raw_score":{
                             "type": "number",
-                            "description": "Raw calculated score (0-1)",
-                            "minimum": 0.0,
-                            "maximum": 1.0
+                            "description": "Raw calculated score (0-1)"
                           },
                           "confidence_score": {
                             "type": "number",
@@ -78,7 +76,7 @@
                             "minimum": 0.0,
                             "maximum": 1.0
                           },
-                          "classification": {
+                          "confidence_classification": {
                             "type": "string",
                             "description": "Confidence classification of the residue"
                           }
