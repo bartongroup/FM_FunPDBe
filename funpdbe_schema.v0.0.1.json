@@ -66,13 +66,15 @@
                             "type": "integer",
                             "description": "Reference to site_id"
                           },
-                          "value":{
+                          "raw_score":{
                             "type": "number",
-                            "description": "Raw calculated score/value"
+                            "description": "Raw calculated score (0-1)",
+                            "minimum": 0.0,
+                            "maximum": 1.0
                           },
-                          "confidence": {
+                          "confidence_score": {
                             "type": "number",
-                            "description": "Confidence level of the annotation",
+                            "description": "Confidence level of the annotation (0-1)",
                             "minimum": 0.0,
                             "maximum": 1.0
                           },
@@ -138,6 +140,10 @@
           "eco_term": {
             "type": "string",
             "description": "Evidence Code Ontology (ECO) term - http://www.evidenceontology.org/"
+          },
+          "eco_code": {
+            "type": "string",
+            "description": "Evidence Code Ontology (ECO) code - http://www.evidenceontology.org/"
           }
         },
         "required": ["eco_term"]
