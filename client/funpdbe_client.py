@@ -20,12 +20,6 @@ import sys
 import json
 import jsonschema
 
-"""
-FunPDBe Deposition Client
-Created on 16th January 2018
-Author: Mihaly Varadi
-"""
-
 
 class Schema(object):
 
