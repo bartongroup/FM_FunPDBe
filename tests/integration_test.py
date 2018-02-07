@@ -3,6 +3,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from client.funpdbe_client import *
 
+
 def integration_test():
     """
     Integration test of all the calls
@@ -196,6 +197,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger(__name__)
     if integration_test():
-        print("Passed all tests")
+        print("\n\nPASSED ALL TESTS")
     else:
-        print("Some tests failed")
+        print("\n\nSOME TESTS FAILED (SEE ABOVE)")
