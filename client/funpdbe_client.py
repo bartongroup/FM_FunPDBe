@@ -21,8 +21,11 @@ import json
 import jsonschema
 import logging
 import re
+import glob
+
 
 RESOURCES = ("funsites", "3dligandsite", "nod", "popscomp", "14-3-3-pred", "dynamine", "cansar", "credo")
+PDB_ID_PATTERN = "[0-9][a-z][a-z0-9]{2}"
 
 
 class Schema(object):
@@ -55,8 +58,6 @@ class Schema(object):
         :return: True if JSON is valid, False is invalid or other problems
         """
         logging.debug("Validating JSON")
-        print(self.json_schema)
-        print(json_data)
         if not self.json_schema or not json_data:
             return False
         validation = jsonschema.validate(json_data, self.json_schema)
@@ -262,6 +263,7 @@ def main():
     resource = None
     path = None
     debug = False
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:hd", [
             "user=",
@@ -275,6 +277,7 @@ def main():
     except getopt.GetoptError as err:
         print("Error: %s" % err)
         sys.exit(2)
+
     for option, value in opts:
         if option in ["-u", "--user"]:
             user = value
@@ -284,7 +287,7 @@ def main():
             if value in ("get", "post", "delete"):
                 mode = value
         elif option in ["-i", "--pdbid"]:
-            if re.match("[0-9][a-z][a-z0-9]{2}", value):
+            if re.match(PDB_ID_PATTERN, value):
                 pdbid = value
             else:
                 logging.warning("Invalid PDB id format")
@@ -333,8 +336,11 @@ def main():
                 if c.validate_json():
                     c.post(resource)
         else:
-            # TODO process all .json files in path (use glob)
-            pass
+            for json_path in glob.glob("%s/*.json" % path):
+                if c.parse_json(json_path):
+                    if c.validate_json():
+                        c.post(resource)
+
     elif mode == "delete":
         if not pdbid:
             while not pdbid:
