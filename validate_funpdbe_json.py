@@ -10,4 +10,7 @@ with open("funpdbe_example.json") as example_file:
 # print(funpdbe_schema)
 # print(funpdbe_example)
 
-print(jsonschema.validate(funpdbe_example, funpdbe_schema))
+try:
+    print(jsonschema.validate(funpdbe_example, funpdbe_schema))
+except jsonschema.exceptions.ValidationError as valerr:
+    print(valerr)
