@@ -93,7 +93,7 @@ def integration_test():
     c.user.user_name = "test"
     c.json_data = ""
     bad_post = c.post("funsites")
-    if bad_post.status_code == 500:
+    if bad_post.status_code == 400:
         logging.info("PASS: bad JSON caught")
     else:
         logging.error("FAIL: bad data went through")
@@ -117,7 +117,7 @@ def integration_test():
 
     # Test GET one by PDB id not existing
     get_one_pdb_none = c.get_one("invalid")
-    if get_one_pdb_none.status_code == 404:
+    if get_one_pdb_none.status_code == 400:
         logging.info("PASS: GET failed for non existing entry")
     else:
         logging.error("FAIL: should not GET what is not there")
@@ -149,7 +149,7 @@ def integration_test():
 
     # Test GET one by bad PDB or bad resource
     get_one_res_pdb_bad = c.get_one("foo", "bar")
-    if get_one_res_pdb_bad.status_code == 404:
+    if get_one_res_pdb_bad.status_code == 400:
         logging.info("PASS: GET one by PDB id and resource failed for bad data")
     else:
         logging.error("FAIL: GET one by PDB id and resource worked for bad data")
