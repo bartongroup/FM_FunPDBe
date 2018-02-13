@@ -121,7 +121,7 @@ Usage parameters:
 -h, --help:       Help (this is what you see now)
 -u, --user:       FunPDBe user name
 -p, --pwd:        FunPDBe password
--m, --mode:       Running mode (get, post, delete)
+-m, --mode:       Running mode (get, post, delete, put)
 -i, --pdbid:      PDB id of an entry
 -r, --resource:   Name of a resource
 -f, --path:       Path to JSON file (.json ending), or files (folder name)
@@ -133,19 +133,22 @@ Examples:
 ./funpdbe_client.py -user=username -pwd=password --mode=get
 
 2.) Listing entries for PDB id 1abc
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdbid=1abc
+./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc
 
 3.) Listing entries from funsites
 ./funpdbe_client.py -user=username -pwd=password --mode=get --resource=funsites
 
 4.) Listing entries for PDB id 1abc from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdbid=1abc --resource=funsites
+./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
 
 5.) Posting an entry to funsites
 ./funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
 
 6.) Deleting an entry (1abc) from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=delete --pdbid=1abc --resource=funsites
+./funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+
+7.) Updating an entry (1abc) from funsites
+./funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
 
 #########################################################################
         """
@@ -240,6 +243,18 @@ Examples:
         print(r.text)
         return r
 
+    def put(self, pdb_id, resource):
+        """
+        POST JSON to deposition API
+        :param resource: String, resource name
+        :return: None
+        """
+        url = self.API_URL
+        url += "resource/%s/%s/" % (resource, pdb_id)
+        r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
+        print(r.text)
+        return r
+
     def delete_one(self, pdb_id, resource):
         """
         DELETE entry based on PDB id
@@ -247,7 +262,6 @@ Examples:
         :param resource: String, resource name
         :return: none
         """
-        # url = '%spdb/%s' % (self.API_URL, pdb_id)
         url = self.API_URL
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.delete(url, auth=(self.user.user_name, self.user.user_pwd))
@@ -259,7 +273,7 @@ def main():
     user = None
     pwd = None
     mode = None
-    pdbid = None
+    pdb_id = None
     resource = None
     path = None
     debug = False
@@ -269,7 +283,7 @@ def main():
             "user=",
             "pwd=",
             "mode=",
-            "pdbid=",
+            "pdb_id=",
             "resource=",
             "path=",
             "help",
@@ -284,15 +298,15 @@ def main():
         elif option in ["-p", "--pwd"]:
             pwd = value
         elif option in ["-m", "--mode"]:
-            if value in ("get", "post", "delete"):
+            if value in ("get", "post", "delete", "put"):
                 mode = value
-        elif option in ["-i", "--pdbid"]:
+        elif option in ["-i", "--pdb_id"]:
             if re.match(PDB_ID_PATTERN, value):
-                pdbid = value
+                pdb_id = value
             else:
                 logging.warning("Invalid PDB id format")
-                while not pdbid:
-                    pdbid = input("valid pdb id (lower case): ")
+                while not pdb_id:
+                    pdb_id = input("valid pdb id (lower case): ")
         elif option in ["-r", "--resource"]:
             if value in RESOURCES:
                 resource = value
@@ -319,9 +333,10 @@ def main():
     c = Client(user=user, pwd=pwd)
     c.welcome()
     c.user_info()
+    print(mode)
     if mode == "get":
-        if pdbid:
-            c.get_one(pdbid, resource)
+        if pdb_id:
+            c.get_one(pdb_id, resource)
         else:
             c.get_all(resource)
     elif mode == "post":
@@ -341,14 +356,34 @@ def main():
                     if c.validate_json():
                         c.post(resource)
 
-    elif mode == "delete":
-        if not pdbid:
-            while not pdbid:
-                pdbid = input("pdb id to delete: ")
+    elif mode == "put":
+        if not path:
+            while not path:
+                path = input("path to json: ")
         if not resource:
             while not resource:
                 resource = input("resource name: ")
-        c.delete_one(pdbid, resource)
+        if not pdb_id:
+            while not pdb_id:
+                pdb_id = input("pdb id to update: ")
+        if path.endswith(".json"):
+            if c.parse_json(path):
+                if c.validate_json():
+                    c.put(pdb_id, resource)
+        else:
+            for json_path in glob.glob("%s/*.json" % path):
+                if c.parse_json(json_path):
+                    if c.validate_json():
+                        c.put(pdb_id, resource)
+
+    elif mode == "delete":
+        if not pdb_id:
+            while not pdb_id:
+                pdb_id = input("pdb id to delete: ")
+        if not resource:
+            while not resource:
+                resource = input("resource name: ")
+        c.delete_one(pdb_id, resource)
 
 
 if __name__ == "__main__":
