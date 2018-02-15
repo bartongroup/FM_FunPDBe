@@ -227,6 +227,7 @@ Examples:
         schema.get_schema()
         if schema.validate_json(self.json_data):
             logging.debug("JSON validated")
+            self.json_data["pdb_id"] = self.json_data["pdb_id"].lower()
             return True
         logging.warning("JSON invalid")
         return False
@@ -240,7 +241,10 @@ Examples:
         url = self.API_URL
         url += "resource/%s/" % resource
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        print(r.text)
+        if r.status_code != 201:
+            logging.error("Error:%i - %s" % (r.status_code, r.text))
+        else:
+            print("%i - created" % r.status_code)
         return r
 
     def put(self, pdb_id, resource):
@@ -252,7 +256,10 @@ Examples:
         url = self.API_URL
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        print(r.text)
+        if r.status_code != 201:
+            logging.error("Error:%i - %s" % (r.status_code, r.text))
+        else:
+            print("%i - created" % r.status_code)
         return r
 
     def delete_one(self, pdb_id, resource):
@@ -265,7 +272,7 @@ Examples:
         url = self.API_URL
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.delete(url, auth=(self.user.user_name, self.user.user_pwd))
-        print(r.text)
+        print(r.status_code)
         return r
 
 
@@ -333,7 +340,6 @@ def main():
     c = Client(user=user, pwd=pwd)
     c.welcome()
     c.user_info()
-    print(mode)
     if mode == "get":
         if pdb_id:
             c.get_one(pdb_id, resource)
