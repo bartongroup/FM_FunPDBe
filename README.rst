@@ -18,14 +18,14 @@ $ funpdbe_client.py --help
 
 Usage parameters:
 
--h, --help:       Help (this is what you see now)
--u, --user:       FunPDBe user name
--p, --pwd:        FunPDBe password
--m, --mode:       Running mode (get, post, delete, put)
--i, --pdbid:      PDB id of an entry
--r, --resource:   Name of a resource
--f, --path:       Path to JSON file (.json ending), or files (folder name)
--d, --debug:      Enable more detailed logging
+* -h, --help:       Help (this is what you see now)
+* -u, --user:       FunPDBe user name
+* -p, --pwd:        FunPDBe password
+* -m, --mode:       Running mode (get, post, delete, put)
+* -i, --pdbid:      PDB id of an entry
+* -r, --resource:   Name of a resource
+* -f, --path:       Path to JSON file (.json ending), or files (folder name)
+* -d, --debug:      Enable more detailed logging
 
 Examples:
 
