@@ -340,6 +340,14 @@ def main():
     c = Client(user=user, pwd=pwd)
     c.welcome()
     c.user_info()
+
+    # Ask user to give running mode if not already done so
+    if not mode:
+        while not mode:
+            mode_input = input("running mode: ")
+            if mode_input in ("get", "post", "put", "delete"):
+                mode = mode_input
+
     if mode == "get":
         if pdb_id:
             c.get_one(pdb_id, resource)
