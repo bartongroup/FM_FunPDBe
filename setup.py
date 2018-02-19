@@ -8,7 +8,7 @@ with open('LICENSE') as f:
 
 setup(
     name='funpdbe_client',
-    version='1.0.0',
+    version='1.1.1',
     description='Deposition client for FunPDBe',
     long_description=readme,
     author='Mihaly Varadi',
@@ -17,6 +17,10 @@ setup(
     license=license,
     packages=['funpdbe_client'],
     install_requires=[
-        'jsonschema'
-    ]
+        'jsonschema',
+        'requests'
+    ],
+    entry_points = {
+        'console_scripts': ['funpdbe-client=funpdbe_client.command_line:main']
+    }
 )
