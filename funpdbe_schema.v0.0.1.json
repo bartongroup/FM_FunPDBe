@@ -143,8 +143,7 @@
             "type": "string",
             "description": "Evidence Code Ontology (ECO) code - http://www.evidenceontology.org/"
           }
-        },
-        "required": ["eco_term"]
+        }
       },
       "uniqueItems": true
     }
