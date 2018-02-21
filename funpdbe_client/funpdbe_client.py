@@ -93,7 +93,8 @@ class Schema(object):
             logging.warning(validation)
             return False
 
-    def clean_json(self, json_data):
+    @staticmethod
+    def clean_json(json_data):
         json_copy = json_data
         for i in range(len(json_data["sites"])):
             json_copy["sites"][i]["source_database"] = json_data["sites"][i]["source_database"].lower()
@@ -207,6 +208,9 @@ Examples:
         self.schema = Schema()
         self.schema.get_schema()
 
+    def set_json_data(self, value):
+        self.json_data = value
+
     def get_one(self, pdb_id, resource=None):
         """
         Get one FunPDBe entry based on PDB id and
@@ -248,7 +252,7 @@ Examples:
         try:
             with open(path) as json_file:
                 try:
-                    self.json_data = json.load(json_file)
+                    self.set_json_data(json.load(json_file))
                     logging.debug("JSON parsed")
                     return True
                 except ValueError as valerr:
@@ -295,6 +299,8 @@ Examples:
     def put(self, path, pdb_id, resource):
         """
         POST JSON to deposition API
+        :param path: String, path to JSON file
+        :param pdb_id, String, PDB id
         :param resource: String, resource name
         :return: None
         """
@@ -416,24 +422,25 @@ def main():
         else:
             for json_path in glob.glob("%s/*.json" % path):
                 client.post(json_path, resource)
+                # Reset JSON data to None
+                client.set_json_data(None)
 
     elif mode == "put":
         # Set the JSON schema only once
         client.set_schema()
         if not path:
             while not path:
-                path = input("path to json: ")
+                path = input("path to json (../file.json): ")
         if not resource:
             while not resource:
                 resource = input("resource name: ")
         if not pdb_id:
             while not pdb_id:
                 pdb_id = input("pdb id to update: ")
-        if path.endswith(".json"):
-            client.put(path, pdb_id, resource)
-        else:
-            for json_path in glob.glob("%s/*.json" % path):
-                client.put(json_path, pdb_id, resource)
+        if not path.endswith(".json"):
+            while not path.endswith(".json"):
+                path = input("path to json (../file.json): ")
+        client.put(path, pdb_id, resource)
 
     elif mode == "delete":
         if not pdb_id:
