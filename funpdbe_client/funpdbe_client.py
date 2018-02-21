@@ -290,10 +290,9 @@ Examples:
         url = self.api_url
         url += "resource/%s/" % resource
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        if r.status_code != 201:
-            logging.error("Error:%i - %s" % (r.status_code, r.text))
-        else:
-            print("%i - created entry for %s from %s" % (r.status_code, resource, path))
+        check = self.put_or_post_check("put", r.status_code, r.text)
+        if check:
+            print("%s entry for %s from %s" % (check, resource, path))
         return r
 
     def put(self, path, pdb_id, resource):
@@ -311,11 +310,21 @@ Examples:
         url = self.api_url
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        if r.status_code != 201:
-            logging.error("Error:%i - %s" % (r.status_code, r.text))
-        else:
-            print("%i - updated %s from %s" % (r.status_code, pdb_id, resource))
+        check = self.put_or_post_check("put", r.status_code, r.text)
+        if check:
+            print("%s %s from %s" % (check, pdb_id, resource))
         return r
+
+    def put_or_post_check(self, mode, status_code, text):
+        messages = {
+            "post": "201 - created",
+            "put": "201 - updated"
+        }
+        if status_code != 201:
+            logging.error("Error: %i - %s" % (status_code, text))
+            return None
+        else:
+            return messages[mode]
 
     def delete_one(self, pdb_id, resource):
         """
