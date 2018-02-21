@@ -2,6 +2,8 @@
 FunPDBe Deposition Client
 =====
 
+[![Build Status](https://travis-ci.org/funpdbe-consortium/funpdbe-client.svg?branch=master)](https://travis-ci.org/funpdbe-consortium/funpdbe-client)
+
 This client can be used for depositing functional annotations to the FunPDBe deposition system.
 
 The FunPDBe project is described at: https://funpdbe.org
