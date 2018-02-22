@@ -59,8 +59,6 @@ Usage parameters:
 -f, --path:       Path to JSON file (.json ending), or files (folder name)
 -d, --debug:      Enable debug logging
 
-Examples:
-
 1.) Listing all entries
 ./funpdbe_client.py -user=username -pwd=password --mode=get
 
@@ -81,8 +79,6 @@ Examples:
 
 7.) Updating an entry (1abc) from funsites
 ./funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
-
-#########################################################################
         """
 
     def welcome(self):
