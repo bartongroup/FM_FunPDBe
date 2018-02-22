@@ -6,6 +6,6 @@ install:
   - pip install pytest-cov
   - pip install -r requirements.txt
 script:
-  - pytest funpdbe_client --cov=funpdbe_client
+  - pytest tests --cov=funpdbe_client
 after_success:
   - codecov
