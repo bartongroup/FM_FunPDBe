@@ -1,8 +1,8 @@
-import unittest
+from unittest import TestCase
 from funpdbe_client.schema import Schema
 
 
-class TestSchema(unittest.TestCase):
+class TestSchema(TestCase):
 
     def setUp(self):
         self.schema = Schema()

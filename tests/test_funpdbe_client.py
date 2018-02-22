@@ -11,43 +11,14 @@
 # language governing permissions and limitations under the
 # License.
 
-import unittest
-from funpdbe_client.funpdbe_client import Schema
-from funpdbe_client.funpdbe_client import User
+from unittest import TestCase
 from funpdbe_client.funpdbe_client import Client
 
 
-class TestSchema(unittest.TestCase):
-
-    def setUp(self):
-        self.schema = Schema()
-
-    def test_validate_json_with_missing_schema(self):
-        self.schema.json_schema = ""
-        self.assertFalse(self.schema.validate_json({"foo": "bar"}))
-
-    def test_validate_json_with_missing_data(self):
-        self.schema.json_schema = {"foo": "bar"}
-        self.assertFalse(self.schema.validate_json(None))
-
-    def test_validate_json(self):
-        self.schema.json_schema = {"foo": "bar"}
-        self.assertTrue(self.schema.validate_json({"foo": "bar"}))
 
 
-class TestUser(unittest.TestCase):
 
-    def setUp(self):
-        self.user = User("foo", "bar")
-
-    def test_setting_user_name(self):
-        self.assertIsNotNone(self.user.user_name)
-
-    def test_setting_password(self):
-        self.assertIsNotNone(self.user.user_pwd)
-
-
-class TestClient(unittest.TestCase):
+class TestClient(TestCase):
 
     def setUp(self):
         self.client = Client("user", "pwd")

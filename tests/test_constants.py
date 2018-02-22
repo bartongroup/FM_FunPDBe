@@ -1,8 +1,8 @@
-import unittest
+from unittest import TestCase
 from funpdbe_client.constants import Constants
 
 
-class TestConstants(unittest.TestCase):
+class TestConstants(TestCase):
 
     def setUp(self):
         self.constants = Constants()
