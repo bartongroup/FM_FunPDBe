@@ -46,27 +46,6 @@ Usage parameters:
 -r, --resource:   Name of a resource
 -f, --path:       Path to JSON file (.json ending), or files (folder name)
 -d, --debug:      Enable debug logging
-
-1.) Listing all entries
-./client.py -user=username -pwd=password --mode=get
-
-2.) Listing entries for PDB id 1abc
-./client.py -user=username -pwd=password --mode=get --pdb_id=1abc
-
-3.) Listing entries from funsites
-./client.py -user=username -pwd=password --mode=get --resource=funsites
-
-4.) Listing entries for PDB id 1abc from funsites
-./client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
-
-5.) Posting an entry to funsites
-./client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
-
-6.) Deleting an entry (1abc) from funsites
-./client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
-
-7.) Updating an entry (1abc) from funsites
-./client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
         """
 
     def get_one(self, pdb_id, resource=None):
