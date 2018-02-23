@@ -47,7 +47,8 @@ class MockSchema(object):
 
     @staticmethod
     def validate_json(data):
-        if data:
+        print(data)
+        if data == {"foo": "bar"}:
             return True
         return False
 
@@ -66,6 +67,28 @@ def mocked_requests_get(*args, **kwargs):
         return MockResponse({"pdb": "ok"}, 200)
     elif args[0].endswith("/"):
         return MockResponse({"pdb": "ok"}, 200)
+    return MockResponse(None, 404)
+
+
+def mocked_requests_post(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.text = "foo"
+            self.json_data = json_data
+            self.status_code = status_code
+    if args[0].endswith("foo/"):
+        return MockResponse({"bar": "ok"}, 201)
+    return MockResponse(None, 404)
+
+
+def mocked_requests_delete(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.text = "foo"
+            self.json_data = json_data
+            self.status_code = status_code
+    if args[0].endswith("/"):
+        return MockResponse({"foo": "bar"}, 301)
     return MockResponse(None, 404)
 
 
@@ -125,14 +148,59 @@ class TestClient(TestCase):
 
     def test_validate_json_no_schema(self):
         self.client.schema.json_schema = None
-        self.client.json_data = "foo"
+        self.client.json_data = {"foo": "bar"}
         self.assertTrue(self.client.validate_json())
 
     def test_validate_json_valid(self):
-        self.client.json_data = "foo"
+        self.client.json_data = {"foo": "bar"}
         self.assertTrue(self.client.validate_json())
 
     def test_validate_json_invalid(self):
         self.client.json_data = None
         self.assertFalse(self.client.validate_json())
 
+    def test_post_no_file(self):
+        self.assertIsNone(self.client.post(None, None))
+
+    def test_post_not_valid(self):
+        with open("tmp.json", "w") as tmp:
+            tmp.write('{"asd": "asd"}')
+        self.client.json_data = None
+        self.assertIsNone(self.client.post("tmp.json", None))
+        os.system("rm tmp.json")
+
+    @mock.patch('requests.post', side_effect=mocked_requests_post)
+    def test_post(self, mock):
+        with open("tmp.json", "w") as tmp:
+            tmp.write('{"foo": "bar"}')
+        call = self.client.post("tmp.json", "foo")
+        os.system("rm tmp.json")
+        self.assertEqual(call.status_code, 201)
+
+    @mock.patch('requests.post', side_effect=mocked_requests_post)
+    def test_put(self, mock):
+        with open("tmp.json", "w") as tmp:
+            tmp.write('{"foo": "bar"}')
+        call = self.client.put("tmp.json", "foo", "bar")
+        os.system("rm tmp.json")
+        self.assertEqual(call.status_code, 201)
+
+    def test_put_no_file(self):
+        self.assertIsNone(self.client.put(None, None, None))
+
+    def test_put_not_valid(self):
+        with open("tmp.json", "w") as tmp:
+            tmp.write('{"asd": "asd"}')
+        self.client.json_data = None
+        self.assertIsNone(self.client.put("tmp.json", None, None))
+        os.system("rm tmp.json")
+
+    def test_put_or_post_check(self):
+        self.assertIsNotNone(self.client.put_or_post_check("post", 201, "foo"))
+
+    def test_put_or_post_check_bad(self):
+        self.assertIsNone(self.client.put_or_post_check("post", 404, "foo"))
+
+    @mock.patch('requests.delete', side_effect=mocked_requests_delete)
+    def test_delete(self, mock):
+        self.assertEqual(self.client.delete_one("foo", "bar").status_code, 301)
