@@ -10,20 +10,26 @@ class User(object):
 
     def set_user(self):
         """
-        Get user name from user
-        :return: String, user name
+        Set user name
         """
-        if not self.user_name:
-            while not self.user_name:
-                self.user_name = input("funpdbe user name: ")
-        return self.user_name
+        self.user_name = self.set_attribute(self.user_name, "funpdbe user name: ")
 
     def set_pwd(self):
         """
-        Get user password from user
-        :return: String, user password
+        Set password
         """
-        if not self.user_pwd:
-            while not self.user_pwd:
-                self.user_pwd = input("funpdbe password: ")
-        return self.user_pwd
+        self.user_pwd = self.set_attribute(self.user_pwd, "funpdbe password: ")
+
+    def set_attribute(self, attribute, text):
+        """
+        Set attribute to user input
+        :param attribute:
+        :param text:
+        :return:
+        """
+        value = attribute
+        if not value:
+            while not value:
+                value = input(text)
+        return value
+
