@@ -12,16 +12,8 @@
 # License.
 
 from unittest import TestCase
-from funpdbe_client.funpdbe_client import Client
+# from funpdbe_client.constants import Constants
+# from funpdbe_client.client import Client
 
 
 
-
-
-class TestClient(TestCase):
-
-    def setUp(self):
-        self.client = Client("user", "pwd")
-
-    def test_parse_missing_json(self):
-        self.assertFalse(self.client.parse_json(""))
