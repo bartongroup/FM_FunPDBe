@@ -48,26 +48,47 @@ class Control(object):
             logging.error("Running mode not specified")
             return None
 
+        if self.mode == "get":
+            self.get()
+        elif self.mode == "post":
+            self.post()
+        elif self.mode == "put":
+            self.put()
+        elif self.mode == "delete":
+            self.delete()
+        else:
+            return None
+
+    def get(self):
+        user = User(self.user, self.pwd)
+        client = Client(schema=None, user=user)
+        if self.pdb_id:
+            return client.get_one(self.pdb_id, self.resource)
+        else:
+            return client.get_all(self.resource)
+
+    def post(self):
         user = User(self.user, self.pwd)
         schema = Schema()
         client = Client(schema=schema, user=user)
+        if self.path.endswith(".json"):
+            client.post(self.path, self.resource)
+        else:
+            for json_path in glob.glob("%s/*.json" % self.path):
+                client.post(json_path, self.resource)
+                client.json_data(None)
 
-        if self.mode == "get":
-            if self.pdb_id:
-                client.get_one(self.pdb_id, self.resource)
-            else:
-                client.get_all(self.resource)
-        elif self.mode == "post":
-            if self.path.endswith(".json"):
-                client.post(self.path, self.resource)
-            else:
-                for json_path in glob.glob("%s/*.json" % self.path):
-                    client.post(json_path, self.resource)
-                    client.json_data(None)
-        elif self.mode == "put":
-            client.put(self.path, self.pdb_id, self.resource)
-        elif self.mode == "delete":
-                client.delete_one(self.pdb_id, self.resource)
+    def put(self):
+        user = User(self.user, self.pwd)
+        schema = Schema()
+        client = Client(schema=schema, user=user)
+        client.put(self.path, self.pdb_id, self.resource)
+
+    def delete(self):
+        user = User(self.user, self.pwd)
+        schema = Schema()
+        client = Client(schema=schema, user=user)
+        client.delete_one(self.pdb_id, self.resource)
 
     def process_options(self):
         for option, value in self.opts:
