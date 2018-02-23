@@ -13,17 +13,9 @@
 # language governing permissions and limitations under the
 # License.
 
-import getpass
 import requests
-import getopt
-import sys
 import json
 import logging
-import re
-import glob
-from funpdbe_client.constants import Constants
-from funpdbe_client.schema import Schema
-from funpdbe_client.user import User
 
 
 class Client(object):
@@ -32,11 +24,11 @@ class Client(object):
     data in the FunPDBe deposition system
     """
 
-    def __init__(self, user=None, pwd=None, help=False):
-        self.user = User(user, pwd)
+    def __init__(self, api_url, schema, user, help=False):
+        self.user = user
+        self.schema = schema
+        self.api_url = api_url
         self.json_data = None
-        self.schema = None
-        self.api_url = Constants().get_api_url()
         # Only perform welcome with user and password check, if not running in help mode
         if not help:
             self.welcome()
@@ -60,25 +52,25 @@ Usage parameters:
 -d, --debug:      Enable debug logging
 
 1.) Listing all entries
-./funpdbe_client.py -user=username -pwd=password --mode=get
+./client.py -user=username -pwd=password --mode=get
 
 2.) Listing entries for PDB id 1abc
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc
+./client.py -user=username -pwd=password --mode=get --pdb_id=1abc
 
 3.) Listing entries from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=get --resource=funsites
+./client.py -user=username -pwd=password --mode=get --resource=funsites
 
 4.) Listing entries for PDB id 1abc from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
+./client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
 
 5.) Posting an entry to funsites
-./funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
+./client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
 
 6.) Deleting an entry (1abc) from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+./client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
 
 7.) Updating an entry (1abc) from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
+./client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
         """
 
     def welcome(self):
@@ -94,10 +86,6 @@ Usage parameters:
         """
         self.user.set_user()
         self.user.set_pwd()
-
-    def set_schema(self):
-        self.schema = Schema()
-        self.schema.get_schema()
 
     def set_json_data(self, value):
         self.json_data = value
@@ -158,8 +146,8 @@ Usage parameters:
         Validate JSON against schema
         :return: Boolean, True if validated JSON, False if not
         """
-        if not self.schema:
-            self.set_schema()
+        if not self.schema.json_schema:
+            self.schema.get_schema()
         if self.schema.validate_json(self.json_data):
             logging.debug("JSON validated")
             self.json_data = self.schema.clean_json(self.json_data)
@@ -230,127 +218,3 @@ Usage parameters:
         if r.status_code == 301:
             print("%i - deleted %s from %s" % (r.status_code, pdb_id, resource))
         return r
-
-
-def main():
-    user = None
-    pwd = None
-    mode = None
-    pdb_id = None
-    resource = None
-    path = None
-    debug = False
-    config = Constants()
-
-    try:
-        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:hd", [
-            "user=",
-            "pwd=",
-            "mode=",
-            "pdb_id=",
-            "resource=",
-            "path=",
-            "help",
-            "debug"])
-    except getopt.GetoptError as err:
-        print("Error: %s" % err)
-        sys.exit(2)
-
-    for option, value in opts:
-        if option in ["-u", "--user"]:
-            user = value
-        elif option in ["-p", "--pwd"]:
-            pwd = value
-        elif option in ["-m", "--mode"]:
-            if value in ("get", "post", "delete", "put"):
-                mode = value
-        elif option in ["-i", "--pdb_id"]:
-            if re.match(config.get_pdb_id_pattern(), value):
-                pdb_id = value
-            else:
-                logging.warning("Invalid PDB id format")
-                while not pdb_id:
-                    pdb_id = input("valid pdb id (lower case): ")
-        elif option in ["-r", "--resource"]:
-            if value in config.get_resources():
-                resource = value
-            else:
-                logging.warning("Invalid resource name")
-                logging.warning("Has to be one of:" + str(config.get_resources()))
-        elif option in ["-f", "--path"]:
-            path = value
-        elif option in ["-h", "--help"]:
-            client = Client(help=True)
-            print(client)
-            exit(1)
-        elif option in ["-d", "--debug"]:
-            debug = True
-        else:
-            assert False, "unhandled option"
-
-    if debug:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
-    logging.getLogger(__name__)
-
-    client = Client(user=user, pwd=pwd)
-
-    # Ask user to give running mode if not already done so
-    if not mode:
-        while not mode:
-            mode_input = input("running mode: ")
-            if mode_input in ("get", "post", "put", "delete"):
-                mode = mode_input
-
-    if mode == "get":
-        if pdb_id:
-            client.get_one(pdb_id, resource)
-        else:
-            client.get_all(resource)
-    elif mode == "post":
-        # Set the JSON schema only once
-        client.set_schema()
-        if not path:
-            while not path:
-                path = input("path to json: ")
-        if not resource:
-            while not resource:
-                resource = input("resource name: ")
-        if path.endswith(".json"):
-            client.post(path, resource)
-        else:
-            for json_path in glob.glob("%s/*.json" % path):
-                client.post(json_path, resource)
-                # Reset JSON data to None
-                client.set_json_data(None)
-
-    elif mode == "put":
-        # Set the JSON schema only once
-        client.set_schema()
-        if not path:
-            while not path:
-                path = input("path to json (../file.json): ")
-        if not resource:
-            while not resource:
-                resource = input("resource name: ")
-        if not pdb_id:
-            while not pdb_id:
-                pdb_id = input("pdb id to update: ")
-        if not path.endswith(".json"):
-            while not path.endswith(".json"):
-                path = input("path to json (../file.json): ")
-        client.put(path, pdb_id, resource)
-
-    elif mode == "delete":
-        if not pdb_id:
-            while not pdb_id:
-                pdb_id = input("pdb id to delete: ")
-        if not resource:
-            while not resource:
-                resource = input("resource name: ")
-        client.delete_one(pdb_id, resource)
-
-
-if __name__ == "__main__":
-    main()
