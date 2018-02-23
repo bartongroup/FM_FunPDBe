@@ -17,7 +17,7 @@ import requests
 import json
 import logging
 import re
-from funpdbe_client.constants import PDB_ID_PATTERN, API_URL
+from funpdbe_client.constants import PDB_ID_PATTERN, API_URL, RESOURCES
 
 
 class Client(object):
@@ -80,13 +80,12 @@ Usage parameters:
         if not pdb_id:
             logging.error("No PDB id provided")
             return None
-        if not re.match(PDB_ID_PATTERN, pdb_id):
-            logging.error("PDB id is invalid")
+        if not self.check_pdb_id(pdb_id):
             return None
 
         self.user_info()
         url = self.api_url
-        if resource:
+        if resource and self.check_resource(resource):
             url += "resource/%s/" % resource
         else:
             url += "pdb/"
@@ -104,7 +103,7 @@ Usage parameters:
         """
         self.user_info()
         url = self.api_url
-        if resource:
+        if resource and self.check_resource(resource):
             url += "resource/%s/" % resource
         r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         print(r.text)
@@ -117,6 +116,20 @@ Usage parameters:
         """
         self.user.set_user()
         self.user.set_pwd()
+
+    @staticmethod
+    def check_pdb_id(pdb_id):
+        if re.match(PDB_ID_PATTERN, pdb_id):
+            return True
+        logging.error("Invalid PDB id")
+        return False
+
+    @staticmethod
+    def check_resource(resource):
+        if resource in RESOURCES:
+            return True
+        logging.error("Invalid resource name")
+        return False
 
     def parse_json(self, path):
         """
@@ -162,6 +175,8 @@ Usage parameters:
         :return: None
         """
         self.user_info()
+        if not self.check_resource(resource):
+            return None
         if not self.parse_json(path):
             return None
         if not self.validate_json():
@@ -182,6 +197,10 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
+        if not self.check_resource(resource):
+            return None
+        if not self.check_pdb_id(pdb_id):
+            return None
         self.user_info()
         if not self.parse_json(path):
             return None
@@ -195,7 +214,8 @@ Usage parameters:
             print("%s %s from %s" % (check, pdb_id, resource))
         return r
 
-    def put_or_post_check(self, mode, status_code, text):
+    @staticmethod
+    def put_or_post_check(mode, status_code, text):
         messages = {
             "post": "201 - created",
             "put": "201 - updated"
@@ -213,6 +233,10 @@ Usage parameters:
         :param resource: String, resource name
         :return: none
         """
+        if not self.check_resource(resource):
+            return None
+        if not self.check_pdb_id(pdb_id):
+            return None
         self.user_info()
         url = self.api_url
         url += "resource/%s/%s/" % (resource, pdb_id)
