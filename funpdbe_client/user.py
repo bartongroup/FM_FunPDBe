@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 class User(object):
     """
     User object to handle prompts if no user name
