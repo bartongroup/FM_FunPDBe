@@ -16,6 +16,22 @@
 import requests
 import json
 import logging
+import re
+from funpdbe_client.constants import PDB_ID_PATTERN, API_URL
+
+
+# API_URL = "http://127.0.0.1:8000/funpdbe_deposition/entries/"
+# PDB_ID_PATTERN = "[0-9][a-z][a-z0-9]{2}"
+# RESOURCES = (
+#     "funsites",
+#     "3dligandsite",
+#     "nod",
+#     "popscomp",
+#     "14-3-3-pred",
+#     "dynamine",
+#     "cansar",
+#     "credo"
+# )
 
 
 class Client(object):
@@ -24,14 +40,11 @@ class Client(object):
     data in the FunPDBe deposition system
     """
 
-    def __init__(self, api_url, schema, user, help=False):
+    def __init__(self, schema, user):
         self.user = user
         self.schema = schema
-        self.api_url = api_url
+        self.api_url = API_URL
         self.json_data = None
-        # Only perform welcome with user and password check, if not running in help mode
-        if not help:
-            self.welcome()
 
     def __str__(self):
         return """
@@ -73,23 +86,6 @@ Usage parameters:
 ./client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
         """
 
-    def welcome(self):
-        print("\n####################################\n")
-        print("Welcome to FunPDBe deposition client\n")
-        print("####################################\n")
-        self.user_info()
-
-    def user_info(self):
-        """
-        Prompting user to provide info if missing
-        :return: None
-        """
-        self.user.set_user()
-        self.user.set_pwd()
-
-    def set_json_data(self, value):
-        self.json_data = value
-
     def get_one(self, pdb_id, resource=None):
         """
         Get one FunPDBe entry based on PDB id and
@@ -98,6 +94,14 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
+        if not pdb_id:
+            logging.error("No PDB id provided")
+            return None
+        if not re.match(PDB_ID_PATTERN, pdb_id):
+            logging.error("PDB id is invalid")
+            return None
+
+        self.user_info()
         url = self.api_url
         if resource:
             url += "resource/%s/" % resource
@@ -115,12 +119,24 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
+        self.user_info()
         url = self.api_url
         if resource:
             url += "resource/%s/" % resource
         r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         print(r.text)
         return r
+
+    def user_info(self):
+        """
+        Prompting user to provide info if missing
+        :return: None
+        """
+        self.user.set_user()
+        self.user.set_pwd()
+
+    def set_json_data(self, value):
+        self.json_data = value
 
     def parse_json(self, path):
         """
@@ -162,6 +178,7 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
+        self.user_info()
         if not self.parse_json(path):
             return None
         if not self.validate_json():
@@ -182,6 +199,7 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
+        self.user_info()
         if not self.parse_json(path):
             return None
         if not self.validate_json():
@@ -212,6 +230,7 @@ Usage parameters:
         :param resource: String, resource name
         :return: none
         """
+        self.user_info()
         url = self.api_url
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.delete(url, auth=(self.user.user_name, self.user.user_pwd))
