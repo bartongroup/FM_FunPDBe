@@ -20,20 +20,6 @@ import re
 from funpdbe_client.constants import PDB_ID_PATTERN, API_URL
 
 
-# API_URL = "http://127.0.0.1:8000/funpdbe_deposition/entries/"
-# PDB_ID_PATTERN = "[0-9][a-z][a-z0-9]{2}"
-# RESOURCES = (
-#     "funsites",
-#     "3dligandsite",
-#     "nod",
-#     "popscomp",
-#     "14-3-3-pred",
-#     "dynamine",
-#     "cansar",
-#     "credo"
-# )
-
-
 class Client(object):
     """
     The FunPDBe deposition client allows users to deposit, delete and view
@@ -135,19 +121,19 @@ Usage parameters:
         self.user.set_user()
         self.user.set_pwd()
 
-    def set_json_data(self, value):
-        self.json_data = value
-
     def parse_json(self, path):
         """
         Parse user JSON file
         :param path: String, path to JSON
         :return: Boolean, True if parse, False if errors
         """
+        if not path:
+            logging.error("No path to JSON was provided")
+            return None
         try:
             with open(path) as json_file:
                 try:
-                    self.set_json_data(json.load(json_file))
+                    self.json_data = json.load(json_file)
                     logging.debug("JSON parsed")
                     return True
                 except ValueError as valerr:
