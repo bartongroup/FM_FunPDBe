@@ -34,13 +34,10 @@ class Client(object):
 
     def __str__(self):
         return """
-#########################################################################
-The FunPDBe deposition client allows users to deposit, delete and view  #
-data in the FunPDBe deposition system                                   #
-#########################################################################
+The FunPDBe deposition client allows users to deposit, delete and view  
+data in the FunPDBe deposition system                                   
 
 Usage parameters:
-
 -h, --help:       Help (this is what you see now)
 -u, --user:       FunPDBe user name
 -p, --pwd:        FunPDBe password
