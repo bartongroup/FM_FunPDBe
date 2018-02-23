@@ -19,5 +19,23 @@ from funpdbe_client.control import Control
 class TestControl(TestCase):
 
     def setUp(self):
-        pass
+        mock_opts = [("--user", "test"), ("--pwd", "test")]
+        self.control = Control(mock_opts)
 
+    def test_run_no_mode(self):
+        self.assertIsNone(self.control.run())
+
+    def test_run_get(self):
+        self.control.mode = "get"
+        self.control.run()
+
+    def test_get(self):
+        self.control.user = "test"
+        self.control.pwd = "test"
+        self.assertIsNotNone(self.control.get())
+
+    def test_get_with_pdb_id(self):
+        self.control.user = "test"
+        self.control.pwd = "test"
+        self.pdb_id = "1abc"
+        self.assertIsNotNone(self.control.get())
