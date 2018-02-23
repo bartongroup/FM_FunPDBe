@@ -12,8 +12,58 @@
 # License.
 
 from unittest import TestCase
-# from funpdbe_client.constants import Constants
-# from funpdbe_client.client import Client
+from unittest import mock
+from funpdbe_client.client import Client
 
 
+class MockUser(object):
 
+    def __init__(self):
+        self.user_name = "foo"
+        self.user_pwd = "bar"
+
+    def set_user(self):
+        return True
+
+    def set_pwd(self):
+        return True
+
+
+def mocked_requests_get(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.text = "foo"
+            self.json_data = json_data
+            self.status_code = status_code
+    if args[0].endswith("resource/funsites/1abc/"):
+        return MockResponse({"resource": "ok"}, 200)
+    elif args[0].endswith("pdb/1abc/"):
+        return MockResponse({"pdb": "ok"}, 200)
+    return MockResponse(None, 404)
+
+
+class TestClient(TestCase):
+
+    def setUp(self):
+        self.mock_user = MockUser()
+        self.client = Client(None, self.mock_user)
+
+
+    def test_help_text(self):
+        self.assertIsNotNone(self.client.__str__())
+
+    def test_get_one_no_pdb_id(self):
+        self.assertIsNone(self.client.get_one(None))
+
+    def test_pattern_mismatch(self):
+        self.assertIsNone(self.client.get_one("invalid"))
+
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_one_with_id(self, mock):
+        call = self.client.get_one("1abc")
+        self.assertEqual({"pdb": "ok"}, call.json_data)
+
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_one_with_resource(self, mock):
+        call = self.client.get_one("1abc", "funsites")
+        self.assertEqual({"resource": "ok"}, call.json_data)
