@@ -3,6 +3,7 @@ FunPDBe Deposition Client
 
 [![Build Status](https://travis-ci.org/funpdbe-consortium/funpdbe-client.svg?branch=master)](https://travis-ci.org/funpdbe-consortium/funpdbe-client)
 [![codecov](https://codecov.io/gh/funpdbe-consortium/funpdbe-client/branch/master/graph/badge.svg)](https://codecov.io/gh/funpdbe-consortium/funpdbe-client)
+[![Maintainability](https://api.codeclimate.com/v1/badges/eac066fbf15333153070/maintainability)](https://codeclimate.com/github/funpdbe-consortium/funpdbe-client/maintainability)
 
 This client can be used for depositing functional annotations to the FunPDBe deposition system.
 
