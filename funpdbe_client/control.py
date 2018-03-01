@@ -44,6 +44,7 @@ class Control(object):
         return None
 
     def action(self):
+        response = None
         if self.mode == "get":
             response = self.get()
         elif self.mode == "post":
@@ -52,9 +53,6 @@ class Control(object):
             response = self.put()
         elif self.mode == "delete":
             response = self.delete()
-        else:
-            response = None
-
         return response
 
     def configure(self):
