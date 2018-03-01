@@ -35,11 +35,16 @@ class Control(object):
         logging.basicConfig(level=logging.INFO)
         self.process_options()
         self.configure()
-        response = None
 
         if not self.mode:
             logging.error("Running mode not specified")
-        elif self.mode == "get":
+        else:
+            return self.action()
+
+        return None
+
+    def action(self):
+        if self.mode == "get":
             response = self.get()
         elif self.mode == "post":
             response = self.post()
@@ -47,6 +52,8 @@ class Control(object):
             response = self.put()
         elif self.mode == "delete":
             response = self.delete()
+        else:
+            response = None
 
         return response
 
