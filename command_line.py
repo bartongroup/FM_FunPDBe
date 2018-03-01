@@ -16,6 +16,9 @@
 import getopt
 import sys
 from funpdbe_client.control import Control
+from funpdbe_client.client import Client
+from funpdbe_client.user import User
+from funpdbe_client.schema import Schema
 
 
 def main():
@@ -35,7 +38,7 @@ def main():
         sys.exit(2)
 
     if opts:
-        Control(opts).run()
+        Control(opts, Client(), Schema(), User()).run()
 
 
 if __name__ == '__main__':
