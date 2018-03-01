@@ -176,9 +176,7 @@ Usage parameters:
         :param resource: String, resource name
         :return: None
         """
-        if not self.check_resource(resource):
-            return None
-        if not self.check_pdb_id(pdb_id):
+        if not self.check_resource(resource) or not self.check_pdb_id(pdb_id):
             return None
         self.user_info()
         if not self.parse_json(path):
