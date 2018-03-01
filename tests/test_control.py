@@ -62,6 +62,7 @@ class TestControl(TestCase):
     def test_run_help(self):
         mock_opts = [("--help", "help"), ("--debug", "debug")]
         self.control = Control(mock_opts, MockObject(), MockObject(), MockObject())
+        self.control.process_options()
         self.assertIsNone(self.control.run())
 
     def mock_function(self):
@@ -116,6 +117,7 @@ class TestControl(TestCase):
                      ("--pdb_id", "test"),
                      ("--resource", "test"),
                      ("--path", "test"),
+                     ("--debug", "debug"),
                      ("--foo", "bar")]
         self.control = Control(mock_opts, MockClient(), MockClient(), MockClient())
         self.control.process_options()
