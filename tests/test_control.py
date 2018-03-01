@@ -13,6 +13,7 @@
 # language governing permissions and limitations under the
 # License.
 
+import os
 from unittest import TestCase
 from funpdbe_client.control import Control
 
@@ -93,8 +94,10 @@ class TestControl(TestCase):
         self.assertIsNone(self.control.post())
         self.control.path = ".json"
         self.assertIsNotNone(self.control.post())
+        os.system("touch foo.json")
         self.control.path = "./"
         self.assertIsNotNone(self.control.post())
+        os.system("rm foo.json")
 
     def test_put(self):
         self.control.client = MockClient()
