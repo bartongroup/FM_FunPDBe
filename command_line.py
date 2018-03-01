@@ -37,8 +37,11 @@ def main():
         print("Error: %s" % err)
         sys.exit(2)
 
+    schema = Schema()
+    user = User()
+    client = Client(schema, user)
     if opts:
-        Control(opts, Client(), Schema(), User()).run()
+        Control(opts, client=client, schema=schema, user=user).run()
 
 
 if __name__ == '__main__':
