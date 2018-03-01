@@ -44,14 +44,15 @@ class Control(object):
         return None
 
     def action(self):
-        if self.mode == "get":
-            return self.get()
-        elif self.mode == "delete":
-            return self.delete()
-        elif self.mode == "post":
-            return self.post()
-        elif self.mode == "put":
-            return self.put()
+        actions = {
+            "get": self.get,
+            "post": self.post,
+            "put": self.put,
+            "delete": self.delete
+        }
+        if self.mode in actions.keys():
+            return actions[self.mode]()
+        return None
 
     def configure(self):
         self.client.user.user_name = self.user_name
