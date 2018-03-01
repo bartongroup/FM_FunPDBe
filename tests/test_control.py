@@ -32,6 +32,26 @@ class MockObject(object):
         self.schema = None
         self.pwd = None
 
+    @staticmethod
+    def get_one(arg1, arg2):
+        return True
+
+    @staticmethod
+    def get_all(arg1):
+        return True
+
+    @staticmethod
+    def post(arg1, arg2):
+        return True
+
+    @staticmethod
+    def put(arg1, arg2, arg3):
+        return True
+
+    @staticmethod
+    def delete_one(arg1, arg2):
+        return True
+
 
 class MockClient(object):
 
@@ -66,9 +86,6 @@ class TestControl(TestCase):
         self.control = Control(mock_opts, MockObject(MockUser()))
 
     def test_run_no_mode(self):
-        self.assertIsNone(self.control.run())
-
-    def test_run_no_mode(self):
         self.control.debug = True
         self.assertIsNone(self.control.run())
         self.control.debug = False
@@ -100,13 +117,13 @@ class TestControl(TestCase):
         self.assertIsNone(self.control.run())
 
     def test_get(self):
-        self.control.client = MockClient()
+        self.control.client = MockObject(MockUser())
         self.assertIsNotNone(self.control.get())
         self.control.pdb_id = "foo"
         self.assertIsNotNone(self.control.get())
 
     def test_post(self):
-        self.control.client = MockClient()
+        self.control.client = MockObject(MockUser())
         self.assertIsNone(self.control.post())
         self.control.path = ".json"
         self.assertIsNotNone(self.control.post())
@@ -116,13 +133,13 @@ class TestControl(TestCase):
         os.system("rm foo.json")
 
     def test_put(self):
-        self.control.client = MockClient()
+        self.control.client = MockObject(MockUser())
         self.assertIsNone(self.control.put())
         self.control.path = ".json"
         self.assertIsNotNone(self.control.put())
 
     def test_delete(self):
-        self.control.client = MockClient()
+        self.control.client = MockObject(MockUser())
         self.assertIsNotNone(self.control.delete())
 
     def test_process_options(self):
@@ -134,7 +151,7 @@ class TestControl(TestCase):
                      ("--path", "test"),
                      ("--debug", "debug"),
                      ("--foo", "bar")]
-        self.control = Control(mock_opts, MockClient())
+        self.control = Control(mock_opts, MockObject(MockUser()))
         self.control.process_options()
         self.assertIsNotNone(self.control.user_name)
         self.assertIsNotNone(self.control.pwd)

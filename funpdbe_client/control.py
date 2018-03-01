@@ -46,13 +46,12 @@ class Control(object):
     def action(self):
         if self.mode == "get":
             return self.get()
+        elif self.mode == "delete":
+            return self.delete()
         elif self.mode == "post":
             return self.post()
         elif self.mode == "put":
             return self.put()
-        elif self.mode == "delete":
-            return self.delete()
-        return None
 
     def configure(self):
         self.client.user.user_name = self.user_name
