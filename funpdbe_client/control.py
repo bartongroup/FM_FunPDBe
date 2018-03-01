@@ -34,17 +34,9 @@ class Control(object):
         self.help = False
 
     def run(self):
+        logging.basicConfig(level=logging.INFO)
         self.process_options()
         self.configure()
-
-        if self.help:
-            print(self.client)
-            return None
-
-        if self.debug:
-            logging.basicConfig(level=logging.DEBUG)
-        else:
-            logging.basicConfig(level=logging.INFO)
 
         if not self.mode:
             logging.error("Running mode not specified")
@@ -109,8 +101,9 @@ class Control(object):
             elif option in ["-f", "--path"]:
                 self.path = value
             elif option in ["-h", "--help"]:
-                self.help = True
+                print(self.client)
+                break
             elif option in ["-d", "--debug"]:
-                self.debug = True
+                logging.basicConfig(level=logging.DEBUG)
             else:
                 logging.info("Unhandled option: %s" % option)
