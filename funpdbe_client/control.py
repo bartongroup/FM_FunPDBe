@@ -15,16 +15,16 @@
 
 import logging
 import glob
-from funpdbe_client.client import Client
-from funpdbe_client.schema import Schema
-from funpdbe_client.user import User
 
 
 class Control(object):
 
-    def __init__(self, opts):
+    def __init__(self, opts, client, schema, user):
         self.opts = opts
-        self.user = None
+        self.client = client
+        self.user = user
+        self.schema = schema
+        self.user_name = None
         self.pwd = None
         self.mode = None
         self.pdb_id = None
@@ -35,8 +35,10 @@ class Control(object):
 
     def run(self):
         self.process_options()
+        self.configure()
+
         if self.help:
-            print(Client(schema=None, user=None))
+            print(self.client)
             return None
 
         if self.debug:
@@ -49,51 +51,53 @@ class Control(object):
             return None
 
         if self.mode == "get":
-            self.get()
+            return self.get()
         elif self.mode == "post":
-            self.post()
+            return self.post()
         elif self.mode == "put":
-            self.put()
+            return self.put()
         elif self.mode == "delete":
-            self.delete()
+            return self.delete()
         else:
             return None
 
+    def configure(self):
+        self.user.user_name = self.user_name
+        self.user.user_pwd = self.pwd
+        self.client.schema = self.schema
+        self.client.user = self.user
+
     def get(self):
-        user = User(self.user, self.pwd)
-        client = Client(schema=None, user=user)
         if self.pdb_id:
-            return client.get_one(self.pdb_id, self.resource)
+            return self.client.get_one(self.pdb_id, self.resource)
         else:
-            return client.get_all(self.resource)
+            return self.client.get_all(self.resource)
 
     def post(self):
-        user = User(self.user, self.pwd)
-        schema = Schema()
-        client = Client(schema=schema, user=user)
+        if not self.path:
+            logging.error("No path to JSON file(s) provided")
+            return None
         if self.path.endswith(".json"):
-            client.post(self.path, self.resource)
+            return self.client.post(self.path, self.resource)
         else:
             for json_path in glob.glob("%s/*.json" % self.path):
-                client.post(json_path, self.resource)
-                client.json_data(None)
+                self.client.post(json_path, self.resource)
+                self.client.json_data = None
+            return True
 
     def put(self):
-        user = User(self.user, self.pwd)
-        schema = Schema()
-        client = Client(schema=schema, user=user)
-        client.put(self.path, self.pdb_id, self.resource)
+        if not self.path:
+            logging.error("No path to JSON file(s) provided")
+            return None
+        return self.client.put(self.path, self.pdb_id, self.resource)
 
     def delete(self):
-        user = User(self.user, self.pwd)
-        schema = Schema()
-        client = Client(schema=schema, user=user)
-        client.delete_one(self.pdb_id, self.resource)
+        return self.client.delete_one(self.pdb_id, self.resource)
 
     def process_options(self):
         for option, value in self.opts:
             if option in ["-u", "--user"]:
-                self.user = value
+                self.user_name = value
             elif option in ["-p", "--pwd"]:
                 self.pwd = value
             elif option in ["-m", "--mode"]:
@@ -109,4 +113,4 @@ class Control(object):
             elif option in ["-d", "--debug"]:
                 self.debug = True
             else:
-                assert False, "unhandled option"
+                logging.info("Unhandled option: %s" % option)
