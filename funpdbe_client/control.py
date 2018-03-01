@@ -28,15 +28,15 @@ class Control(object):
         self.pdb_id = None
         self.resource = None
         self.path = None
-        self.debug = False
         self.help = False
 
     def run(self):
         logging.basicConfig(level=logging.INFO)
         self.process_options()
         self.configure()
-
-        if not self.mode:
+        if self.help:
+            print(self.client)
+        elif not self.mode:
             logging.error("Running mode not specified")
         else:
             return self.action()
@@ -117,6 +117,6 @@ class Control(object):
         self.set_pwd()
         for option, value in self.opts:
             if option in ["-h", "--help"]:
-                print(self.client)
+                self.help = True
             elif option in ["-d", "--debug"]:
                 logging.basicConfig(level=logging.DEBUG)
