@@ -81,24 +81,38 @@ class Control(object):
     def delete(self):
         return self.client.delete_one(self.pdb_id, self.resource)
 
-    def process_options(self):
+    def set_path(self):
+        self.path = self.loop_options("-f", "--path")
+
+    def set_pdb_id(self):
+        self.pdb_id = self.loop_options("-i", "--pdb_id")
+
+    def set_mode(self):
+        self.mode = self.loop_options("-m", "--mode")
+
+    def set_resource(self):
+        self.resource = self.loop_options("-r", "--resource")
+
+    def set_user(self):
+        self.user_name = self.loop_options("-u", "--user")
+
+    def set_pwd(self):
+        self.pwd = self.loop_options("-p", "--pwd")
+
+    def loop_options(self, opt1, opt2):
         for option, value in self.opts:
-            if option in ["-u", "--user"]:
-                self.user_name = value
-            elif option in ["-p", "--pwd"]:
-                self.pwd = value
-            elif option in ["-m", "--mode"]:
-                self.mode = value
-            elif option in ["-i", "--pdb_id"]:
-                self.pdb_id = value
-            elif option in ["-r", "--resource"]:
-                self.resource = value
-            elif option in ["-f", "--path"]:
-                self.path = value
-            elif option in ["-h", "--help"]:
+            if option == opt1 or option == opt2:
+                return value
+
+    def process_options(self):
+        self.set_path()
+        self.set_pdb_id()
+        self.set_mode()
+        self.set_resource()
+        self.set_user()
+        self.set_pwd()
+        for option, value in self.opts:
+            if option in ["-h", "--help"]:
                 print(self.client)
-                break
             elif option in ["-d", "--debug"]:
                 logging.basicConfig(level=logging.DEBUG)
-            else:
-                logging.info("Unhandled option: %s" % option)

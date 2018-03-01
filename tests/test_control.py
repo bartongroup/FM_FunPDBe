@@ -84,19 +84,19 @@ class TestControl(TestCase):
         return True
 
     def test_run(self):
+        self.control = Control([("--mode", "get")], MockObject(MockUser()))
         self.control.get = self.mock_function
-        self.control.mode = "get"
         self.assertTrue(self.control.run())
+        self.control = Control([("--mode", "put")], MockObject(MockUser()))
         self.control.put = self.mock_function
-        self.control.mode = "put"
         self.assertTrue(self.control.run())
+        self.control = Control([("--mode", "post")], MockObject(MockUser()))
         self.control.post = self.mock_function
-        self.control.mode = "post"
         self.assertTrue(self.control.run())
+        self.control = Control([("--mode", "delete")], MockObject(MockUser()))
         self.control.delete = self.mock_function
-        self.control.mode = "delete"
         self.assertTrue(self.control.run())
-        self.control.mode = "foo"
+        self.control = Control([("--mode", "foo")], MockObject(MockUser()))
         self.assertIsNone(self.control.run())
 
     def test_get(self):
