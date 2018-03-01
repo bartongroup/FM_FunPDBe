@@ -41,7 +41,7 @@ def main():
     user = User()
     client = Client(schema, user)
     if opts:
-        Control(opts, client=client, schema=schema, user=user).run()
+        Control(opts, client=client).run()
 
 
 if __name__ == '__main__':

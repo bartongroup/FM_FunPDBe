@@ -18,29 +18,44 @@ from unittest import TestCase
 from funpdbe_client.control import Control
 
 
-class MockObject(object):
+class MockUser(object):
 
     def __init__(self):
-        pass
+        self.user_name = None
+        self.user_pwd = None
+
+
+class MockObject(object):
+
+    def __init__(self, mock_user):
+        self.user = mock_user
+        self.schema = None
+        self.pwd = None
+
 
 class MockClient(object):
 
     def __init__(self):
         pass
 
-    def get_one(self, arg1, arg2):
+    @staticmethod
+    def get_one(arg1, arg2):
         return True
 
-    def get_all(self, arg1):
+    @staticmethod
+    def get_all(arg1):
         return True
 
-    def post(self, arg1, arg2):
+    @staticmethod
+    def post(arg1, arg2):
         return True
 
-    def put(self, arg1, arg2, arg3):
+    @staticmethod
+    def put(arg1, arg2, arg3):
         return True
 
-    def delete_one(self, arg1, arg2):
+    @staticmethod
+    def delete_one(arg1, arg2):
         return True
 
 
@@ -48,7 +63,7 @@ class TestControl(TestCase):
 
     def setUp(self):
         mock_opts = [("--user", "test"), ("--pwd", "test")]
-        self.control = Control(mock_opts, MockObject(), MockObject(), MockObject())
+        self.control = Control(mock_opts, MockObject(MockUser()))
 
     def test_run_no_mode(self):
         self.assertIsNone(self.control.run())
@@ -61,7 +76,7 @@ class TestControl(TestCase):
 
     def test_run_help(self):
         mock_opts = [("--help", "help"), ("--debug", "debug")]
-        self.control = Control(mock_opts, MockObject(), MockObject(), MockObject())
+        self.control = Control(mock_opts, MockObject(MockUser()))
         self.control.process_options()
         self.assertIsNone(self.control.run())
 
@@ -119,7 +134,7 @@ class TestControl(TestCase):
                      ("--path", "test"),
                      ("--debug", "debug"),
                      ("--foo", "bar")]
-        self.control = Control(mock_opts, MockClient(), MockClient(), MockClient())
+        self.control = Control(mock_opts, MockClient())
         self.control.process_options()
         self.assertIsNotNone(self.control.user_name)
         self.assertIsNotNone(self.control.pwd)

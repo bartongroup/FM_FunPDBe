@@ -19,11 +19,9 @@ import glob
 
 class Control(object):
 
-    def __init__(self, opts, client, schema, user):
+    def __init__(self, opts, client):
         self.opts = opts
         self.client = client
-        self.user = user
-        self.schema = schema
         self.user_name = None
         self.pwd = None
         self.mode = None
@@ -54,10 +52,8 @@ class Control(object):
             return None
 
     def configure(self):
-        self.user.user_name = self.user_name
-        self.user.user_pwd = self.pwd
-        self.client.schema = self.schema
-        self.client.user = self.user
+        self.client.user.user_name = self.user_name
+        self.client.user.user_pwd = self.pwd
 
     def get(self):
         if self.pdb_id:
