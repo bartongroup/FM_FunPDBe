@@ -16,26 +16,111 @@
 from unittest import TestCase
 from funpdbe_client.control import Control
 
+
+class MockObject(object):
+
+    def __init__(self):
+        pass
+
+class MockClient(object):
+
+    def __init__(self):
+        pass
+
+    def get_one(self, arg1, arg2):
+        return True
+
+    def get_all(self, arg1):
+        return True
+
+    def post(self, arg1, arg2):
+        return True
+
+    def put(self, arg1, arg2, arg3):
+        return True
+
+    def delete_one(self, arg1, arg2):
+        return True
+
+
 class TestControl(TestCase):
 
     def setUp(self):
         mock_opts = [("--user", "test"), ("--pwd", "test")]
-        self.control = Control(mock_opts)
+        self.control = Control(mock_opts, MockObject(), MockObject(), MockObject())
 
     def test_run_no_mode(self):
         self.assertIsNone(self.control.run())
 
-    # def test_run_get(self):
-    #     self.control.mode = "get"
-    #     self.control.run()
-    #
-    # def test_get(self):
-    #     self.control.user = "test"
-    #     self.control.pwd = "test"
-    #     self.assertIsNotNone(self.control.get())
-    #
-    # def test_get_with_pdb_id(self):
-    #     self.control.user = "test"
-    #     self.control.pwd = "test"
-    #     self.pdb_id = "1abc"
-    #     self.assertIsNotNone(self.control.get())
+    def test_run_no_mode(self):
+        self.control.debug = True
+        self.assertIsNone(self.control.run())
+        self.control.debug = False
+        self.assertIsNone(self.control.run())
+
+    def test_run_help(self):
+        mock_opts = [("--help", "help"), ("--debug", "debug")]
+        self.control = Control(mock_opts, MockObject(), MockObject(), MockObject())
+        self.assertIsNone(self.control.run())
+
+    def mock_function(self):
+        return True
+
+    def test_run(self):
+        self.control.get = self.mock_function
+        self.control.mode = "get"
+        self.assertTrue(self.control.run())
+        self.control.put = self.mock_function
+        self.control.mode = "put"
+        self.assertTrue(self.control.run())
+        self.control.post = self.mock_function
+        self.control.mode = "post"
+        self.assertTrue(self.control.run())
+        self.control.delete = self.mock_function
+        self.control.mode = "delete"
+        self.assertTrue(self.control.run())
+        self.control.mode = "foo"
+        self.assertIsNone(self.control.run())
+
+    def test_get(self):
+        self.control.client = MockClient()
+        self.assertIsNotNone(self.control.get())
+        self.control.pdb_id = "foo"
+        self.assertIsNotNone(self.control.get())
+
+    def test_post(self):
+        self.control.client = MockClient()
+        self.assertIsNone(self.control.post())
+        self.control.path = ".json"
+        self.assertIsNotNone(self.control.post())
+        self.control.path = "./"
+        self.assertIsNotNone(self.control.post())
+
+    def test_put(self):
+        self.control.client = MockClient()
+        self.assertIsNone(self.control.put())
+        self.control.path = ".json"
+        self.assertIsNotNone(self.control.put())
+
+    def test_delete(self):
+        self.control.client = MockClient()
+        self.assertIsNotNone(self.control.delete())
+
+    def test_process_options(self):
+        mock_opts = [("--user", "test"),
+                     ("--pwd", "test"),
+                     ("--mode", "test"),
+                     ("--pdb_id", "test"),
+                     ("--resource", "test"),
+                     ("--path", "test"),
+                     ("--foo", "bar")]
+        self.control = Control(mock_opts, MockClient(), MockClient(), MockClient())
+        self.control.process_options()
+        self.assertIsNotNone(self.control.user_name)
+        self.assertIsNotNone(self.control.pwd)
+        self.assertIsNotNone(self.control.mode)
+        self.assertIsNotNone(self.control.pdb_id)
+        self.assertIsNotNone(self.control.path)
+        self.assertIsNotNone(self.control.resource)
+
+
