@@ -86,7 +86,7 @@ $ funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data
 
 #### Deleting an entry (1abc) from funsites
 ```
-funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+$ funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
 ```
 
 #### Updating an entry (1abc) from funsites
