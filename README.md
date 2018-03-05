@@ -36,8 +36,6 @@ $ pip install -r requirements.txt
 $ pip install funpdbe_client
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Usage
 
 Examples of usage:
