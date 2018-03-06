@@ -5,21 +5,46 @@ FunPDBe Deposition Client
 [![codecov](https://codecov.io/gh/funpdbe-consortium/funpdbe-client/branch/master/graph/badge.svg)](https://codecov.io/gh/funpdbe-consortium/funpdbe-client)
 [![Maintainability](https://api.codeclimate.com/v1/badges/eac066fbf15333153070/maintainability)](https://codeclimate.com/github/funpdbe-consortium/funpdbe-client/maintainability)
 
-This client can be used for depositing functional annotations to the FunPDBe deposition system.
+The client can be used to connect to the FunPDBe deposition system API, and perform GET, POST, PUT and DELETE calls. With the exception of GET calls, all other calls require user authentication.
 
-The FunPDBe project is described at: https://funpdbe.org
+For more information on the FunPDBe initiative, visit https://funpdbe.org
 
 Quick start
 -----------
 
-The client can be used to connect to the FunPDBe deposition system API, and perform GET, POST, PUT and DELETE calls. With the exception of GET calls, all other calls require user authentication (user name and password).
-Users (and data resources) can be registered at https://funpdbe.org
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+There are no prerequisites for installing the client, but in order to connect to the FunPDBe deposition system using this client, depositors have to register an account at https://funpdbe.org/register. Activating user accounts in dependent on admin approval.
+
+### Installing
+
+The are two main approaches to getting the client up and running.
+
+#### Checking out this repository
+
+```
+$ git clone https://github.com/funpdbe-consortium/funpdbe-client
+$ cd funpdbe-client
+$ pip install -r requirements.txt
+```
+
+#### Installing using PIP
+
+```
+$ pip install funpdbe_client
+```
+
+## Usage
 
 Examples of usage:
 
+```
 $ funpdbe_client.py --help
+```
 
-Usage parameters:
+### Parameters
 
 * -h, --help:       Help (this is what you see now)
 * -u, --user:       FunPDBe user name
@@ -30,25 +55,72 @@ Usage parameters:
 * -f, --path:       Path to JSON file (.json ending), or files (folder name)
 * -d, --debug:      Enable more detailed logging
 
-Examples:
+### Examples
 
-1.) Listing all entries
-./funpdbe_client.py -user=username -pwd=password --mode=get
+#### Listing all entries
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=get
+```
 
-2.) Listing entries for PDB id 1abc
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc
+#### Listing entries for PDB id 1abc
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc
+```
 
-3.) Listing entries from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=get --resource=funsites
+#### Listing entries from funsites
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=get --resource=funsites
+```
 
-4.) Listing entries for PDB id 1abc from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
+#### Listing entry for PDB id 1abc from funsites
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
+```
 
-5.) Posting an entry to funsites
-./funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
+#### Posting an entry to funsites
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
+```
 
-6.) Deleting an entry (1abc) from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+#### Deleting an entry (1abc) from funsites
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+```
 
-7.) Updating an entry (1abc) from funsites
-./funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
+#### Updating an entry (1abc) from funsites
+```
+$ funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
+```
+
+## Running the tests
+
+Running tests for the client is performed simply by using
+```
+$ pytest
+```
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/funpdbe-consortium/funpdbe-client/tags).
+
+## Authors
+
+* **Mihaly Varadi** - *Initial work* - [mvaradi](https://github.com/mvaradi)
+
+See also the list of [contributors](https://github.com/funpdbe-consortium/funpdbe-client/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the EMBL-EBI License - see the [LICENSE](LICENSE) file for details
+
+## Acknowledgments
+
+We would like to thank the PDBe team for their support and feedback, as well as all the members of the FunPDBe consortium:
+
+* PDBe team - [team website](https://www.ebi.ac.uk/services/teams/pdbe)
+* Orengo team - [CATH](http://www.cathdb.info/)
+* Vranken team - [DynaMine](http://dynamine.ibsquare.be/)
+* Barton team - [NoD](http://www.compbio.dundee.ac.uk/www-nod/)
+* Wass team - [3DLigandSite](http://www.sbg.bio.ic.ac.uk/3dligandsite/)
+* Blundell team - [CREDO](http://marid.bioc.cam.ac.uk/credo)
+* Fraternali team - [POPSCOMP](https://mathbio.crick.ac.uk/wiki/POPSCOMP)
