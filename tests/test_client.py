@@ -104,6 +104,12 @@ class TestClient(TestCase):
     def test_help_text(self):
         self.assertIsNotNone(self.client.__str__())
 
+    def test_no_pdb_id(self):
+        self.assertFalse(self.client.check_pdb_id(None))
+
+    def test_no_resource_name(self):
+        self.assertFalse(self.client.check_resource(None))
+
     def test_get_one_no_pdb_id(self):
         self.assertIsNone(self.client.get_one(None))
 
