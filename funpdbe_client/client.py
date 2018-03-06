@@ -99,6 +99,7 @@ Usage parameters:
     @staticmethod
     def check_pdb_id(pdb_id):
         if not pdb_id:
+            logging.error("No PDB id")
             return False
         if re.match(PDB_ID_PATTERN, pdb_id):
             return True
@@ -108,6 +109,7 @@ Usage parameters:
     @staticmethod
     def check_resource(resource):
         if not resource:
+            logging.error("No resource name")
             return False
         if resource in RESOURCES:
             return True
