@@ -5,12 +5,13 @@ from funpdbe_client.schema import Schema
 
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
-        def __init__(self, json_data, status_code):
-            self.text = '{"foo": "bar"}'
-            self.json_data = json_data
+        def __init__(self, text, status_code):
+            self.text = text
             self.status_code = status_code
     if args[0].endswith("funpdbe_schema.v0.0.1.json"):
-        return MockResponse({"resource": "ok"}, 200)
+        return MockResponse('{"foo":"bar"}', 200)
+    elif args[0].endswith("bad.json"):
+        return MockResponse("asd", 200)
     return MockResponse(None, 404)
 
 
@@ -23,6 +24,12 @@ class TestSchema(TestCase):
     def test_get_schema(self, mock):
         self.schema.get_schema()
         self.assertIsNotNone(self.schema.json_schema)
+
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_schema_bad_json(self, mock):
+        self.schema.json_url = "bad.json"
+        self.schema.get_schema()
+        self.assertIsNone(self.schema.json_schema)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_schema_bad_data(self, mock):
