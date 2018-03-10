@@ -22,6 +22,9 @@ class Schema(object):
         """
         logging.debug("Getting JSON schema")
         response = requests.get(self.json_url)
+        if response.status_code == 404:
+            logging.error(response.text)
+            return None
         try:
             self.json_schema = json.loads(response.text)
         except ValueError as valerr:
