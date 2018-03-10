@@ -1,5 +1,17 @@
 from unittest import TestCase
+from unittest import mock
 from funpdbe_client.schema import Schema
+
+
+def mocked_requests_get(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.text = '{"foo": "bar"}'
+            self.json_data = json_data
+            self.status_code = status_code
+    if args[0].endswith("funpdbe_schema.v0.0.1.json"):
+        return MockResponse({"resource": "ok"}, 200)
+    return MockResponse(None, 404)
 
 
 class TestSchema(TestCase):
@@ -7,11 +19,13 @@ class TestSchema(TestCase):
     def setUp(self):
         self.schema = Schema()
 
-    def test_get_schema(self):
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_schema(self, mock):
         self.schema.get_schema()
         self.assertIsNotNone(self.schema.json_schema)
 
-    def test_get_schema_bad_data(self):
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_schema_bad_data(self, mock):
         self.schema.json_url = "https://www.ebi.ac.uk"
         self.schema.get_schema()
         self.assertIsNone(self.schema.json_schema)
