@@ -124,7 +124,7 @@
             "description": "Date of acquiring data from source"
             }
           },
-          "required": ["site_id", "label", "source_database", "source_accession"]
+          "required": ["label", "source_database", "source_accession"]
         },
         "minItems": 1,
         "uniqueItems": true
@@ -149,5 +149,5 @@
     }
   },
 
-  "required": ["data_resource", "release_date", "pdb_id", "chains", "sites"]
+  "required": ["data_resource", "pdb_id", "chains"]
 }
