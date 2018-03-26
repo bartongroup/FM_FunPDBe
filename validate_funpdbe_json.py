@@ -1,7 +1,7 @@
 import jsonschema
 import json
 
-with open("funpdbe_schema.v0.0.1.json") as schema_file:
+with open("funpdbe_schema.v1.0.0.json") as schema_file:
     funpdbe_schema = json.load(schema_file)
 
 with open("funpdbe_example.json") as example_file:
