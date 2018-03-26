@@ -7,10 +7,8 @@ with open("funpdbe_schema.v0.0.1.json") as schema_file:
 with open("funpdbe_example.json") as example_file:
     funpdbe_example = json.load(example_file)
 
-# print(funpdbe_schema)
-# print(funpdbe_example)
-
 try:
-    print(jsonschema.validate(funpdbe_example, funpdbe_schema))
+    if not (jsonschema.validate(funpdbe_example, funpdbe_schema)):
+        print("\nJSON validated - has all the required fields and with the expected data types")
 except jsonschema.exceptions.ValidationError as valerr:
     print(valerr)
