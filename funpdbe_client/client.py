@@ -84,6 +84,8 @@ Usage parameters:
         url = self.api_url
         if resource and self.check_resource(resource):
             url += "resource/%s/" % resource
+        else:
+            logging.info("No resource name provided, returning every entry")
         r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         print(r.text)
         return r
