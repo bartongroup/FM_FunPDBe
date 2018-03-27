@@ -8,7 +8,7 @@ def mocked_requests_get(*args, **kwargs):
         def __init__(self, text, status_code):
             self.text = text
             self.status_code = status_code
-    if args[0].endswith("funpdbe_schema.v0.0.1.json"):
+    if args[0].endswith("funpdbe_schema.json"):
         return MockResponse('{"foo":"bar"}', 200)
     elif args[0].endswith("bad.json"):
         return MockResponse("asd", 200)

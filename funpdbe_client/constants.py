@@ -1,4 +1,5 @@
-API_URL = "http://127.0.0.1:8000/funpdbe_deposition/entries/"
+API_URL = "http://wp-p1m-3c.ebi.ac.uk/pdbe/funpdbe/funpdbe_deposition/entries/"
+# API_URL = "http://127.0.0.1:8000/funpdbe_deposition/entries/"
 PDB_ID_PATTERN = "[0-9][a-z][a-z0-9]{2}"
 RESOURCES = (
     "funsites",

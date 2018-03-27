@@ -12,7 +12,7 @@ class Schema(object):
 
     def __init__(self):
         self.url_base = "https://raw.githubusercontent.com/funpdbe-consortium/funpdbe_schema/master"
-        self.json_url = "%s/funpdbe_schema.v0.0.1.json" % self.url_base
+        self.json_url = "%s/funpdbe_schema.json" % self.url_base
         self.json_schema = None
 
     def get_schema(self):
