@@ -6,3 +6,6 @@
 /data/
 .coverage
 .json
+
+# local e2e tests
+funpdbe_client_functional_test.py
