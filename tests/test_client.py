@@ -67,6 +67,8 @@ def mocked_requests_get(*args, **kwargs):
         return MockResponse({"resource": "ok"}, 200)
     elif args[0].endswith("pdb/1abc/"):
         return MockResponse({"pdb": "ok"}, 200)
+    elif args[0].endswith("pdb/2abc/"):
+        return MockResponse(None, 404)
     elif args[0].endswith("/"):
         return MockResponse({"pdb": "ok"}, 200)
     return MockResponse(None, 404)
@@ -121,6 +123,11 @@ class TestClient(TestCase):
     def test_get_one_with_id(self, mock):
         call = self.client.get_one("1abc")
         self.assertEqual({"pdb": "ok"}, call.json_data)
+
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_get_one_with_id_not_exist(self, mock):
+        call = self.client.get_one("2abc")
+        self.assertIsNone(call.json_data)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_one_with_resource(self, mock):
