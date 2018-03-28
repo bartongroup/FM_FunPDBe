@@ -61,9 +61,9 @@ def mocked_requests_get(*args, **kwargs):
             self.text = "foo"
             self.json_data = json_data
             self.status_code = status_code
-    if args[0].endswith("resource/funsites/1abc/"):
+    if args[0].endswith("resource/cath-funsites/1abc/"):
         return MockResponse({"resource": "ok"}, 200)
-    elif args[0].endswith("resource/funsites/"):
+    elif args[0].endswith("resource/cath-funsites/"):
         return MockResponse({"resource": "ok"}, 200)
     elif args[0].endswith("pdb/1abc/"):
         return MockResponse({"pdb": "ok"}, 200)
@@ -78,7 +78,7 @@ def mocked_requests_post(*args, **kwargs):
             self.text = "foo"
             self.json_data = json_data
             self.status_code = status_code
-    if args[0].endswith("funsites/") or args[0].endswith("1abc/"):
+    if args[0].endswith("cath-funsites/") or args[0].endswith("1abc/"):
         return MockResponse({"bar": "ok"}, 201)
     return MockResponse(None, 404)
 
@@ -123,7 +123,7 @@ class TestClient(TestCase):
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_one_with_resource(self, mock):
-        call = self.client.get_one("1abc", "funsites")
+        call = self.client.get_one("1abc", "cath-funsites")
         self.assertEqual({"resource": "ok"}, call.json_data)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
@@ -133,7 +133,7 @@ class TestClient(TestCase):
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_all_with_resource(self, mock):
-        call = self.client.get_all("funsites")
+        call = self.client.get_all("cath-funsites")
         self.assertEqual({"resource": "ok"}, call.json_data)
 
     def test_parse_json_no_path(self):
@@ -168,20 +168,20 @@ class TestClient(TestCase):
         self.assertFalse(self.client.validate_json())
 
     def test_post_no_file(self):
-        self.assertIsNone(self.client.post(None, "funsites"))
+        self.assertIsNone(self.client.post(None, "cath-funsites"))
 
     def test_post_not_valid(self):
         with open("tmp.json", "w") as tmp:
             tmp.write('{"asd": "asd"}')
         self.client.json_data = None
-        self.assertIsNone(self.client.post("tmp.json", "funsites"))
+        self.assertIsNone(self.client.post("tmp.json", "cath-funsites"))
         os.system("rm tmp.json")
 
     @mock.patch('requests.post', side_effect=mocked_requests_post)
     def test_post(self, mock):
         with open("tmp.json", "w") as tmp:
             tmp.write('{"foo": "bar"}')
-        call = self.client.post("tmp.json", "funsites")
+        call = self.client.post("tmp.json", "cath-funsites")
         os.system("rm tmp.json")
         self.assertEqual(call.status_code, 201)
 
@@ -192,25 +192,25 @@ class TestClient(TestCase):
     def test_put(self, mock):
         with open("tmp.json", "w") as tmp:
             tmp.write('{"foo": "bar"}')
-        call = self.client.put("tmp.json", "1abc", "funsites")
+        call = self.client.put("tmp.json", "1abc", "cath-funsites")
         os.system("rm tmp.json")
         self.assertEqual(call.status_code, 201)
 
     def test_put_no_file(self):
-        self.assertIsNone(self.client.put(None, "1abc", "funsites"))
+        self.assertIsNone(self.client.put(None, "1abc", "cath-funsites"))
 
     def test_put_not_valid(self):
         with open("tmp.json", "w") as tmp:
             tmp.write('{"asd": "asd"}')
         self.client.json_data = None
-        self.assertIsNone(self.client.put("tmp.json", "1abc", "funsites"))
+        self.assertIsNone(self.client.put("tmp.json", "1abc", "cath-funsites"))
         os.system("rm tmp.json")
 
     def test_put_bad_resource(self):
         self.assertIsNone(self.client.put("foo", "1abc", "bar"))
 
     def test_put_bad_pdb_id(self):
-        self.assertIsNone(self.client.put("invalid", "something", "funsites"))
+        self.assertIsNone(self.client.put("invalid", "something", "cath-funsites"))
 
     def test_put_or_post_check(self):
         self.assertIsNotNone(self.client.put_or_post_check("post", 201, "foo"))
@@ -220,10 +220,10 @@ class TestClient(TestCase):
 
     @mock.patch('requests.delete', side_effect=mocked_requests_delete)
     def test_delete(self, mock):
-        self.assertEqual(self.client.delete_one("1abc", "funsites").status_code, 301)
+        self.assertEqual(self.client.delete_one("1abc", "cath-funsites").status_code, 301)
 
     def test_delete_bad_pdb_id(self):
-        self.assertIsNone(self.client.delete_one("invalid", "funsites"))
+        self.assertIsNone(self.client.delete_one("invalid", "cath-funsites"))
 
     def test_delete_bad_resource(self):
         self.assertIsNone(self.client.delete_one("1abc", "invalid"))
@@ -235,7 +235,7 @@ class TestClient(TestCase):
         self.assertFalse(self.client.check_pdb_id("whatever"))
 
     def test_check_resource_valid(self):
-        self.assertTrue(self.client.check_resource("funsites"))
+        self.assertTrue(self.client.check_resource("cath-funsites"))
 
     def test_check_resource_invalid(self):
         self.assertFalse(self.client.check_resource("whatever"))
