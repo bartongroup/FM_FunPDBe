@@ -89,7 +89,8 @@ def mocked_requests_delete(*args, **kwargs):
             self.text = "foo"
             self.json_data = json_data
             self.status_code = status_code
-    if args[0].endswith("/"):
+
+    if args[0].endswith("1abc/"):
         return MockResponse({"foo": "bar"}, 301)
     return MockResponse(None, 404)
 
@@ -220,7 +221,11 @@ class TestClient(TestCase):
 
     @mock.patch('requests.delete', side_effect=mocked_requests_delete)
     def test_delete(self, mock):
-        self.assertEqual(self.client.delete_one("1abc", "cath-funsites").status_code, 301)
+        self.assertEqual(self.client.delete_one("1abc", "nod").status_code, 301)
+
+    @mock.patch('requests.delete', side_effect=mocked_requests_delete)
+    def test_delete_not_there(self, mock):
+        self.assertEqual(self.client.delete_one("2abc", "nod").status_code, 404)
 
     def test_delete_bad_pdb_id(self):
         self.assertIsNone(self.client.delete_one("invalid", "cath-funsites"))
