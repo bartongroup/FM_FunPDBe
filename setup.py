@@ -8,7 +8,7 @@ with open('LICENSE') as f:
 
 setup(
     name='funpdbe_client',
-    version='1.1.1',
+    version='1.0.0',
     description='Deposition client for FunPDBe',
     long_description=readme,
     author='Mihaly Varadi',
