@@ -71,25 +71,29 @@ Usage parameters:
             message += " from %s" % resource
         self.logger.log().info(message)
 
-        if not self.check_exists(pdb_id, "no_pdb"):
-            return None
         if not self.check_pdb_id(pdb_id):
             return None
 
         self.user_info()
+        url = self.construct_get_url(resource, pdb_id)
+        r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
+
+        if(r.status_code == 200):
+            self.logger.log().info("[%i] success" % r.status_code)
+        else:
+            self.log_api_error(r.status_code, r.text)
+
+        print(r.text)
+        return r
+
+    def construct_get_url(self, resource=None, pdb_id=None):
         url = self.api_url
         if resource and self.check_resource(resource):
             url += "resource/%s/" % resource
         else:
             url += "pdb/"
         url += "%s/" % pdb_id
-        r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
-        if(r.status_code == 200):
-            self.logger.log().info("[%i] success" % r.status_code)
-        else:
-            self.log_api_error(r.status_code, r.text)
-        print(r.text)
-        return r
+        return url
 
     def get_all(self, resource=None):
         """
