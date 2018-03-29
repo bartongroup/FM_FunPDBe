@@ -13,31 +13,30 @@
 # language governing permissions and limitations under the
 # License.
 
-import logging
 import glob
+from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 
+CONTROL_ERRORS = {
+    "no_mode": "No running mode was specified (--mode=)",
+    "no_path": "No path to JSON file(s) provided"
+}
 
 class Control(object):
 
     def __init__(self, opts, client):
         self.opts = opts
         self.client = client
-        self.user_name = None
-        self.pwd = None
-        self.mode = None
-        self.pdb_id = None
-        self.resource = None
-        self.path = None
         self.help = False
+        self.logger = FunPDBeClientLogger("control")
 
     def run(self):
-        logging.basicConfig(level=logging.INFO)
         self.process_options()
         self.configure()
         if self.help:
             print(self.client)
         elif not self.mode:
-            logging.error("Running mode not specified")
+            generic_error()
+            self.logger.log().error(CONTROL_ERRORS["no_mode"])
         else:
             return self.action()
 
@@ -66,7 +65,7 @@ class Control(object):
 
     def post(self):
         if not self.path:
-            logging.error("No path to JSON file(s) provided")
+            self.logger.log().error(CONTROL_ERRORS["no_path"])
             return None
         if self.path.endswith(".json"):
             return self.client.post(self.path, self.resource)
@@ -78,45 +77,26 @@ class Control(object):
 
     def put(self):
         if not self.path:
-            logging.error("No path to JSON file(s) provided")
+            self.logger.log().error(CONTROL_ERRORS["no_path"])
             return None
         return self.client.put(self.path, self.pdb_id, self.resource)
 
     def delete(self):
         return self.client.delete_one(self.pdb_id, self.resource)
 
-    def set_path(self):
-        self.path = self.loop_options("-f", "--path")
-
-    def set_pdb_id(self):
-        self.pdb_id = self.loop_options("-i", "--pdb_id")
-
-    def set_mode(self):
-        self.mode = self.loop_options("-m", "--mode")
-
-    def set_resource(self):
-        self.resource = self.loop_options("-r", "--resource")
-
-    def set_user(self):
-        self.user_name = self.loop_options("-u", "--user")
-
-    def set_pwd(self):
-        self.pwd = self.loop_options("-p", "--pwd")
-
     def loop_options(self, opt1, opt2):
         for option, value in self.opts:
             if option == opt1 or option == opt2:
                 return value
+        return None
 
     def process_options(self):
-        self.set_path()
-        self.set_pdb_id()
-        self.set_mode()
-        self.set_resource()
-        self.set_user()
-        self.set_pwd()
+        self.path = self.loop_options("-f", "--path")
+        self.pdb_id = self.loop_options("-i", "--pdb_id")
+        self.mode = self.loop_options("-m", "--mode")
+        self.resource = self.loop_options("-r", "--resource")
+        self.user_name = self.loop_options("-u", "--user")
+        self.pwd = self.loop_options("-p", "--pwd")
         for option, value in self.opts:
             if option in ["-h", "--help"]:
                 self.help = True
-            elif option in ["-d", "--debug"]:
-                logging.basicConfig(level=logging.DEBUG)

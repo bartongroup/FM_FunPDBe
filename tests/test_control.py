@@ -84,6 +84,12 @@ class TestControl(TestCase):
     def setUp(self):
         mock_opts = [("--user", "test"), ("--pwd", "test")]
         self.control = Control(mock_opts, MockObject(MockUser()))
+        self.control.user_name = None
+        self.control.pwd = None
+        self.control.mode = None
+        self.control.pdb_id = None
+        self.control.resource = None
+        self.control.path = None
 
     def test_run_no_mode(self):
         self.control.debug = True
