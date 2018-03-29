@@ -220,12 +220,6 @@ class TestClient(TestCase):
     def test_put_bad_pdb_id(self):
         self.assertIsNone(self.client.put("invalid", "something", "cath-funsites"))
 
-    def test_put_or_post_check(self):
-        self.assertIsNotNone(self.client.put_or_post_check("post", 201, "foo"))
-
-    def test_put_or_post_check_bad(self):
-        self.assertIsNone(self.client.put_or_post_check("post", 404, "foo"))
-
     @mock.patch('requests.delete', side_effect=mocked_requests_delete)
     def test_delete(self, mock):
         self.assertEqual(self.client.delete_one("1abc", "nod").status_code, 301)
