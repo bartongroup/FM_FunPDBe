@@ -17,3 +17,6 @@ class FunPDBeClientLogger(object):
 
     def log(self):
         return self.logger
+
+def generic_error():
+    print("FAILED - check %s for details" % LOG_FILENAME)

@@ -19,7 +19,7 @@ from funpdbe_client.control import Control
 from funpdbe_client.client import Client
 from funpdbe_client.user import User
 from funpdbe_client.schema import Schema
-from funpdbe_client.logger_config import FunPDBeClientLogger
+from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 
 
 def main():
@@ -27,17 +27,16 @@ def main():
     logger = FunPDBeClientLogger(name="main")
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:hd", [
+        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:h", [
             "user=",
             "pwd=",
             "mode=",
             "pdb_id=",
             "resource=",
             "path=",
-            "help",
-            "debug"])
+            "help"])
     except getopt.GetoptError as err:
-        print(err)
+        generic_error()
         logger.log().error(err)
         sys.exit(2)
 
