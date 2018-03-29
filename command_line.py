@@ -24,7 +24,7 @@ from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 
 def main():
 
-    logger = FunPDBeClientLogger(name="main")
+    logger = FunPDBeClientLogger(name="main", write_mode="w")
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:h", [
