@@ -19,9 +19,12 @@ from funpdbe_client.control import Control
 from funpdbe_client.client import Client
 from funpdbe_client.user import User
 from funpdbe_client.schema import Schema
+from funpdbe_client.logger_config import FunPDBeClientLogger
 
 
 def main():
+
+    logger = FunPDBeClientLogger(name="main")
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:hd", [
@@ -34,7 +37,8 @@ def main():
             "help",
             "debug"])
     except getopt.GetoptError as err:
-        print("Error: %s" % err)
+        print(err)
+        logger.log().error(err)
         sys.exit(2)
 
     schema = Schema()
@@ -42,6 +46,8 @@ def main():
     client = Client(schema, user)
     if opts:
         Control(opts, client=client).run()
+    else:
+        Control([('--help', '')], client=client).run()
 
 
 if __name__ == '__main__':
