@@ -21,16 +21,25 @@ CONTROL_ERRORS = {
     "no_path": "No path to JSON file(s) provided"
 }
 
+
 class Control(object):
 
     def __init__(self, opts, client):
         self.opts = opts
         self.client = client
+        self.path = self.loop_options("-f", "--path")
+        self.pdb_id = self.loop_options("-i", "--pdb_id")
+        self.mode = self.loop_options("-m", "--mode")
+        self.resource = self.loop_options("-r", "--resource")
+        self.user_name = self.loop_options("-u", "--user")
+        self.pwd = self.loop_options("-p", "--pwd")
         self.help = False
+        for option, value in self.opts:
+            if option in ["-h", "--help"]:
+                self.help = True
         self.logger = FunPDBeClientLogger("control")
 
     def run(self):
-        self.process_options()
         self.configure()
         if self.help:
             print(self.client)
@@ -89,14 +98,3 @@ class Control(object):
             if option == opt1 or option == opt2:
                 return value
         return None
-
-    def process_options(self):
-        self.path = self.loop_options("-f", "--path")
-        self.pdb_id = self.loop_options("-i", "--pdb_id")
-        self.mode = self.loop_options("-m", "--mode")
-        self.resource = self.loop_options("-r", "--resource")
-        self.user_name = self.loop_options("-u", "--user")
-        self.pwd = self.loop_options("-p", "--pwd")
-        for option, value in self.opts:
-            if option in ["-h", "--help"]:
-                self.help = True

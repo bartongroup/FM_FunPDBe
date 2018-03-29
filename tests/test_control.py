@@ -84,12 +84,12 @@ class TestControl(TestCase):
     def setUp(self):
         mock_opts = [("--user", "test"), ("--pwd", "test")]
         self.control = Control(mock_opts, MockObject(MockUser()))
-        self.control.user_name = None
-        self.control.pwd = None
-        self.control.mode = None
-        self.control.pdb_id = None
-        self.control.resource = None
-        self.control.path = None
+        # self.control.user_name = None
+        # self.control.pwd = None
+        # self.control.mode = None
+        # self.control.pdb_id = None
+        # self.control.resource = None
+        # self.control.path = None
 
     def test_run_no_mode(self):
         self.control.debug = True
@@ -98,9 +98,8 @@ class TestControl(TestCase):
         self.assertIsNone(self.control.run())
 
     def test_run_help(self):
-        mock_opts = [("--help", "help"), ("--debug", "debug")]
+        mock_opts = [("--help", "help")]
         self.control = Control(mock_opts, MockObject(MockUser()))
-        self.control.process_options()
         self.assertIsNone(self.control.run())
 
     def mock_function(self):
@@ -147,23 +146,3 @@ class TestControl(TestCase):
     def test_delete(self):
         self.control.client = MockObject(MockUser())
         self.assertIsNotNone(self.control.delete())
-
-    def test_process_options(self):
-        mock_opts = [("--user", "test"),
-                     ("--pwd", "test"),
-                     ("--mode", "test"),
-                     ("--pdb_id", "test"),
-                     ("--resource", "test"),
-                     ("--path", "test"),
-                     ("--debug", "debug"),
-                     ("--foo", "bar")]
-        self.control = Control(mock_opts, MockObject(MockUser()))
-        self.control.process_options()
-        self.assertIsNotNone(self.control.user_name)
-        self.assertIsNotNone(self.control.pwd)
-        self.assertIsNotNone(self.control.mode)
-        self.assertIsNotNone(self.control.pdb_id)
-        self.assertIsNotNone(self.control.path)
-        self.assertIsNotNone(self.control.resource)
-
-
