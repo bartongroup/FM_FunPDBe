@@ -15,6 +15,7 @@ class FunPDBeClientLogger(object):
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         config.setFormatter(formatter)
         self.logger.addHandler(config)
+        self.logger.setLevel("INFO")
 
     def log(self):
         return self.logger
