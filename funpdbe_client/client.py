@@ -16,7 +16,6 @@
 import requests
 import json
 import re
-import logging
 from funpdbe_client.constants import PDB_ID_PATTERN, API_URL, RESOURCES
 from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 
@@ -72,9 +71,7 @@ Usage parameters:
             message += " from %s" % resource
         self.logger.log().info(message)
 
-        if not pdb_id:
-            self.logger.log().error(CLIENT_ERRORS["no_pdb"])
-            generic_error()
+        if not self.check_exists(pdb_id, "no_pdb"):
             return None
         if not self.check_pdb_id(pdb_id):
             return None
@@ -88,7 +85,7 @@ Usage parameters:
         url += "%s/" % pdb_id
         r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         if(r.status_code == 200):
-            self.logger.log().info("[%i] success")
+            self.logger.log().info("[%i] success" % r.status_code)
         else:
             self.log_api_error(r.status_code, r.text)
         print(r.text)
@@ -188,8 +185,7 @@ Usage parameters:
         :param pdb_id: String
         :return: Boolean
         """
-        if not pdb_id:
-            self.logger.log().error(CLIENT_ERRORS["no_pdb"])
+        if not self.check_exists(pdb_id, "no_pdb"):
             return False
         if re.match(PDB_ID_PATTERN, pdb_id):
             return True
@@ -204,9 +200,7 @@ Usage parameters:
         :param resource: String
         :return: Boolean
         """
-        if not resource:
-            self.logger.log().error(CLIENT_ERRORS["no_resource"])
-            generic_error()
+        if not self.check_exists(resource, "no_resource"):
             return False
         if resource in RESOURCES:
             return True
@@ -220,8 +214,7 @@ Usage parameters:
         :param path: String, path to JSON
         :return: Boolean
         """
-        if not path:
-            self.logger.log().error(CLIENT_ERRORS["no_path"])
+        if not self.check_exists(path, "no_path"):
             return None
         try:
             with open(path) as json_file:
@@ -257,10 +250,16 @@ Usage parameters:
         if response.status_code == expected:
             self.logger.log().info("[%i] SUCCESS" % response.status_code)
         else:
-            logging.error("[%i] FAIL - %s" % (response.status_code, response.text))
+            self.logger.log().error("[%i] FAIL - %s" % (response.status_code, response.text))
 
     def log_api_error(self, status_code, text):
         self.logger.log().error("[%s] - %s" % (status_code, text))
+
+    def check_exists(self, value, error):
+        if value:
+            return True
+        self.logger.log().error(CLIENT_ERRORS[error])
+        return False
 
     def user_info(self):
         """

@@ -73,8 +73,7 @@ class Control(object):
             return self.client.get_all(self.resource)
 
     def post(self):
-        if not self.path:
-            self.logger.log().error(CONTROL_ERRORS["no_path"])
+        if not self.check_path():
             return None
         if self.path.endswith(".json"):
             return self.client.post(self.path, self.resource)
@@ -85,8 +84,7 @@ class Control(object):
             return True
 
     def put(self):
-        if not self.path:
-            self.logger.log().error(CONTROL_ERRORS["no_path"])
+        if not self.check_path():
             return None
         return self.client.put(self.path, self.pdb_id, self.resource)
 
@@ -98,3 +96,9 @@ class Control(object):
             if option == opt1 or option == opt2:
                 return value
         return None
+
+    def check_path(self):
+        if not self.path:
+            self.logger.log().error(CONTROL_ERRORS["no_path"])
+            return False
+        return True
