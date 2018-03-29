@@ -40,6 +40,10 @@ class Control(object):
         self.logger = FunPDBeClientLogger("control")
 
     def run(self):
+        """
+        Main entry point
+        :return: Response.text or None
+        """
         self.configure()
         if self.help:
             print(self.client)
@@ -52,6 +56,11 @@ class Control(object):
         return None
 
     def action(self):
+        """
+        API calls that can be performed by
+        the client
+        :return: Response.text or None
+        """
         actions = {
             "get": self.get,
             "post": self.post,
@@ -63,16 +72,28 @@ class Control(object):
         return None
 
     def configure(self):
+        """
+        Set the user name and password
+        :return: None
+        """
         self.client.user.user_name = self.user_name
         self.client.user.user_pwd = self.pwd
 
     def get(self):
+        """
+        Make GET call
+        :return: Response.text or None
+        """
         if self.pdb_id:
             return self.client.get_one(self.pdb_id, self.resource)
         else:
             return self.client.get_all(self.resource)
 
     def post(self):
+        """
+        Make POST call
+        :return: Response.text or None
+        """
         if not self.check_path():
             return None
         if self.path.endswith(".json"):
@@ -84,20 +105,38 @@ class Control(object):
             return True
 
     def put(self):
+        """
+        Make PUT (update) call
+        :return: Response.text or None
+        """
         if not self.check_path():
             return None
         return self.client.put(self.path, self.pdb_id, self.resource)
 
     def delete(self):
+        """
+        Make DELETE call
+        :return: Response.text or None
+        """
         return self.client.delete_one(self.pdb_id, self.resource)
 
     def loop_options(self, opt1, opt2):
+        """
+        Loop through options
+        :param opt1: String
+        :param opt2: String
+        :return: String or None
+        """
         for option, value in self.opts:
             if option == opt1 or option == opt2:
                 return value
         return None
 
     def check_path(self):
+        """
+        Check if path exists
+        :return: Boolean
+        """
         if not self.path:
             self.logger.log().error(CONTROL_ERRORS["no_path"])
             return False

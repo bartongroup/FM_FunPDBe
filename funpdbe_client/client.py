@@ -86,15 +86,6 @@ Usage parameters:
         print(r.text)
         return r
 
-    def construct_get_url(self, resource=None, pdb_id=None):
-        url = self.api_url
-        if resource and self.check_resource(resource):
-            url += "resource/%s/" % resource
-        else:
-            url += "pdb/"
-        url += "%s/" % pdb_id
-        return url
-
     def get_all(self, resource=None):
         """
         Get all FunPDBe entries, optionally filtered
@@ -181,6 +172,22 @@ Usage parameters:
         self.check_status(r, 301)
         return r
 
+    def construct_get_url(self, resource=None, pdb_id=None):
+        """
+        Create the GET URL based on resource
+        and pdb_id
+        :param resource: String
+        :param pdb_id: String
+        :return: String
+        """
+        url = self.api_url
+        if resource and self.check_resource(resource):
+            url += "resource/%s/" % resource
+        else:
+            url += "pdb/"
+        url += "%s/" % pdb_id
+        return url
+
     def check_pdb_id(self, pdb_id):
         """
         Check if PDB id exists and if it matches
@@ -238,7 +245,7 @@ Usage parameters:
     def validate_json(self):
         """
         Validate JSON against schema
-        :return: Boolean, True if validated JSON, False if not
+        :return: Boolean
         """
         if not self.schema.json_schema:
             self.schema.get_schema()
@@ -250,16 +257,36 @@ Usage parameters:
         return False
 
     def check_status(self, response, expected):
-
+        """
+        Check if status code is what is expected
+        and log message accordingly
+        :param response: Response
+        :param expected: Int
+        :return: None
+        """
         if response.status_code == expected:
             self.logger.log().info("[%i] SUCCESS" % response.status_code)
         else:
             self.logger.log().error("[%i] FAIL - %s" % (response.status_code, response.text))
 
     def log_api_error(self, status_code, text):
+        """
+        Log error based on status code and
+        response text
+        :param status_code: Int
+        :param text: String
+        :return: None
+        """
         self.logger.log().error("[%s] - %s" % (status_code, text))
 
     def check_exists(self, value, error):
+        """
+        Check if a value is not none, and
+        log error message if it is
+        :param value: Any
+        :param error: String
+        :return: Boolean
+        """
         if value:
             return True
         self.logger.log().error(CLIENT_ERRORS[error])

@@ -23,6 +23,10 @@ from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 
 
 def main():
+    """
+    Main entry point for the FunPDBe client
+    :return: None
+    """
 
     logger = FunPDBeClientLogger(name="main", write_mode="w")
 

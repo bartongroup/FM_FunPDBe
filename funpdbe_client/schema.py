@@ -63,6 +63,12 @@ class Schema(object):
 
     @staticmethod
     def clean_json(json_data):
+        """
+        Convert source-database and pdb_id Strings to
+        lower case uniformly
+        :param json_data: JSON
+        :return: JSON
+        """
         json_copy = json_data
         for i in range(len(json_data["sites"])):
             json_copy["sites"][i]["source_database"] = json_data["sites"][i]["source_database"].lower()

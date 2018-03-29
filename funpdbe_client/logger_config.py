@@ -18,6 +18,12 @@ from funpdbe_client.constants import LOG_FILENAME
 
 
 class FunPDBeClientLogger(object):
+    """
+    The FunPDBe client uses logging to log
+    information and error to an output
+    file. The file path is defined in
+    constants.LOG_FILENAME
+    """
 
     def __init__(self, name="general", write_mode="a"):
         self.write_mode = write_mode
@@ -25,6 +31,10 @@ class FunPDBeClientLogger(object):
         self.configure()
 
     def configure(self):
+        """
+        Configure a handler for the logger
+        :return: None
+        """
         config = logging.FileHandler(LOG_FILENAME, mode=self.write_mode)
         config.setLevel(logging.INFO)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -33,7 +43,16 @@ class FunPDBeClientLogger(object):
         self.logger.setLevel("INFO")
 
     def log(self):
+        """
+        Get the logger
+        :return: Logger
+        """
         return self.logger
 
 def generic_error():
+    """
+    Print a generic error message that points
+    to the log file
+    :return: None
+    """
     print("FAILED - check %s for details" % LOG_FILENAME)
