@@ -13,11 +13,8 @@
 # language governing permissions and limitations under the
 # License.
 
-# These are the URLs of the API of the FunPDBe deposition system
-    # internal EBI test URL
-# API_URL = "http://wp-p1m-3c.ebi.ac.uk/pdbe/funpdbe/funpdbe_deposition/entries/"
-    # local test URL
-API_URL = "http://127.0.0.1:8000/funpdbe_deposition/entries/"
+# These is the URL of the API of the FunPDBe deposition system
+API_URL = "https://www.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
 
 # This is the file name of the log file that the client generates
 LOG_FILENAME = 'client.log'
