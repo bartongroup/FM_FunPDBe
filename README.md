@@ -30,12 +30,6 @@ $ cd funpdbe-client
 $ pip install -r requirements.txt
 ```
 
-#### Installing using PIP
-
-```
-$ pip install funpdbe_client
-```
-
 ## Usage
 
 Examples of usage:
