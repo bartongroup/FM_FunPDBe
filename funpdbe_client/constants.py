@@ -14,7 +14,7 @@
 # License.
 
 # These is the URL of the API of the FunPDBe deposition system
-API_URL = "https://www.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
+API_URL = "https://wwwdev.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
 
 # This is the file name of the log file that the client generates
 LOG_FILENAME = 'client.log'
