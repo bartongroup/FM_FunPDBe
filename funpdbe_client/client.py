@@ -254,6 +254,7 @@ Usage parameters:
             self.json_data = self.schema.clean_json(self.json_data)
             return True
         self.logger.log().error(CLIENT_ERRORS["bad_json"])
+        generic_error()
         return False
 
     def check_status(self, response, expected):
@@ -267,6 +268,7 @@ Usage parameters:
         if response.status_code == expected:
             self.logger.log().info("[%i] SUCCESS" % response.status_code)
         else:
+            generic_error()
             self.logger.log().error("[%i] FAIL - %s" % (response.status_code, response.text))
 
     def log_api_error(self, status_code, text):
