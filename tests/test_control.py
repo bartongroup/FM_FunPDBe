@@ -42,7 +42,7 @@ class MockObject(object):
 
     @staticmethod
     def post(arg1, arg2):
-        return True
+        return MockResponse()
 
     @staticmethod
     def put(arg1, arg2, arg3):
@@ -52,6 +52,11 @@ class MockObject(object):
     def delete_one(arg1, arg2):
         return True
 
+
+class MockResponse(object):
+
+    def __init__(self):
+        self.status_code = 200
 
 class MockClient(object):
 
