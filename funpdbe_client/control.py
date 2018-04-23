@@ -94,15 +94,24 @@ class Control(object):
         Make POST call
         :return: Response.text or None
         """
+        response = None
         if not self.check_path():
-            return None
+            return response
         if self.path.endswith(".json"):
-            return self.client.post(self.path, self.resource)
+            response = self.client.post(self.path, self.resource)
         else:
+            attempted = 0
+            succeeded = 0
             for json_path in glob.glob("%s/*.json" % self.path):
-                self.client.post(json_path, self.resource)
+                response = self.client.post(json_path, self.resource)
                 self.client.json_data = None
-            return True
+                if response.status_code == 201:
+                    succeeded += 1
+                attempted += 1
+            message = "Batch POSTing: %i out of %i POSTed successfully" % (succeeded, attempted)
+            self.logger.log().info(message)
+            print(message)
+        return response
 
     def put(self):
         """
