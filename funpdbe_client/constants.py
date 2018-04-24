@@ -26,6 +26,11 @@ CLIENT_ERRORS = {
     "bad_json": "JSON does not comply with FunPDBe schema"
 }
 
+CONTROL_ERRORS = {
+    "no_mode": "No running mode was specified (--mode=)",
+    "no_path": "No path to JSON file(s) provided"
+}
+
 # This is the file name of the log file that the client generates
 LOG_FILENAME = 'client.log'
 

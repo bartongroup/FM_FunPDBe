@@ -15,11 +15,7 @@
 
 import glob
 from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
-
-CONTROL_ERRORS = {
-    "no_mode": "No running mode was specified (--mode=)",
-    "no_path": "No path to JSON file(s) provided"
-}
+from funpdbe_client.constants import CONTROL_ERRORS
 
 
 class Control(object):
