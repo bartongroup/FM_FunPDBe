@@ -56,7 +56,7 @@ class MockObject(object):
 class MockResponse(object):
 
     def __init__(self):
-        self.status_code = 200
+        self.status_code = 201
 
 class MockClient(object):
 
