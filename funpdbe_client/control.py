@@ -100,10 +100,15 @@ class Control(object):
         if self.path.endswith(".json"):
             response = self.client.post(self.path, self.resource)
         else:
-            response = self.batch_post(response)
+            response = self.batch_post()
         return response
 
-    def batch_post(self, response):
+    def batch_post(self):
+        """
+        Make batch POST call
+        :return: Response
+        """
+        response = None
         attempted = 0
         succeeded = 0
         for json_path in glob.glob("%s/*.json" % self.path):

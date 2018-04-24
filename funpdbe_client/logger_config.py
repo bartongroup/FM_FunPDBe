@@ -49,6 +49,7 @@ class FunPDBeClientLogger(object):
         """
         return self.logger
 
+
 def generic_error():
     """
     Print a generic error message that points
