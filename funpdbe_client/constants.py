@@ -15,6 +15,16 @@
 
 # These is the URL of the API of the FunPDBe deposition system
 API_URL = "https://wwwdev.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
+# API_URL = "http://127.0.0.1:8000/entries/"
+
+CLIENT_ERRORS = {
+    "no_pdb": "No PDB identifier specified",
+    "bad_pdb": "Invalid PDB identifier pattern",
+    "no_resource": "No resource name specified",
+    "unknown_resource": "Unknown resource name",
+    "no_path": "No file path to JSON(s) specified",
+    "bad_json": "JSON does not comply with FunPDBe schema"
+}
 
 # This is the file name of the log file that the client generates
 LOG_FILENAME = 'client.log'
