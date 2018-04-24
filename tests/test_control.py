@@ -52,36 +52,22 @@ class MockObject(object):
     def delete_one(arg1, arg2):
         return True
 
+    @staticmethod
+    def parse_json(path):
+        if path:
+            return True
+        return False
+
+    @staticmethod
+    def validate_json():
+        return True
+
+
 
 class MockResponse(object):
 
     def __init__(self):
         self.status_code = 201
-
-class MockClient(object):
-
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def get_one(arg1, arg2):
-        return True
-
-    @staticmethod
-    def get_all(arg1):
-        return True
-
-    @staticmethod
-    def post(arg1, arg2):
-        return True
-
-    @staticmethod
-    def put(arg1, arg2, arg3):
-        return True
-
-    @staticmethod
-    def delete_one(arg1, arg2):
-        return True
 
 
 class TestControl(TestCase):
@@ -89,12 +75,6 @@ class TestControl(TestCase):
     def setUp(self):
         mock_opts = [("--user", "test"), ("--pwd", "test")]
         self.control = Control(mock_opts, MockObject(MockUser()))
-        # self.control.user_name = None
-        # self.control.pwd = None
-        # self.control.mode = None
-        # self.control.pdb_id = None
-        # self.control.resource = None
-        # self.control.path = None
 
     def test_run_no_mode(self):
         self.control.debug = True
@@ -151,3 +131,19 @@ class TestControl(TestCase):
     def test_delete(self):
         self.control.client = MockObject(MockUser())
         self.assertIsNotNone(self.control.delete())
+
+    def test_single_validate(self):
+        self.assertFalse(self.control.single_validate(None))
+        self.assertTrue(self.control.single_validate("path/to/json"))
+
+    def test_validate(self):
+        self.control.path = None
+        self.assertFalse(self.control.validate())
+        self.control.path = "path/to/file.json"
+        self.assertTrue(self.control.validate())
+        self.control.path = "tests/"
+        self.assertTrue(self.control.validate())
+        self.control.single_validate = lambda x: False
+        self.assertFalse(self.control.validate())
+
+

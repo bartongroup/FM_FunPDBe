@@ -61,7 +61,8 @@ class Control(object):
             "get": self.get,
             "post": self.post,
             "put": self.put,
-            "delete": self.delete
+            "delete": self.delete,
+            "validate": self.validate
         }
         if self.mode in actions.keys():
             return actions[self.mode]()
@@ -74,6 +75,35 @@ class Control(object):
         """
         self.client.user.user_name = self.user_name
         self.client.user.user_pwd = self.pwd
+
+    def validate(self):
+        """
+        Validate one or more JSON files against
+        FunPDBe Schema
+        :return: None
+        """
+        if not self.check_path():
+            return False
+
+        if self.path.endswith(".json"):
+            return self.single_validate(self.path)
+        else:
+            all_valid = True
+            for json_path in glob.glob("%s/*.json" % self.path):
+                if not self.single_validate(json_path):
+                    all_valid = False
+            return all_valid
+
+    def single_validate(self, path):
+        """
+        Validate a single JSON
+        :param path: String
+        :return: Boolean
+        """
+        print("Parsing and validating %s" % path)
+        if self.client.parse_json(path):
+            return self.client.validate_json()
+        return False
 
     def get(self):
         """
