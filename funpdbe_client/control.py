@@ -100,17 +100,21 @@ class Control(object):
         if self.path.endswith(".json"):
             response = self.client.post(self.path, self.resource)
         else:
-            attempted = 0
-            succeeded = 0
-            for json_path in glob.glob("%s/*.json" % self.path):
-                response = self.client.post(json_path, self.resource)
-                self.client.json_data = None
-                if response.status_code == 201:
-                    succeeded += 1
-                attempted += 1
-            message = "Batch POSTing: %i out of %i POSTed successfully" % (succeeded, attempted)
-            self.logger.log().info(message)
-            print(message)
+            response = self.batch_post(response)
+        return response
+
+    def batch_post(self, response):
+        attempted = 0
+        succeeded = 0
+        for json_path in glob.glob("%s/*.json" % self.path):
+            response = self.client.post(json_path, self.resource)
+            self.client.json_data = None
+            if response.status_code == 201:
+                succeeded += 1
+            attempted += 1
+        message = "Batch POSTing: %i out of %i POSTed successfully" % (succeeded, attempted)
+        self.logger.log().info(message)
+        print(message)
         return response
 
     def put(self):
