@@ -16,17 +16,9 @@
 import requests
 import json
 import re
-from funpdbe_client.constants import PDB_ID_PATTERN, API_URL, RESOURCES
+from funpdbe_client.constants import PDB_ID_PATTERN, API_URL, RESOURCES, CLIENT_ERRORS
 from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
-
-CLIENT_ERRORS = {
-    "no_pdb": "No PDB identifier specified",
-    "bad_pdb": "Invalid PDB identifier pattern",
-    "no_resource": "No resource name specified",
-    "unknown_resource": "Unknown resource name",
-    "no_path": "No file path to JSON(s) specified",
-    "bad_json": "JSON does not comply with FunPDBe schema"
-}
+from funpdbe_client.utils import check_exists, check_status
 
 
 class Client(object):
@@ -78,7 +70,7 @@ Usage parameters:
         url = self.construct_get_url(resource, pdb_id)
         r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
 
-        if(r.status_code == 200):
+        if r.status_code == 200:
             self.logger.log().info("[%i] success" % r.status_code)
         else:
             self.log_api_error(r.status_code, r.text)
@@ -125,7 +117,7 @@ Usage parameters:
         url = self.api_url
         url += "resource/%s/" % resource
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        self.check_status(r, 201)
+        check_status(r, 201, self.logger)
         return r
 
     def put(self, path, pdb_id, resource):
@@ -148,7 +140,7 @@ Usage parameters:
         url = self.api_url
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.post(url, json=self.json_data, auth=(self.user.user_name, self.user.user_pwd))
-        self.check_status(r, 201)
+        check_status(r, 201, self.logger)
         return r
 
     def delete_one(self, pdb_id, resource):
@@ -169,7 +161,7 @@ Usage parameters:
         url = self.api_url
         url += "resource/%s/%s/" % (resource, pdb_id)
         r = requests.delete(url, auth=(self.user.user_name, self.user.user_pwd))
-        self.check_status(r, 301)
+        check_status(r, 301, self.logger)
         return r
 
     def construct_get_url(self, resource=None, pdb_id=None):
@@ -196,7 +188,7 @@ Usage parameters:
         :param pdb_id: String
         :return: Boolean
         """
-        if not self.check_exists(pdb_id, "no_pdb"):
+        if not check_exists(pdb_id, "no_pdb", self.logger):
             return False
         if re.match(PDB_ID_PATTERN, pdb_id):
             return True
@@ -211,7 +203,7 @@ Usage parameters:
         :param resource: String
         :return: Boolean
         """
-        if not self.check_exists(resource, "no_resource"):
+        if not check_exists(resource, "no_resource", self.logger):
             return False
         if resource in RESOURCES:
             return True
@@ -225,7 +217,7 @@ Usage parameters:
         :param path: String, path to JSON
         :return: Boolean
         """
-        if not self.check_exists(path, "no_path"):
+        if not check_exists(path, "no_path", self.logger):
             return None
         try:
             with open(path) as json_file:
@@ -257,20 +249,6 @@ Usage parameters:
         generic_error()
         return False
 
-    def check_status(self, response, expected):
-        """
-        Check if status code is what is expected
-        and log message accordingly
-        :param response: Response
-        :param expected: Int
-        :return: None
-        """
-        if response.status_code == expected:
-            self.logger.log().info("[%i] SUCCESS" % response.status_code)
-        else:
-            generic_error()
-            self.logger.log().error("[%i] FAIL - %s" % (response.status_code, response.text))
-
     def log_api_error(self, status_code, text):
         """
         Log error based on status code and
@@ -280,19 +258,6 @@ Usage parameters:
         :return: None
         """
         self.logger.log().error("[%s] - %s" % (status_code, text))
-
-    def check_exists(self, value, error):
-        """
-        Check if a value is not none, and
-        log error message if it is
-        :param value: Any
-        :param error: String
-        :return: Boolean
-        """
-        if value:
-            return True
-        self.logger.log().error(CLIENT_ERRORS[error])
-        return False
 
     def user_info(self):
         """
