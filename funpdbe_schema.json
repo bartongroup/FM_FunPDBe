@@ -130,7 +130,8 @@
               "pattern": "^[0-3][0-9]/[0-1][0-9]/[1-2][0-9]{3}$"
             }
           },
-          "required": ["site_id", "label", "source_database", "source_accession"]
+          "required": ["site_id", "label", "source_database", "source_accession"],
+          "additionalProperties": false
         },
         "minItems": 1,
         "uniqueItems": true
@@ -151,7 +152,8 @@
             "pattern": "^ECO_[0-9]{7}$"
           }
         },
-        "required": ["eco_code"]
+        "required": ["eco_code"],
+        "additionalProperties": false
       },
       "minItems": 1,
       "uniqueItems": true
