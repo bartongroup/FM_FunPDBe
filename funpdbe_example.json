@@ -39,7 +39,7 @@
   "evidence_code_ontology": [
     {
       "eco_term": "computational combinatorial evidence used in automatic assertion",
-      "eco_code": "ECO:0000246"
+      "eco_code": "ECO_0000246"
     }
   ]
 }
