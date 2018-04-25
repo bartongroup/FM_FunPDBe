@@ -35,7 +35,7 @@ $ pip install -r requirements.txt
 Examples of usage:
 
 ```
-$ funpdbe_client.py --help
+$ ./funpdbe_client.py
 ```
 
 ### Parameters
