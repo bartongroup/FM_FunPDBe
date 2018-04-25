@@ -43,7 +43,7 @@ $ ./funpdbe_client.py
 * -h, --help:       Help (this is what you see now)
 * -u, --user:       FunPDBe user name
 * -p, --pwd:        FunPDBe password
-* -m, --mode:       Running mode (get, post, delete, put)
+* -m, --mode:       Running mode (get, post, delete, put, validate)
 * -i, --pdbid:      PDB id of an entry
 * -r, --resource:   Name of a resource
 * -f, --path:       Path to JSON file (.json ending), or files (folder name)
@@ -51,39 +51,44 @@ $ ./funpdbe_client.py
 
 ### Examples
 
+#### Validating JSON file against schema
+```
+$ ./funpdbe_client.py --path=path/to/file.json --mode=validate
+```
+
 #### Listing all entries
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=get
+$ ./funpdbe_client.py --user=username --pwd=password --mode=get
 ```
 
 #### Listing entries for PDB id 1abc
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc
+$ ./funpdbe_client.py --user=username --pwd=password --mode=get --pdb_id=1abc
 ```
 
 #### Listing entries from funsites
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=get --resource=funsites
+$ ./funpdbe_client.py --user=username --pwd=password --mode=get --resource=funsites
 ```
 
 #### Listing entry for PDB id 1abc from funsites
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=get --pdb_id=1abc --resource=funsites
+$ ./funpdbe_client.py --user=username --pwd=password --mode=get --pdb_id=1abc --resource=funsites
 ```
 
 #### Posting an entry to funsites
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=post --path=path/to/data.json --resource=funsites
+$ ./funpdbe_client.py --user=username --pwd=password --mode=post --path=path/to/data.json --resource=funsites
 ```
 
 #### Deleting an entry (1abc) from funsites
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=delete --pdb_id=1abc --resource=funsites
+$ ./funpdbe_client.py --user=username --pwd=password --mode=delete --pdb_id=1abc --resource=funsites
 ```
 
 #### Updating an entry (1abc) from funsites
 ```
-$ funpdbe_client.py -user=username -pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
+$ ./funpdbe_client.py --user=username --pwd=password --mode=put --path=path/to/data.json --resource=funsites --pdb_id=1abc
 ```
 
 ## Running the tests
