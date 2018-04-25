@@ -58,7 +58,12 @@
                 },
                 "aa_type": {
                   "type": "string",
-                  "description": "Three-letter amino acid code"
+                  "description": "Three-letter amino acid code",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "additional_residue_annotations": {
+                  "type": "object",
+                  "description": "Additional residue-level annotations"
                 },
                 "site_data": {
                   "type": "array",
@@ -96,9 +101,11 @@
                 "pdb_res_label",
                 "aa_type",
                 "site_data"
-              ]
+              ],
+              "additionalProperties": false
             },
-            "minItems": 1
+            "minItems": 1,
+            "uniqueItems": true
           }
         },
         "required": [
