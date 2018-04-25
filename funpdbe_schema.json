@@ -35,6 +35,11 @@
       "description": "PDB identifier"
     },
 
+    "additional_entry_annotations": {
+      "type": "object",
+      "description": "Additional entry-level annotations"
+    },
+
     "chains": {
           "type": "array",
           "items": {
@@ -141,13 +146,16 @@
           },
           "eco_code": {
             "type": "string",
-            "description": "Evidence Code Ontology (ECO) code - http://www.evidenceontology.org/"
+            "description": "Evidence Code Ontology (ECO) code - http://www.evidenceontology.org/",
+            "pattern": "ECO_[0-9]{7}"
           }
-        }
+        },
+        "required": ["eco_code"]
       },
+      "minItems": 1,
       "uniqueItems": true
     }
   },
-
-  "required": ["data_resource", "pdb_id", "chains"]
+  "required": ["data_resource", "pdb_id", "chains", "evidence_code_ontology"],
+  "additionalProperties": false
 }
