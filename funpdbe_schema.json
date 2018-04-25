@@ -76,7 +76,7 @@
                       },
                       "raw_score": {
                         "type": "number",
-                        "description": "Raw calculated score (0-1)"
+                        "description": "Raw calculated score"
                       },
                       "confidence_score": {
                         "type": "number",
@@ -86,12 +86,22 @@
                       },
                       "confidence_classification": {
                         "type": "string",
-                        "description": "Confidence classification of the residue"
+                        "description": "Confidence classification of the residue",
+                        "enum": [
+                          "high",
+                          "medium",
+                          "low",
+                          "null"
+                        ]
                       }
                     },
                     "required": [
-                      "site_id_ref"
-                    ]
+                      "site_id_ref",
+                      "raw_score",
+                      "confidence_score",
+                      "confidence_classification"
+                    ],
+                    "additionalProperties": false
                   },
                   "minItems": 1,
                   "uniqueItems": true

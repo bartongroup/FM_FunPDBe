@@ -10,3 +10,7 @@ Changelog
 25/04/2018 - "release_date" has pattern "^[0-3][0-9]/[0-1][0-9]/[1-2][0-9]{3}$"
 25/04/2018 - "pdb_id" has pattern "^[0-9][a-z][a-z0-9]{2}$"
 25/04/2018 - "chains.residues.aa_type" has pattern "^[A-Z]{3}$"
+25/04/2018 - "chains.residues.site_data.raw_score is required
+25/04/2018 - "chains.residues.site_data.confidence_score is required
+25/04/2018 - "chains.residues.site_data.confidence_classification is required
+25/04/2018 - "chains.residues.site_data.confidence_classification is enum of ["high", "medium", "low", "null"]
