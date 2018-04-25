@@ -126,10 +126,11 @@
             },
             "source_release_date": {
             "type": "string",
-            "description": "Date of acquiring data from source"
+            "description": "Date of acquiring data from source",
+              "pattern": "^[0-3][0-9]/[0-1][0-9]/[1-2][0-9]{3}$"
             }
           },
-          "required": ["label", "source_database", "source_accession"]
+          "required": ["site_id", "label", "source_database", "source_accession"]
         },
         "minItems": 1,
         "uniqueItems": true
@@ -147,7 +148,7 @@
           "eco_code": {
             "type": "string",
             "description": "Evidence Code Ontology (ECO) code - http://www.evidenceontology.org/",
-            "pattern": "ECO_[0-9]{7}"
+            "pattern": "^ECO_[0-9]{7}$"
           }
         },
         "required": ["eco_code"]
