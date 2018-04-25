@@ -43,6 +43,10 @@
             "type": "string",
             "description": "PDB chain identifier"
           },
+          "additional_chain_annotations": {
+            "type": "object",
+            "description": "Additional chain-level annotations"
+          },
           "residues": {
             "type": "array",
             "items": {
@@ -100,7 +104,8 @@
         "required": [
           "chain_label",
           "residues"
-        ]
+        ],
+        "additionalProperties": false
       },
       "minItems": 1,
       "uniqueItems": true
