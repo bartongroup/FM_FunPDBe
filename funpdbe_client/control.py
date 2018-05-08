@@ -140,7 +140,7 @@ class Control(object):
         for json_path in glob.glob("%s/*.json" % self.path):
             response = self.client.post(json_path, self.resource)
             self.client.json_data = None
-            if response.status_code == 201:
+            if response and response.status_code == 201:
                 succeeded += 1
             attempted += 1
         message = "Batch POSTing: %i out of %i POSTed successfully" % (succeeded, attempted)
