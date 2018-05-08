@@ -122,6 +122,10 @@ class TestControl(TestCase):
         self.assertIsNotNone(self.control.post())
         os.system("rm foo.json")
 
+    def test_batch_post(self):
+        self.control.client = MockObject(MockUser())
+        self.assertIsNone(self.control.batch_post())
+
     def test_put(self):
         self.control.client = MockObject(MockUser())
         self.assertIsNone(self.control.put())

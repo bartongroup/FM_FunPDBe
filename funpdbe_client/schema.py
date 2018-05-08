@@ -59,6 +59,7 @@ class Schema(object):
             return True
         except jsonschema.exceptions.ValidationError:
             logging.warning("JSON does not comply with schema")
+            logging.warning(jsonschema.exceptions.ValidationError)
             return False
 
     @staticmethod
