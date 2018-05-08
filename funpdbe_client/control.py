@@ -88,11 +88,14 @@ class Control(object):
         if self.path.endswith(".json"):
             return self.single_validate(self.path)
         else:
-            all_valid = True
-            for json_path in glob.glob("%s/*.json" % self.path):
-                if not self.single_validate(json_path):
-                    all_valid = False
-            return all_valid
+            return self.multi_validate()
+
+    def multi_validate(self):
+        all_valid = True
+        for json_path in glob.glob("%s/*.json" % self.path):
+            if not self.single_validate(json_path):
+                all_valid = False
+        return all_valid
 
     def single_validate(self, path):
         """
