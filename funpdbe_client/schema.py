@@ -57,9 +57,9 @@ class Schema(object):
         try:
             jsonschema.validate(json_data, self.json_schema)
             return True
-        except jsonschema.exceptions.ValidationError:
+        except jsonschema.exceptions.ValidationError as err:
             logging.warning("JSON does not comply with schema")
-            logging.warning(jsonschema.exceptions.ValidationError)
+            logging.warning(err)
             return False
 
     @staticmethod
