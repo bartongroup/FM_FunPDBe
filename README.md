@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-There are no prerequisites for installing the client.
+There are no prerequisites for installing the client. Please note that the client is written in Python3, and the dependencies have to be installed accordingly (for example by using pip3)!
 <!--- There are no prerequisites for installing the client, but in order to connect to the FunPDBe deposition system using this client, depositors have to register an account at https://funpdbe.org/register. Activating user accounts in dependent on admin approval. --->
 
 ### Installing
@@ -28,7 +28,7 @@ The are two main approaches to getting the client up and running.
 ```
 $ git clone https://github.com/funpdbe-consortium/funpdbe-client
 $ cd funpdbe-client
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ## Usage
