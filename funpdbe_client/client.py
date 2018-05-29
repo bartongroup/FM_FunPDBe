@@ -98,11 +98,12 @@ Usage parameters:
         print(r.text)
         return r
 
-    def post(self, path, resource):
+    def post(self, path, resource, plugin=False):
         """
         POST JSON to deposition API
         :param path: String, path to JSON file
         :param resource: String, resource name
+        :param plugin: Boolean, plugin mode
         :return: None
         """
         message = "POST %s to %s" % (path, resource)
@@ -110,7 +111,7 @@ Usage parameters:
         self.user_info()
         if not self.check_resource(resource):
             return None
-        if not self.parse_json(path):
+        if not self.parse_json(path) and not plugin:
             return None
         if not self.validate_json():
             return None
