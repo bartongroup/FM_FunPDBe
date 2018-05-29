@@ -14,7 +14,6 @@
 # License.
 
 from unittest import TestCase
-from unittest import mock
 from funpdbe_client.plugin import Plugin
 
 mock_data = {
