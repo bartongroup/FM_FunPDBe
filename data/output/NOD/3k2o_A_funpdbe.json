@@ -1,0 +1,1193 @@
+{
+    "additional_entry_annotations": {},
+    "chains": [
+        {
+            "additional_chain_annotations": {},
+            "chain_id": "A",
+            "residues": [
+                {
+                    "aa_type": "HIS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "1",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "3",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "HIS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "4",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "5",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "SER",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "6",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "7",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "8",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "9",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ILE",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "10",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "11",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "12",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ALA",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "13",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "14",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "15",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "SER",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "16",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ALA",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "17",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "18",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PRO",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "19",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "20",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "21",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "22",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "23",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "SER",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "24",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 0,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ALA",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "82",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "83",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "84",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "85",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "TRP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "86",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "THR",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "87",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "88",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "89",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "90",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "91",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "92",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "93",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "94",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "TYR",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "95",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "96",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "97",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "98",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "99",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PHE",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "100",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "101",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "CYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "102",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLY",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "103",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "104",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "105",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "106",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ASP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "107",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 1,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PHE",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "295",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PRO",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "296",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "VAL",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "297",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "VAL",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "298",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "TRP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "299",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "HIS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "300",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "301",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "THR",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "302",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "VAL",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "303",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "304",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLY",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "305",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "306",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PRO",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "307",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "308",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "309",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "SER",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "310",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "311",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "312",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "TRP",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "313",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "TYR",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "314",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ARG",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "315",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ILE",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "316",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "317",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LYS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "318",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLN",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "319",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "320",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "HIS",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "321",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "PRO",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "322",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "GLU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "323",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "LEU",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "324",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "aa_type": "ALA",
+                    "additional_residue_annotations": {},
+                    "pdb_res_label": "325",
+                    "site_data": [
+                        {
+                            "additional_site_data_annotations": {},
+                            "classification": "reliable",
+                            "confidence": 1,
+                            "site_id_ref": 2,
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "data_resource": "NOD",
+    "evidence_code_ontology": [
+        "sequence_similarity_evidence_used_in_automatic_assertion"
+    ],
+    "labels": [
+        {
+            "label_id": 1,
+            "label_text": "predicted nucleolar localization sequence"
+        }
+    ],
+    "pdb_id": "3k2o",
+    "release_date": "5/1/2018",
+    "resource_entry_url": "http://www.compbio.dundee.ac.uk/nod/",
+    "sites": [
+        {
+            "additional_site_annotations": {
+                "segment": "HNHKSKKRIREAKRSARPELKDS"
+            },
+            "evidence": {
+                "source_accession": "",
+                "source_id_ref": 1
+            },
+            "label_id_ref": 1,
+            "site_id": 0
+        },
+        {
+            "additional_site_annotations": {
+                "segment": "AQEKWTLERLKRKYRNQKFKCGEDND"
+            },
+            "evidence": {
+                "source_accession": "",
+                "source_id_ref": 1
+            },
+            "label_id_ref": 1,
+            "site_id": 1
+        },
+        {
+            "additional_site_annotations": {
+                "segment": "FPVVWHKTVRGRPKLSRKWYRILKQEHPELA"
+            },
+            "evidence": {
+                "source_accession": "",
+                "source_id_ref": 1
+            },
+            "label_id_ref": 1,
+            "site_id": 2
+        }
+    ],
+    "software_version": "",
+    "source_datasets": [
+        {
+            "source_db": "PDB",
+            "source_id": 1,
+            "source_release_date": "10/2017"
+        },
+        {
+            "source_db": "NOD Dataset",
+            "source_id": 2,
+            "source_publication_doi": "10.1186/1471-2105-12-317",
+            "source_release_date": "2011"
+        }
+    ]
+}
