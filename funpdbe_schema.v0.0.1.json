@@ -1,0 +1,193 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "FunPDBeSchema",
+  "type": "object",
+  "properties": {
+
+    "data_resource": {
+      "type": "string",
+      "description": "Name of the database or software"
+    },
+
+    "resource_version": {
+      "type": "string",
+      "description": "Version of the resource"
+    },
+
+    "software_version": {
+      "type": "string",
+      "description": "Version of the software used"
+    },
+
+    "resource_entry_url": {
+      "type": "string",
+      "description": "URL linking to the entry at the partner resource"
+    },
+
+    "release_date": {
+      "type": "string",
+      "description": "Release date of the annotation"
+    },
+
+    "source_datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "description": "Unique identifier of source"
+          },
+          "source_release_date": {
+            "type": "string",
+            "description": "Date of acquiring data from source"
+          },
+          "source_db": {
+            "type": "string",
+            "description": "Name of the source database"
+          }
+        },
+        "required": ["source_id", "source_db"]
+      }
+    },
+
+    "pdb_id": {
+      "type": "string",
+      "description": "PDB identifier"
+    },
+
+    "chains": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chain_id": {
+                "type": "string",
+                "description": "PDB chain identifier"
+              },
+              "residues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "pdb_res_label": {
+                      "type": "string",
+                      "description": "Residue index from the related PDB entry"
+                    },
+                    "aa_type": {
+                      "type": "string",
+                      "description": "One letter amino acid code"
+                    },
+                    "site_data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "site_id_ref": {
+                            "type": "integer",
+                            "description": "Reference to site_id"
+                          },
+                          "value":{
+                            "type": "number",
+                            "description": "Raw calculated score/value"
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "description": "Confidence level of the annotation",
+                            "minimum": 0.0,
+                            "maximum": 1.0
+                          },
+                          "classification": {
+                            "type": "string",
+                            "description": "Confidence classification of the residue"
+                          }
+                        },
+                        "required": ["site_id_ref"]
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "mergeStrategy": "append"
+                    }
+                  },
+                  "required": ["pdb_res_label", "aa_type", "site_data"]
+                },
+                "minItems": 1,
+                "mergeStrategy": "arrayMergeById",
+                "mergeOptions": {"idRef": "pdb_res_label"}
+              }
+            },
+            "required": ["chain_id", "residues"]
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {"idRef": "chain_id"}
+        },
+
+    "sites": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "site_id": {
+              "type": "integer",
+              "description": "Site identifier"
+            },
+            "label_id_ref": {
+              "type": "integer",
+              "description": "Reference to label"
+            },
+            "evidence": {
+              "type": "object",
+              "properties": {
+                "source_id_ref": {
+                  "type": "integer",
+                  "description": "Referencing source identifier"
+                },
+                "source_accession": {
+                  "type": "string",
+                  "description": "Accession identifier"
+                }
+              },
+              "required": ["source_id_ref", "source_accession"]
+            }
+          },
+          "required": ["site_id", "label_id_ref"]
+        },
+        "minItems": 1,
+        "uniqueItems": true,
+        "mergeStrategy": "append"
+      },
+
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label_id": {
+            "type": "integer",
+            "description": "Label identifier"
+          },
+          "label_text": {
+            "type": "string",
+            "description": "Label description, sequence feature ontology (SFO) term"
+          }
+        },
+        "required": ["label_id", "label_text"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+
+    "evidence_code_ontology": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Evidence Code Ontology (ECO) term - http://www.evidenceontology.org/"
+      },
+      "uniqueItems": true
+    }
+  },
+
+  "required": ["data_resource", "release_date", "pdb_id", "chains", "sites", "labels", "source_datasets"]
+}
