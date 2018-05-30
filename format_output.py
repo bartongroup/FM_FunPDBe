@@ -344,11 +344,11 @@ if __name__ == '__main__':
 
     # Validate and save 1433 example
     schema.validate_FunPDBe_entry(FunPDBe_1433_json)
-    with open('14_3_3_Pred.json', 'w') as output:
+    with open('./data/output/1433pred/3tpp_A_funpdbe.json', 'w') as output:
         json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
 
     # Format NOD example
     r = parse_nod_results('3k2o', 'A', 'data/output/NOD/3k2o_A.nod')
     schema.validate_FunPDBe_entry(r)
-    with open('NOD_example.json', 'w') as output:
+    with open('data/output/NOD/3k2o_A_funpdbe.json', 'w') as output:
         json.dump(r, output, indent=4, sort_keys=True)
