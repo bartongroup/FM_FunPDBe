@@ -1,42 +1,42 @@
 {
-  "pdb_id": "0x00",
-  "data_resource": "cath-funsites",
-  "resource_version": "1.0.0",
-  "software_version": "1.0.0",
-  "resource_entry_url": "https://example.com/foo/bar",
-  "release_date": "01/01/2000",
-  "chains": [
-    {
-      "chain_label": "A",
-      "residues": [
+    "pdb_id": "2aqa",
+    "data_resource": "cath-funsites",
+    "resource_version": "1.0.0",
+    "software_version": "1.0.0",
+    "resource_entry_url": "https://example.com/foo/bar",
+    "release_date": "01/01/2000",
+    "chains": [
         {
-          "pdb_res_label": "1",
-          "aa_type": "ALA",
-          "site_data": [
-            {
-              "site_id_ref": 1,
-              "raw_score": 0.7,
-              "confidence_score": 0.9,
-              "confidence_classification": "high"
-            }
-          ]
+            "chain_label": "A",
+            "residues": [
+                {
+                    "pdb_res_label": "2",
+                    "aa_type": "HIS",
+                    "site_data": [
+                        {
+                            "site_id_ref": 1,
+                            "raw_score": 0.7,
+                            "confidence_score": 0.9,
+                            "confidence_classification": "high"
+                        }
+                    ]
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "sites": [
-    {
-      "site_id": 1,
-      "label": "ligand_binding_site",
-      "source_database": "pdb",
-      "source_accession": "1abc",
-      "source_release_date": "01/01/2000"
-    }
-  ],
-  "evidence_code_ontology": [
-    {
-      "eco_term": "manually_curated",
-      "eco_code": "ECO_0000042"
-    }
-  ]
+    ],
+    "sites": [
+        {
+            "site_id": 1,
+            "label": "ligand_binding_site",
+            "source_database": "pdb",
+            "source_accession": "1abc",
+            "source_release_date": "01/01/2000"
+        }
+    ],
+    "evidence_code_ontology": [
+        {
+            "eco_term": "manually_curated",
+            "eco_code": "ECO_0000042"
+        }
+    ]
 }

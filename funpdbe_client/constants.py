@@ -14,7 +14,8 @@
 # License.
 
 # These is the URL of the API of the FunPDBe deposition system
-API_URL = "https://wwwdev.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
+API_URL = "https://www.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
+# API_URL = "https://wwwdev.ebi.ac.uk/pdbe/funpdbe/deposition/entries/"
 # API_URL = "http://127.0.0.1:8000/entries/"
 
 CLIENT_ERRORS = {
