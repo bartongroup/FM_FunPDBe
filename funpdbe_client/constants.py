@@ -47,5 +47,6 @@ RESOURCES = (
     "14-3-3-pred",
     "dynamine",
     "cansar",
-    "credo"
+    "credo",
+    "depth"
 )
