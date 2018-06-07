@@ -135,10 +135,11 @@ class Control(object):
         Make GET call
         :return: Response.text or None
         """
-        if self.pdb_id:
+        if self.pdb_id and self.resource:
             return self.client.get_one(self.pdb_id, self.resource)
-        else:
-            return self.client.get_all(self.resource)
+        self.logger.log().error(CONTROL_ERRORS["no_pdb_or_resource"])
+        print("Please provide both --pdb_id and --resource")
+        return None
 
     def post(self):
         """

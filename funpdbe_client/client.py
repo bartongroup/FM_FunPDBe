@@ -59,7 +59,7 @@ Usage parameters:
         """
         self.api_url = new_url
 
-    def get_one(self, pdb_id, resource=None):
+    def get_one(self, pdb_id, resource):
         """
         Get one FunPDBe entry based on PDB id and
         optionally resource name
@@ -68,11 +68,10 @@ Usage parameters:
         :return: None
         """
         message = "GET entry for %s" % pdb_id
-        if resource:
+        if resource and self.check_pdb_id(pdb_id):
             message += " from %s" % resource
-        self.logger.log().info(message)
-
-        if not self.check_pdb_id(pdb_id):
+            self.logger.log().info(message)
+        else:
             return None
 
         self.user_info()
@@ -84,26 +83,6 @@ Usage parameters:
         else:
             self.log_api_error(r.status_code, r.text)
 
-        print(r.text)
-        return r
-
-    def get_all(self, resource=None):
-        """
-        Get all FunPDBe entries, optionally filtered
-        by resource name
-        :param resource: String, resource name
-        :return: None
-        """
-        message = "GET all entries"
-        if resource:
-            message += " from %s" % resource
-        self.logger.log().info(message)
-
-        self.user_info()
-        url = self.api_url
-        if resource and self.check_resource(resource):
-            url += "resource/%s/" % resource
-        r = requests.get(url, auth=(self.user.user_name, self.user.user_pwd))
         print(r.text)
         return r
 
@@ -161,6 +140,7 @@ Usage parameters:
         :return: none
         """
         message = "DELETE entry %s from %s" % (pdb_id, resource)
+        print(message)
         self.logger.log().info(message)
 
         if not self.check_resource(resource):
@@ -174,7 +154,7 @@ Usage parameters:
         check_status(r, 301, self.logger)
         return r
 
-    def construct_get_url(self, resource=None, pdb_id=None):
+    def construct_get_url(self, resource, pdb_id):
         """
         Create the GET URL based on resource
         and pdb_id
@@ -185,10 +165,9 @@ Usage parameters:
         url = self.api_url
         if resource and self.check_resource(resource):
             url += "resource/%s/" % resource
-        else:
-            url += "pdb/"
-        url += "%s/" % pdb_id
-        return url
+            url += "%s/" % pdb_id
+            return url
+        return None
 
     def check_pdb_id(self, pdb_id):
         """

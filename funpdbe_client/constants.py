@@ -29,7 +29,8 @@ CLIENT_ERRORS = {
 
 CONTROL_ERRORS = {
     "no_mode": "No running mode was specified (--mode=)",
-    "no_path": "No path to JSON file(s) provided"
+    "no_path": "No path to JSON file(s) provided",
+    "no_pdb_or_resource": "No PDB identifier or resource name"
 }
 
 # This is the file name of the log file that the client generates

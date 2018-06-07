@@ -108,8 +108,10 @@ class TestControl(TestCase):
 
     def test_get(self):
         self.control.client = MockObject(MockUser())
-        self.assertIsNotNone(self.control.get())
+        self.assertIsNone(self.control.get())
         self.control.pdb_id = "foo"
+        self.assertIsNone(self.control.get())
+        self.control.resource = "bar"
         self.assertIsNotNone(self.control.get())
 
     def test_post(self):

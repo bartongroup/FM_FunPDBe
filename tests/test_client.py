@@ -63,14 +63,6 @@ def mocked_requests_get(*args, **kwargs):
             self.status_code = status_code
     if args[0].endswith("resource/cath-funsites/1abc/"):
         return MockResponse({"resource": "ok"}, 200)
-    elif args[0].endswith("resource/cath-funsites/"):
-        return MockResponse({"resource": "ok"}, 200)
-    elif args[0].endswith("pdb/1abc/"):
-        return MockResponse({"pdb": "ok"}, 200)
-    elif args[0].endswith("pdb/2abc/"):
-        return MockResponse(None, 404)
-    elif args[0].endswith("/"):
-        return MockResponse({"pdb": "ok"}, 200)
     return MockResponse(None, 404)
 
 
@@ -114,34 +106,19 @@ class TestClient(TestCase):
         self.assertFalse(self.client.check_resource(None))
 
     def test_get_one_no_pdb_id(self):
-        self.assertIsNone(self.client.get_one(None))
+        self.assertIsNone(self.client.get_one(pdb_id=None, resource="nod"))
 
     def test_pattern_mismatch(self):
-        self.assertIsNone(self.client.get_one("invalid"))
-
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_get_one_with_id(self, mock):
-        call = self.client.get_one("1abc")
-        self.assertEqual({"pdb": "ok"}, call.json_data)
+        self.assertIsNone(self.client.get_one(pdb_id="invalid", resource="nod"))
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_one_with_id_not_exist(self, mock):
-        call = self.client.get_one("2abc")
+        call = self.client.get_one("2abc", "nod")
         self.assertIsNone(call.json_data)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_one_with_resource(self, mock):
         call = self.client.get_one("1abc", "cath-funsites")
-        self.assertEqual({"resource": "ok"}, call.json_data)
-
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_get_all(self, mock):
-        call = self.client.get_all()
-        self.assertEqual({"pdb": "ok"}, call.json_data)
-
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_get_all_with_resource(self, mock):
-        call = self.client.get_all("cath-funsites")
         self.assertEqual({"resource": "ok"}, call.json_data)
 
     def test_parse_json_no_path(self):
