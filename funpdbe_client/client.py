@@ -16,7 +16,7 @@
 import requests
 import json
 import re
-from funpdbe_client.constants import PDB_ID_PATTERN, API_URL, RESOURCES, CLIENT_ERRORS
+from funpdbe_client.constants import PDB_ID_PATTERN, PROD_API_URL, RESOURCES, CLIENT_ERRORS
 from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
 from funpdbe_client.utils import check_exists, check_status
 
@@ -30,7 +30,7 @@ class Client(object):
     def __init__(self, schema, user):
         self.user = user
         self.schema = schema
-        self.api_url = API_URL
+        self.api_url = PROD_API_URL
         self.json_data = None
         self.logger = FunPDBeClientLogger("client")
 
@@ -48,7 +48,16 @@ Usage parameters:
 -r, --resource:   Name of a resource
 -f, --path:       Path to JSON file (.json ending), or files (folder name)
 -d, --debug:      Enable debug logging
+-a, --api:        API to be used (prod (default), dev, local)
         """
+
+    def set_api_url(self, new_url):
+        """
+        Setting API to other than default
+        :param new_url: String, API URL
+        :return: None
+        """
+        self.api_url = new_url
 
     def get_one(self, pdb_id, resource=None):
         """

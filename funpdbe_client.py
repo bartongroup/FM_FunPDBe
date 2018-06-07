@@ -31,13 +31,14 @@ def main():
     logger = FunPDBeClientLogger(name="main", write_mode="w")
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:h", [
+        opts, args = getopt.getopt(sys.argv[1:], "u:p:m:i:r:f:a:h", [
             "user=",
             "pwd=",
             "mode=",
             "pdb_id=",
             "resource=",
             "path=",
+            "api=",
             "help"])
     except getopt.GetoptError as err:
         generic_error()

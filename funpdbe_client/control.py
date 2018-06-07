@@ -15,7 +15,7 @@
 
 import glob
 from funpdbe_client.logger_config import FunPDBeClientLogger, generic_error
-from funpdbe_client.constants import CONTROL_ERRORS
+from funpdbe_client.constants import CONTROL_ERRORS, DEV_API_URL, LOCAL_API_URL, PROD_API_URL
 
 
 class Control(object):
@@ -30,6 +30,7 @@ class Control(object):
         self.user_name = self.loop_options("-u", "--user")
         self.pwd = self.loop_options("-p", "--pwd")
         self.help = False
+        self.api_url = self.loop_options("-a", "--api")
         for option, value in self.opts:
             if option in ["-h", "--help"]:
                 self.help = True
@@ -75,6 +76,27 @@ class Control(object):
         """
         self.client.user.user_name = self.user_name
         self.client.user.user_pwd = self.pwd
+        if self.api_url:
+            url_to_use = self.map_url(self.api_url)
+            if url_to_use:
+                self.client.set_api_url(url_to_use)
+
+    def map_url(self, label):
+        """
+        Return the correct API URL based on user input
+        parameters
+        :param label: String, prod, dev or local
+        :return: String, API URL
+        """
+        urls = {
+            "prod": PROD_API_URL,
+            "dev": DEV_API_URL,
+            "local": LOCAL_API_URL
+        }
+        if not label in urls.keys():
+            return None
+        return urls[label]
+
 
     def validate(self):
         """
