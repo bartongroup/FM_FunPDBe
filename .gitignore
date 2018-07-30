@@ -1,0 +1,19 @@
+.idea
+.DS_Store
+/*.egg-info
+/dist/
+*.pyc
+/data/
+.coverage
+.json
+.cache/
+*.json
+build/
+client.log
+dev-env/
+htmlcov/
+.pytest_cache
+plugin_tryout.py
+
+# local e2e tests
+funpdbe_client_functional_test.py
