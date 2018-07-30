@@ -1,9 +1,9 @@
+import click
 import functools
 import json
 import jsonmerge
 import os
 import schema
-
 
 from pprint import pprint
 from proteofav.structures import mmCIF, get_sequence, filter_structures
@@ -336,19 +336,88 @@ def parse_nod_results(pdb_id, chain_id, prediction_results_file):
     return FunPDBe_json
 
 
-if __name__ == '__main__':
-    # Format 1433 example
-    mmcif = read_mmcif_chain('3tpp', 'A')
-    one433_result_file = './data/output/1433pred/3tpp_A.json'
-    FunPDBe_1433_json = format_1433_pdb(mmcif, one433_result_file)
+@click.group()
+def cli():
+    pass
 
-    # Validate and save 1433 example
+
+def _check_pdb_chain_args(path, pdb, chain):
+    """Check if PDB and Chain args are defined, guess if needed."""
+    # Expect path in .../PDB_CHAIN.json format
+    pdb_guess = (os.path.splitext(os.path.basename(path))[0]).split('_')
+
+    # Update or pass-through as necessary
+    if not pdb:
+        pdb = pdb_guess[0]
+    if not chain:
+        chain = pdb_guess[1]
+
+    return pdb, chain
+
+
+def _new_filename(filepath, new_root='{}_funpdbe', new_ext=None):
+    """
+    Construct a filepath derived from an existing filepath
+
+    e.g. [path][root][ext] == [.../path/to/][file][.ext]
+
+    """
+    # Break filepath into components
+    path, basename = os.path.split(filepath)
+    root, ext = os.path.splitext(basename)
+
+    # Construct new filename
+    if new_ext:
+        ext = new_ext
+    if new_root:
+        root = new_root.format(root)  # new_root can include original root
+    basename = root + ext
+
+    # Construct derived filepath
+    return os.path.join(path, basename)
+
+
+
+@cli.command('1433pred')
+@click.argument('prediction_path', type=click.Path(exists=True), required=True)
+@click.argument('pdb', type=str, default=None, required=False)
+@click.argument('chain', type=str, default=None, required=False)
+def pred1433(prediction_path, pdb, chain):
+
+    pdb, chain = _check_pdb_chain_args(prediction_path, pdb, chain)
+
+    # Format 1433 example
+    mmcif = read_mmcif_chain(pdb, chain)
+    FunPDBe_1433_json = format_1433_pdb(mmcif, prediction_path)
+
+    # Validate
     schema.validate_FunPDBe_entry(FunPDBe_1433_json)
-    with open('./data/output/1433pred/3tpp_A_funpdbe.json', 'w') as output:
+
+    # Write JSON to file
+    destination_path = _new_filename(prediction_path)
+    with open(destination_path, 'w') as output:
         json.dump(FunPDBe_1433_json, output, indent=4, sort_keys=True)
 
+
+@cli.command('nod')
+@click.argument('prediction_path', type=click.Path(exists=True), required=True)
+@click.argument('pdb', type=str, default=None, required=False)
+@click.argument('chain', type=str, default=None, required=False)
+def nod(prediction_path, pdb, chain):
+    # Guess PDB and/or chain if not provided
+    pdb, chain = _check_pdb_chain_args(prediction_path, pdb, chain)
+
     # Format NOD example
-    r = parse_nod_results('3k2o', 'A', 'data/output/NOD/3k2o_A.nod')
+    r = parse_nod_results(pdb, chain, prediction_path)
+
+    # Validate
     schema.validate_FunPDBe_entry(r)
-    with open('data/output/NOD/3k2o_A_funpdbe.json', 'w') as output:
+
+    # Write JSON to file
+    destination_path = _new_filename(prediction_path, new_ext='.json')
+    with open(destination_path, 'w') as output:
         json.dump(r, output, indent=4, sort_keys=True)
+
+
+if __name__ == '__main__':
+    cli()
