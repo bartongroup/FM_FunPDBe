@@ -5,7 +5,7 @@ import jsonschema
 
 from collections import OrderedDict
 
-with open("funpdbe_schema.v0.0.1.json") as schema_file:
+with open("lib/funpdbe_schema/funpdbe_schema.json") as schema_file:
     funpdbe_schema = json.load(schema_file, object_pairs_hook=OrderedDict)
 
 FunPDBe_merger = jsonmerge.Merger(funpdbe_schema)
