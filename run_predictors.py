@@ -84,10 +84,11 @@ def nod(input, log):
               type=click.File('wb'))
 @click.argument('input',
                 type=click.File('r'), required=True)
+@click.argument('pred1433_python_bin', type=click.Path(exists=True), default='/usr/bin/python')
 # @click.argument('output',
 #                 type=click.File('w'), required=False)
 @click_log.simple_verbosity_option(default="INFO")
-def pred1433(input, log):
+def pred1433(input, log, pred1433_python_bin):
     logging.basicConfig(stream=log,
                         format='%(asctime)s - %(levelname)s - %(message)s ')
 
@@ -110,7 +111,7 @@ def pred1433(input, log):
             output.write(">{}\n{}\n".format(pid, seq))
             output.close()
 
-        cmd = ['python', pred1433_python,
+        cmd = [pred1433_python_bin, pred1433_python,
                '-i', input_seq, '-o', output_1433pred]
         # Popen(cmd)
         os.system(' '.join(cmd))
