@@ -11,7 +11,7 @@ for the FunPDBe project is a good way for our users to run these tools locally t
 DRSASP tools included in this repository:
 - [14-3-3-Pred](https://www.compbio.dundee.ac.uk/1433pred/about)
 - [NoD](https://www.compbio.dundee.ac.uk/www-nod/)
-- [JPred4 API Client](https://www.compbio.dundee.ac.uk/jpred/)
+- [JPred4](https://www.compbio.dundee.ac.uk/jpred/) (API Client)
 
 If you use this resource in your work then please cite the articles for the tool(s) you used and the DRSASP article:
 MacGowan et al. The Dundee Resource for Sequence Analysis and Structure Prediction Protein Science, 2019,
