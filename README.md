@@ -1,8 +1,41 @@
-# FM_FunPDBe
-Scripts for adding functional annotations to FunPDBe.
+# DRSASP FunPDBe Annotation Utilities
+
+Maintainer: Stuart MacGowan (<smacgowan@dundee.ac.uk>)
+
+
+This repository contains the utility scripts we use to add [DRSASP](http://www.compbio.dundee.ac.uk/drsasp.html)
+annotations to [FunPDBe](https://www.ebi.ac.uk/pdbe/pdbe-kb/funpdbe). For our convenience, we bundled some of
+the DRSASP tools into this repository and it turns out that the common interface and output formatting we built
+for the FunPDBe project is a good way for our users to run these tools locally themselves.
+
+DRSASP tools included in this repository:
+- [14-3-3-Pred](https://www.compbio.dundee.ac.uk/1433pred/about)
+- [NoD](https://www.compbio.dundee.ac.uk/www-nod/)
+- [JPred4 API Client](https://www.compbio.dundee.ac.uk/jpred/)
+
+If you use this resource in your work then please cite the articles for the tool(s) you used and the DRSASP article:
+MacGowan et al. The Dundee Resource for Sequence Analysis and Structure Prediction Protein Science, 2019,
+https://doi.org/10.1002/pro.3783
 
 
 ## How to use
+
+### Running Barton Group Predictors on a collection of Fasta sequences
+
+Running NOD
+```sh
+$ python run_predictors.py nod data/funpdbe_examples_list.fasta
+```
+
+Running 14-3-3-Pred
+```sh
+$ python run_predictors.py 1433pred data/funpdbe_examples_list.fasta
+```
+
+Running Jpred
+```sh
+$ python run_predictors.py jpred data/funpdbe_examples_list.fasta
+```
 
 ### Getting Fasta sequences from a list of PDB ids
 
@@ -26,23 +59,6 @@ $ python extract_sequences.py --pdb <pdb_id> --chain <chain_id>
 Extracting the sequence from all PDB/Chain IDs based on a UniProt ID
 ```sh
 $ python extract_sequences.py --uniprot <pdb_id>
-```
-
-### Running Barton Group Predictors on a collection of Fasta sequences
-
-Running NOD
-```sh
-$ python run_predictors.py nod data/funpdbe_examples_list.fasta
-```
-
-Running 14-3-3-Pred
-```sh
-$ python run_predictors.py 1433pred data/funpdbe_examples_list.fasta
-```
-
-Running Jpred
-```sh
-$ python run_predictors.py jpred data/funpdbe_examples_list.fasta
 ```
 
 
